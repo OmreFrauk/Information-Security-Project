@@ -4,8 +4,9 @@ from logger import logger
 import os
 import tqdm
 import json
-from ca_cert import create_signed_certificate, validate_certificate, send_certificate
+from ca_cert import create_signed_certificate, validate_certificate, send_certificate, create_signed_image
 from rsa_keys import derive_keys, encrypt_aes_with_hmac
+
 NONCE_DEVICE = os.urandom(16)
 logger.info("Device started")
 # Load keys
@@ -194,18 +195,37 @@ def send_secure_text(client_socket, message: str, keys):
         logger.exception("Failed to send secure text")
         raise e
 
+def send_secure_image(client_socket, image_path: str, keys):
+    try:
 
+        payload = create_signed_image(image_path, private_key)
+        encrypted_payload = encrypt_aes_with_hmac(payload, keys["client_enc_key"],keys["client_mac_key"],keys["iv"])
+        
+        client_socket.sendall(b"<IMGX>")
+        logger.info("Sent header: IMGX")
+        client_socket.sendall(len(encrypted_payload).to_bytes(4, byteorder="big"))
+        client_socket.sendall(encrypted_payload)
+        logger.info(f"Sent image payload length: {len(encrypted_payload)}")
 
+        ack = client_socket.recv(256)
+        ack_msg = decrypt_message(ack, private_key)
+        logger.info(f"Server acknowledgement: {ack_msg}")
+    except Exception as e:
+        logger.exception("Failed to send secure image")
+        raise e
+        
+        
+if __name__ == "__main__":
 
-nonce_device = send_hello(client)
-cert_json,nonce_server = recv_hello(client)
-pre_master_secret = send_pre_master_secret(client, server_public_key)
+    nonce_device = send_hello(client)
+    cert_json,nonce_server = recv_hello(client)
+    pre_master_secret = send_pre_master_secret(client, server_public_key)
 
-DERIVED_KEYS = derive_keys(pre_master_secret, nonce_device, nonce_server)
-logger.info(f"Derived keys: {DERIVED_KEYS}")
+    DERIVED_KEYS = derive_keys(pre_master_secret, nonce_device, nonce_server)
+    logger.info(f"Derived keys: {DERIVED_KEYS}")
 
-send_secure_text(client, "Hello, world!", DERIVED_KEYS)
+    send_secure_image(client, "images/test.png", DERIVED_KEYS)
 
-send_end_of_file(client)
-client.close()
-logger.info("Device socket closed")
+    send_end_of_file(client)
+    client.close()
+    logger.info("Device socket closed")

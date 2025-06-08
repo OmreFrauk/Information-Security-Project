@@ -7,6 +7,7 @@ import json
 from logger import logger
 from rsa_keys import decrypt_message
 import base64
+import os 
 
 ca_private_key = load_private_key("keys/ca_private_key.pem")
 ca_public_key = load_public_key("keys/ca_public_key.pem")
@@ -44,7 +45,6 @@ def create_signed_certificate(common_name: str, client_public_key_pem: bytes) ->
         "certificate": certificate_data,
         "signature": base64.b64encode(signature).decode()
     }
-
 def validate_certificate(cert_bundle: dict, ca_public_key: rsa.RSAPublicKey) -> bool:
     cert_data = cert_bundle["certificate"]
     signature = cert_bundle["signature"]
@@ -63,3 +63,47 @@ def validate_certificate(cert_bundle: dict, ca_public_key: rsa.RSAPublicKey) -> 
 
         return False
 
+def create_signed_image(image_path: str, private_key) -> dict:
+    try:
+        with open(image_path, "rb") as f:
+            image_data = f.read()
+        filename = os.path.basename(image_path)
+        signature = private_key.sign(
+            image_data,
+            padding.PSS(
+                mgf=padding.MGF1(hashes.SHA256()),
+                salt_length=padding.PSS.MAX_LENGTH
+
+            ),
+            hashes.SHA256()
+        )
+        payload = {
+            "filename": filename,
+            "image_data": base64.b64encode(image_data).decode(),
+            "signature": base64.b64encode(signature).decode()
+        }
+        return json.dumps(payload).encode()
+    except Exception as e:
+        logger.exception("Failed to create image certificate")
+        raise e
+
+
+def verify_image(payload_bytes: bytes, sender_public_key) -> bool:
+    try:
+        payload = json.loads(payload_bytes)
+        filename = payload["filename"]
+        image_data = base64.b64decode(payload["image_data"])
+        signature = base64.b64decode(payload["signature"])
+        sender_public_key.verify(
+            signature,
+            image_data,
+            padding.PSS(
+                mgf=padding.MGF1(hashes.SHA256()),
+                salt_length=padding.PSS.MAX_LENGTH
+            ),
+            hashes.SHA256()
+        )
+        return True 
+    except Exception as e:
+        logger.exception("Failed to verify image")
+        return False

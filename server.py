@@ -5,8 +5,9 @@ from tqdm import tqdm
 from ca_cert import validate_certificate
 import json
 import os
-from ca_cert import create_signed_certificate, send_certificate
-
+from ca_cert import create_signed_certificate, send_certificate, verify_image
+import base64
+from datetime import datetime
 
 logger.info("Server starting")
 
@@ -41,6 +42,28 @@ def recv_exact(sock, size):
         data += packet
     logger.info(f"Received {len(data)} bytes successfully")
     return data
+def save_verified_image(payload_bytes: bytes, save_dir="received_images") -> str:
+    try:
+        # 1. JSON decode
+        payload = json.loads(payload_bytes.decode())
+        filename = payload["filename"]
+        image_data = base64.b64decode(payload["image_data"])
+
+        # 2. Klasörü oluştur (yoksa)
+        os.makedirs(save_dir, exist_ok=True)
+
+        # 3. Zaman damgası ekle
+        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+        save_path = os.path.join(save_dir, f"{timestamp}_{filename}")
+
+        # 4. Dosyayı kaydet
+        with open(save_path, "wb") as f:
+            f.write(image_data)
+
+        return save_path
+
+    except Exception as e:
+        raise Exception(f"Failed to save image: {e}")
 
 def recv_certificate(client_socket):
     try:
@@ -108,8 +131,35 @@ def recv_secure_text(client_socket, keys=DERIVED_KEYS):
         logger.exception("Failed to receive secure text")
         raise e
 
+def recv_secure_image(client_socket, keys=DERIVED_KEYS):
+    try:
+        length_bytes = recv_exact(client_socket, 4)
+        data_length = int.from_bytes(length_bytes, byteorder="big")
+        logger.info(f"Expecting image of {data_length} bytes")
+        encrypted_image_payload = recv_exact(client_socket, data_length)
+        aes_key = keys["client_enc_key"]
+        mac_key = keys["client_mac_key"]
+        iv = keys["iv"]
+        decrypted_image_payload = decrypt_aes_with_hmac(encrypted_image_payload, aes_key, mac_key, iv)
+        logger.info(f"Decrypted image payload: {decrypted_image_payload}")
+        if verify_image(decrypted_image_payload, device_public_key):
+            logger.info("Image verified successfully")
+            ack = encrypt_message("IMX_RECEIVED", device_public_key)
+            client_socket.sendall(ack)
+            logger.info("Sent acknowledgement")
+            save_path = save_verified_image(decrypted_image_payload)
+            logger.info(f"Saved image to {save_path}")
+            return save_path
+        else:
+            logger.error("Image verification failed")
+            ack = encrypt_message("IMX_REJECTED", device_public_key)
+            client_socket.sendall(ack)
+            logger.info("Sent acknowledgement")
+            return None
+    except Exception as e:
+        logger.exception("Failed to receive secure image")
 try:
-    while True:
+    while True: 
         header = recv_exact(client, 6)
         logger.info(f"Received header: {header}")
 
@@ -214,13 +264,23 @@ try:
                 logger.exception("Failed to receive secure text")
                 raise e
 
+        elif header == b"<IMGX>":
+            logger.info("Expecting secure image")
+            decrypted_image_payload = recv_secure_image(client, DERIVED_KEYS)
+            logger.info(f"Decrypted image payload: {decrypted_image_payload}")
+
+
+            ack = encrypt_message("IMX_RECEIVED", device_public_key)
+            client.sendall(ack)
+        
         elif header == b"<ENDD>":
             logger.info("Received end of file")
             client.close()
             server.close()
             logger.info("Server closed")
             break
-
+        
+        
         else:
             logger.error("Invalid header received")
             client.close()
