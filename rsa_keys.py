@@ -3,6 +3,8 @@ from cryptography.hazmat.primitives.asymmetric import rsa, padding
 from cryptography.hazmat.backends import default_backend
 import base64
 from logger import logger
+import hashlib
+import hmac
 
 def generate_key_pair():
     # Generate private key
@@ -69,13 +71,10 @@ def encrypt_message(message, public_key):
         )
     )
 
-
-def decrypt_message(encrypted_message: bytes, private_key): 
-
+def decrypt_message(encrypted_message: bytes, private_key, decode=True): 
     if len(encrypted_message) != 256:
         raise ValueError(f"Encrypted message length is invalid. Got {len(encrypted_message)} bytes, expected 256 bytes.")
     
-    # Decrypt the message
     try:
         decrypted = private_key.decrypt(
             encrypted_message,
@@ -85,7 +84,25 @@ def decrypt_message(encrypted_message: bytes, private_key):
                 label=None
             )
         )
-        return decrypted.decode()
+        return decrypted.decode() if decode else decrypted
     except Exception as e:
         raise ValueError(f"Decryption failed: {e}")
+
+
+def derive_keys(master_secret,nonce1,nonce2):
+    seed = nonce1 + nonce2
+
+    
+    def hkdf_expand(label: bytes, length: int) -> bytes:
+        info = label + seed
+        return hmac.new(master_secret, info, hashlib.sha256).digest()[:length]
+
+
+    return {
+        "client_enc_key": hkdf_expand(b"client_enc", 16),   # 128-bit AES key
+        "server_enc_key": hkdf_expand(b"server_enc", 16),
+        "client_mac_key": hkdf_expand(b"client_mac", 16),
+        "server_mac_key": hkdf_expand(b"server_mac", 16),
+        "iv": hkdf_expand(b"iv", 16)
+    }
 

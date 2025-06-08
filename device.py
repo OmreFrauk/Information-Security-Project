@@ -5,13 +5,15 @@ import os
 import tqdm
 import json
 from ca_cert import create_signed_certificate, validate_certificate, send_certificate
+from rsa_keys import derive_keys
+NONCE_DEVICE = os.urandom(16)
 
 logger.info("Device started")
 # Load keys
 private_key = load_private_key("keys/device_private_key.pem")
 server_public_key = load_public_key("keys/server_public_key.pem")
 device_public_key = load_public_key("keys/device_public_key.pem")
-
+KEYS = None
 
 try:
     client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -32,7 +34,6 @@ def generate_certificate(path="certificates/device_certificate.json", device_pub
     with open(path, "w") as f:
         json.dump(certificate, f)
     logger.info(f"Certificate saved to {path}")
-
 
 def send_encrypted_text(client_socket,message: str, server_public_key):
     try:
@@ -100,6 +101,7 @@ def send_end_of_file(client_socket):
         logger.exception("Failed to send end of file")
         raise e
     
+
 def send_hello(client_socket):
 
     try:
@@ -107,13 +109,13 @@ def send_hello(client_socket):
         logger.info("Sent header: HELLO")
         
         send_certificate(client_socket, "certificates/device_certificate.json", private_key)
-        nonce_device = os.urandom(16)
+        nonce_device =  NONCE_DEVICE
         client_socket.sendall(nonce_device)
         logger.info(f"Sent nonce: {nonce_device}")
         ack = client_socket.recv(256)
         ack_msg = decrypt_message(ack, private_key)
         logger.info(f"Server acknowledgement: {ack_msg}")
-
+        return nonce_device
     except Exception as e:
         logger.exception("Failed to send hello")
         raise e
@@ -145,21 +147,39 @@ def recv_hello(client_socket):
                 raise Exception("Server certificate validation failed")
             
             logger.info("Recieving server nonce..")
-            nonce_device = client_socket.recv(16)
-            logger.info(f"Received nonce: {nonce_device}")
+            nonce_server = client_socket.recv(16)
+            logger.info(f"Received nonce: {nonce_server}")
             ack = encrypt_message("NONCE_RECEIVED", server_public_key)
             client_socket.sendall(ack)
             logger.info("Sent acknowledgement")
 
-            return cert_json,nonce_device
+            return cert_json,nonce_server
     except Exception as e:
         logger.exception("Failed to receive hello")
         raise e
 
-send_hello(client)
-recv_hello(client)
-send_end_of_file(client)
+def send_pre_master_secret(client_socket, server_public_key):
+    try:
+        pre_master_secret = os.urandom(32) #256 bits secret
+        encrypted_pre_master_secret = encrypt_message(pre_master_secret, server_public_key)
+        client_socket.sendall(b"<PREM>") #header
+        client_socket.sendall(encrypted_pre_master_secret)
+        logger.info("Sent pre-master secret")
 
+        ack = client_socket.recv(256)
+        ack_msg = decrypt_message(ack, private_key)
+        logger.info(f"Server acknowledgement: {ack_msg}")
+        return pre_master_secret
+    except Exception as e:
+        logger.exception("Failed to send pre-master secret")
+        raise e
+
+nonce_device = send_hello(client)
+cert_json,nonce_server = recv_hello(client)
+pre_master_secret = send_pre_master_secret(client, server_public_key)
+send_end_of_file(client)
+derived_keys = derive_keys(pre_master_secret, nonce_device, nonce_server)
+logger.info(f"Derived keys: {derived_keys}")
 
 client.close()
 logger.info("Device socket closed")

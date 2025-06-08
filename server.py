@@ -1,5 +1,5 @@
 import socket
-from rsa_keys import decrypt_message, encrypt_message, load_private_key, load_public_key
+from rsa_keys import decrypt_message, encrypt_message, load_private_key, load_public_key, derive_keys
 from logger import logger
 from tqdm import tqdm
 from ca_cert import validate_certificate
@@ -9,6 +9,11 @@ from ca_cert import create_signed_certificate, send_certificate
 
 
 logger.info("Server starting")
+
+NONCE_DEVICE = None
+NONCE_SERVER = None
+MASTER_SECRET = None
+DERIVED_KEYS = None
 # Load keys
 server_private_key = load_private_key("keys/server_private_key.pem")
 device_public_key = load_public_key("keys/device_public_key.pem")
@@ -70,14 +75,15 @@ def generate_certificate(path="certificates/server_certificate.json", device_pub
     logger.info(f"Certificate saved to {path}")
 
 def send_hello(client_socket):
+    global NONCE_SERVER
     try:
         client_socket.sendall(b"<HELO>")
         logger.info("Sent header: HELLO")
         send_certificate(client_socket, "certificates/server_certificate.json", private_key=server_private_key)
         
-        nonce_server = os.urandom(16)
-        client_socket.sendall(nonce_server)
-        logger.info(f"Sent nonce: {nonce_server}")
+        NONCE_SERVER = os.urandom(16)
+        client_socket.sendall(NONCE_SERVER)
+        logger.info(f"Sent nonce: {NONCE_SERVER}")
         ack = client_socket.recv(256)
         ack_msg = decrypt_message(ack, server_private_key)
         logger.info(f"Device acknowledgement: {ack_msg}")
@@ -151,23 +157,35 @@ try:
             certificate = recv_certificate(client)
             if validate_certificate(certificate, ca_public_key):
                 logger.info("Certificate validated successfully")
-                
-               
-               
             else:
                 logger.warning("Certificate validation failed")
                 client.close()
                 server.close()
                 break
-
-            nonce_device = recv_exact(client, 16)
-            logger.info(f"Received nonce: {nonce_device}")
+            NONCE_DEVICE = recv_exact(client, 16)
+            logger.info(f"Received nonce: {NONCE_DEVICE}")
             
             ack = encrypt_message("HELLO_RECEIVED", device_public_key)
             client.sendall(ack)
             logger.info("Sent acknowledgement")
             send_hello(client)
-            
+
+
+        elif header == b"<PREM>":
+            try:
+                logger.info("Expecting pre-master secret")
+                encrypted_pre_master_secret = recv_exact(client, 256)
+                pre_master_secret = decrypt_message(encrypted_pre_master_secret, server_private_key, decode=False)
+                logger.info(f"Received pre-master secret: {pre_master_secret}")
+                MASTER_SECRET = pre_master_secret
+                ack = encrypt_message("PREM_RECEIVED", device_public_key)
+                client.sendall(ack)
+                logger.info("Sent acknowledgement")
+                DERIVED_KEYS = derive_keys(MASTER_SECRET, NONCE_DEVICE, NONCE_SERVER)
+                logger.info(f"Derived keys: {DERIVED_KEYS}")
+            except Exception as e:
+                logger.exception("Failed to receive pre-master secret")
+                raise e
 
         elif header == b"<ENDD>":
             logger.info("Received end of file")
