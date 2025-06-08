@@ -2026,3 +2026,1731 @@ TypeError: can't concat NoneType to bytes
 2025-06-08 14:44:48,646 [INFO] [server.py:<module>] Received end of file
 2025-06-08 14:44:48,646 [INFO] [server.py:<module>] Server closed
 2025-06-08 14:44:48,646 [INFO] [server.py:<module>] Server shut down
+2025-06-08 19:01:43,164 [INFO] [server.py:<module>] Server starting
+2025-06-08 19:01:43,232 [INFO] [server.py:<module>] Server listening on port 9999
+2025-06-08 19:02:07,820 [INFO] [device.py:<module>] Device started
+2025-06-08 19:02:07,888 [INFO] [device.py:<module>] Connected to server
+2025-06-08 19:02:07,888 [INFO] [device.py:send_hello] Sent header: HELLO
+2025-06-08 19:02:07,888 [INFO] [server.py:<module>] Accepted connection from ('127.0.0.1', 60575)
+2025-06-08 19:02:07,888 [INFO] [server.py:recv_exact] Receiving exactly 6 bytes...
+2025-06-08 19:02:07,888 [INFO] [server.py:recv_exact] Received 6 bytes successfully
+2025-06-08 19:02:07,889 [INFO] [server.py:<module>] Received header: b'<HELO>'
+2025-06-08 19:02:07,889 [INFO] [ca_cert.py:send_certificate] Sent certificate length: 881
+2025-06-08 19:02:07,889 [INFO] [server.py:<module>] Expecting hello
+2025-06-08 19:02:07,889 [INFO] [ca_cert.py:send_certificate] Sent certificate
+2025-06-08 19:02:07,889 [INFO] [server.py:recv_certificate] Receiving certificate header (length)...
+2025-06-08 19:02:07,889 [INFO] [server.py:recv_exact] Receiving exactly 4 bytes...
+2025-06-08 19:02:07,889 [INFO] [server.py:recv_exact] Received 4 bytes successfully
+2025-06-08 19:02:07,889 [INFO] [server.py:recv_certificate] Length bytes (raw): 00000371
+2025-06-08 19:02:07,889 [INFO] [server.py:recv_certificate] Expecting certificate of 881 bytes
+2025-06-08 19:02:07,889 [INFO] [server.py:recv_exact] Receiving exactly 881 bytes...
+2025-06-08 19:02:07,889 [INFO] [server.py:recv_exact] Received 881 bytes successfully
+2025-06-08 19:02:07,889 [INFO] [server.py:recv_certificate] Received certificate from client
+2025-06-08 19:02:07,889 [ERROR] [server.py:recv_certificate] Failed to receive or validate certificate.
+Traceback (most recent call last):
+  File "/Users/omerfarukbulut/info_sec/server.py", line 57, in recv_certificate
+    ack = encrypt_message("CERT_RECEIVED", device_public_key)
+  File "/Users/omerfarukbulut/info_sec/rsa_keys.py", line 69, in encrypt_message
+    padding.OAEP(
+    ^^^^^^^^^^^^
+AttributeError: module 'cryptography.hazmat.primitives.padding' has no attribute 'OAEP'
+2025-06-08 19:02:07,890 [ERROR] [server.py:<module>] An error occurred during communication.
+Traceback (most recent call last):
+  File "/Users/omerfarukbulut/info_sec/server.py", line 169, in <module>
+    if validate_certificate(certificate, ca_public_key):
+       ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/omerfarukbulut/info_sec/ca_cert.py", line 49, in validate_certificate
+    cert_data = cert_bundle["certificate"]
+                ~~~~~~~~~~~^^^^^^^^^^^^^^^
+TypeError: 'NoneType' object is not subscriptable
+2025-06-08 19:02:07,891 [INFO] [server.py:<module>] Server shut down
+2025-06-08 19:02:07,891 [ERROR] [ca_cert.py:send_certificate] Failed to send certificate
+Traceback (most recent call last):
+  File "/Users/omerfarukbulut/info_sec/ca_cert.py", line 24, in send_certificate
+    ack_msg = decrypt_message(ack, private_key)
+  File "/Users/omerfarukbulut/info_sec/rsa_keys.py", line 78, in decrypt_message
+    raise ValueError(f"Encrypted message length is invalid. Got {len(encrypted_message)} bytes, expected 256 bytes.")
+ValueError: Encrypted message length is invalid. Got 0 bytes, expected 256 bytes.
+2025-06-08 19:02:07,891 [ERROR] [device.py:send_hello] Failed to send hello
+Traceback (most recent call last):
+  File "/Users/omerfarukbulut/info_sec/device.py", line 111, in send_hello
+    send_certificate(client_socket, "certificates/device_certificate.json", private_key)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/omerfarukbulut/info_sec/ca_cert.py", line 28, in send_certificate
+    raise e
+  File "/Users/omerfarukbulut/info_sec/ca_cert.py", line 24, in send_certificate
+    ack_msg = decrypt_message(ack, private_key)
+  File "/Users/omerfarukbulut/info_sec/rsa_keys.py", line 78, in decrypt_message
+    raise ValueError(f"Encrypted message length is invalid. Got {len(encrypted_message)} bytes, expected 256 bytes.")
+ValueError: Encrypted message length is invalid. Got 0 bytes, expected 256 bytes.
+2025-06-08 19:02:54,628 [INFO] [server.py:<module>] Server starting
+2025-06-08 19:02:54,696 [INFO] [server.py:<module>] Server listening on port 9999
+2025-06-08 19:02:56,434 [INFO] [device.py:<module>] Device started
+2025-06-08 19:02:56,501 [INFO] [device.py:<module>] Connected to server
+2025-06-08 19:02:56,501 [INFO] [device.py:send_hello] Sent header: HELLO
+2025-06-08 19:02:56,501 [INFO] [server.py:<module>] Accepted connection from ('127.0.0.1', 60581)
+2025-06-08 19:02:56,501 [INFO] [server.py:recv_exact] Receiving exactly 6 bytes...
+2025-06-08 19:02:56,501 [INFO] [server.py:recv_exact] Received 6 bytes successfully
+2025-06-08 19:02:56,502 [INFO] [server.py:<module>] Received header: b'<HELO>'
+2025-06-08 19:02:56,502 [INFO] [server.py:<module>] Expecting hello
+2025-06-08 19:02:56,502 [INFO] [server.py:recv_certificate] Receiving certificate header (length)...
+2025-06-08 19:02:56,502 [INFO] [server.py:recv_exact] Receiving exactly 4 bytes...
+2025-06-08 19:02:56,502 [INFO] [ca_cert.py:send_certificate] Sent certificate length: 881
+2025-06-08 19:02:56,502 [INFO] [ca_cert.py:send_certificate] Sent certificate
+2025-06-08 19:02:56,502 [INFO] [server.py:recv_exact] Received 4 bytes successfully
+2025-06-08 19:02:56,502 [INFO] [server.py:recv_certificate] Length bytes (raw): 00000371
+2025-06-08 19:02:56,502 [INFO] [server.py:recv_certificate] Expecting certificate of 881 bytes
+2025-06-08 19:02:56,502 [INFO] [server.py:recv_exact] Receiving exactly 881 bytes...
+2025-06-08 19:02:56,502 [INFO] [server.py:recv_exact] Received 881 bytes successfully
+2025-06-08 19:02:56,502 [INFO] [server.py:recv_certificate] Received certificate from client
+2025-06-08 19:02:56,505 [INFO] [server.py:recv_certificate] Sent acknowledgement
+2025-06-08 19:02:56,506 [INFO] [server.py:<module>] Certificate validated successfully
+2025-06-08 19:02:56,506 [INFO] [server.py:recv_exact] Receiving exactly 16 bytes...
+2025-06-08 19:02:56,508 [INFO] [ca_cert.py:send_certificate] Server acknowledgement: CERT_RECEIVED
+2025-06-08 19:02:56,508 [INFO] [device.py:send_hello] Sent nonce: b'\xc4\xd9l\xd5\xd9\xf4\xa0\xd3uLE`XCR\xf0'
+2025-06-08 19:02:56,508 [INFO] [server.py:recv_exact] Received 16 bytes successfully
+2025-06-08 19:02:56,508 [INFO] [server.py:<module>] Received nonce: b'\xc4\xd9l\xd5\xd9\xf4\xa0\xd3uLE`XCR\xf0'
+2025-06-08 19:02:56,508 [INFO] [server.py:<module>] Sent acknowledgement
+2025-06-08 19:02:56,508 [INFO] [server.py:send_hello] Sent header: HELLO
+2025-06-08 19:02:56,509 [INFO] [ca_cert.py:send_certificate] Sent certificate length: 881
+2025-06-08 19:02:56,509 [INFO] [ca_cert.py:send_certificate] Sent certificate
+2025-06-08 19:02:56,510 [INFO] [device.py:send_hello] Server acknowledgement: HELLO_RECEIVED
+2025-06-08 19:02:56,510 [INFO] [device.py:recv_hello] Received header: HELLO
+2025-06-08 19:02:56,510 [INFO] [device.py:recv_hello] Recieving server certificate length..
+2025-06-08 19:02:56,510 [INFO] [device.py:recv_hello] Expecting server cert length 881 bytes.
+2025-06-08 19:02:56,510 [INFO] [device.py:recv_hello] Received server certificate: 
+2025-06-08 19:02:56,510 [INFO] [device.py:recv_hello] Sent acknowledgement
+2025-06-08 19:02:56,510 [INFO] [device.py:recv_hello] Server certificate validated successfully
+2025-06-08 19:02:56,510 [INFO] [device.py:recv_hello] Recieving server nonce..
+2025-06-08 19:02:56,512 [INFO] [ca_cert.py:send_certificate] Server acknowledgement: CERT_RECEIVED
+2025-06-08 19:02:56,512 [INFO] [server.py:send_hello] Sent nonce: b'\xa3\x0c\xad#\xafS\xc6\x80J\xb3\x98\xe7}\xebA\xb3'
+2025-06-08 19:02:56,512 [INFO] [device.py:recv_hello] Received nonce: b'\xa3\x0c\xad#\xafS\xc6\x80J\xb3\x98\xe7}\xebA\xb3'
+2025-06-08 19:02:56,512 [INFO] [device.py:recv_hello] Sent acknowledgement
+2025-06-08 19:02:56,513 [INFO] [device.py:send_pre_master_secret] Sent pre-master secret
+2025-06-08 19:02:56,514 [INFO] [server.py:send_hello] Device acknowledgement: NONCE_RECEIVED
+2025-06-08 19:02:56,514 [INFO] [server.py:recv_exact] Receiving exactly 6 bytes...
+2025-06-08 19:02:56,514 [INFO] [server.py:recv_exact] Received 6 bytes successfully
+2025-06-08 19:02:56,514 [INFO] [server.py:<module>] Received header: b'<PREM>'
+2025-06-08 19:02:56,514 [INFO] [server.py:<module>] Expecting pre-master secret
+2025-06-08 19:02:56,514 [INFO] [server.py:recv_exact] Receiving exactly 256 bytes...
+2025-06-08 19:02:56,514 [INFO] [server.py:recv_exact] Received 256 bytes successfully
+2025-06-08 19:02:56,515 [INFO] [server.py:<module>] Received pre-master secret: b'\xcf&\xf7\x8f5\xe7b\xb8\xda\xee\x86+\x1dt\x91\x87L\x03\xd9\xb8S.pl \xf3\x92\xff\xa1\x0bIf'
+2025-06-08 19:02:56,515 [INFO] [server.py:<module>] Sent acknowledgement
+2025-06-08 19:02:56,515 [INFO] [server.py:<module>] Derived keys: {'client_enc_key': b'\x86|^\xddF\x93\xe2,\x89\x19E{}\x0c\x1f\x88', 'server_enc_key': b'\x87,\xc3\x9a\x9ea\x15\xac\xe0\xe8`-\x10\xe5\x164', 'client_mac_key': b'\xd7\xa1\xab\xe4,kL\xde\x9c\xba3\xd0\xce)bO', 'server_mac_key': b'\xf8q\xdf\xbfU\xf3\x04]\x1a\xd2.\x7f\xc8\xc5\xa2_', 'iv': b'"Ve@\xa3\xd7\xfc\tN$\xf2h\xbf@^R'}
+2025-06-08 19:02:56,515 [INFO] [server.py:recv_exact] Receiving exactly 6 bytes...
+2025-06-08 19:02:56,516 [INFO] [device.py:send_pre_master_secret] Server acknowledgement: PREM_RECEIVED
+2025-06-08 19:02:56,516 [INFO] [device.py:<module>] Derived keys: {'client_enc_key': b'\x86|^\xddF\x93\xe2,\x89\x19E{}\x0c\x1f\x88', 'server_enc_key': b'\x87,\xc3\x9a\x9ea\x15\xac\xe0\xe8`-\x10\xe5\x164', 'client_mac_key': b'\xd7\xa1\xab\xe4,kL\xde\x9c\xba3\xd0\xce)bO', 'server_mac_key': b'\xf8q\xdf\xbfU\xf3\x04]\x1a\xd2.\x7f\xc8\xc5\xa2_', 'iv': b'"Ve@\xa3\xd7\xfc\tN$\xf2h\xbf@^R'}
+2025-06-08 19:02:56,516 [INFO] [device.py:send_secure_text] Sent header: SECX
+2025-06-08 19:02:56,516 [INFO] [server.py:recv_exact] Received 6 bytes successfully
+2025-06-08 19:02:56,516 [INFO] [server.py:<module>] Received header: b'<SECX>'
+2025-06-08 19:02:56,516 [INFO] [server.py:<module>] Expecting secure text
+2025-06-08 19:02:56,516 [INFO] [server.py:recv_exact] Receiving exactly 256 bytes...
+2025-06-08 19:02:56,516 [ERROR] [device.py:send_secure_text] Failed to send secure text
+Traceback (most recent call last):
+  File "/Users/omerfarukbulut/info_sec/device.py", line 182, in send_secure_text
+    sym_key = keys["client_enc_key"]
+              ~~~~^^^^^^^^^^^^^^^^^^
+TypeError: 'NoneType' object is not subscriptable
+2025-06-08 19:02:56,521 [WARNING] [server.py:recv_exact] Connection interrupted during receive
+2025-06-08 19:02:56,521 [INFO] [server.py:recv_exact] Received 0 bytes successfully
+2025-06-08 19:02:56,521 [INFO] [server.py:recv_exact] Receiving exactly 256 bytes...
+2025-06-08 19:02:56,521 [ERROR] [server.py:recv_secure_text] Failed to receive secure text
+Traceback (most recent call last):
+  File "/Users/omerfarukbulut/info_sec/server.py", line 97, in recv_secure_text
+    encrypted_message = recv_exact(client_socket, 256)
+  File "/Users/omerfarukbulut/info_sec/server.py", line 37, in recv_exact
+    packet = sock.recv(size - len(data))
+             ^^^^^^^^^
+AttributeError: 'bytes' object has no attribute 'recv'
+2025-06-08 19:02:56,522 [ERROR] [server.py:<module>] Failed to receive secure text
+Traceback (most recent call last):
+  File "/Users/omerfarukbulut/info_sec/server.py", line 204, in <module>
+    decrypted_message = recv_secure_text(encrypted_message, DERIVED_KEYS)
+  File "/Users/omerfarukbulut/info_sec/server.py", line 106, in recv_secure_text
+    raise e
+  File "/Users/omerfarukbulut/info_sec/server.py", line 97, in recv_secure_text
+    encrypted_message = recv_exact(client_socket, 256)
+  File "/Users/omerfarukbulut/info_sec/server.py", line 37, in recv_exact
+    packet = sock.recv(size - len(data))
+             ^^^^^^^^^
+AttributeError: 'bytes' object has no attribute 'recv'
+2025-06-08 19:02:56,523 [ERROR] [server.py:<module>] An error occurred during communication.
+Traceback (most recent call last):
+  File "/Users/omerfarukbulut/info_sec/server.py", line 212, in <module>
+    raise e
+  File "/Users/omerfarukbulut/info_sec/server.py", line 204, in <module>
+    decrypted_message = recv_secure_text(encrypted_message, DERIVED_KEYS)
+  File "/Users/omerfarukbulut/info_sec/server.py", line 106, in recv_secure_text
+    raise e
+  File "/Users/omerfarukbulut/info_sec/server.py", line 97, in recv_secure_text
+    encrypted_message = recv_exact(client_socket, 256)
+  File "/Users/omerfarukbulut/info_sec/server.py", line 37, in recv_exact
+    packet = sock.recv(size - len(data))
+             ^^^^^^^^^
+AttributeError: 'bytes' object has no attribute 'recv'
+2025-06-08 19:02:56,523 [INFO] [server.py:<module>] Server shut down
+2025-06-08 19:03:49,733 [INFO] [server.py:<module>] Server starting
+2025-06-08 19:03:49,800 [INFO] [server.py:<module>] Server listening on port 9999
+2025-06-08 19:03:51,782 [INFO] [device.py:<module>] Device started
+2025-06-08 19:03:51,850 [INFO] [device.py:<module>] Connected to server
+2025-06-08 19:03:51,850 [INFO] [server.py:<module>] Accepted connection from ('127.0.0.1', 60589)
+2025-06-08 19:03:51,850 [INFO] [server.py:recv_exact] Receiving exactly 6 bytes...
+2025-06-08 19:03:51,854 [WARNING] [server.py:recv_exact] Connection interrupted during receive
+2025-06-08 19:03:51,854 [INFO] [server.py:recv_exact] Received 0 bytes successfully
+2025-06-08 19:03:51,854 [INFO] [server.py:<module>] Received header: b''
+2025-06-08 19:03:51,854 [ERROR] [server.py:<module>] Invalid header received
+2025-06-08 19:03:51,854 [INFO] [server.py:<module>] Server shut down
+2025-06-08 19:05:00,096 [INFO] [server.py:<module>] Server starting
+2025-06-08 19:05:00,164 [INFO] [server.py:<module>] Server listening on port 9999
+2025-06-08 19:05:02,314 [INFO] [device.py:<module>] Device started
+2025-06-08 19:05:02,381 [INFO] [device.py:<module>] Connected to server
+2025-06-08 19:05:02,381 [INFO] [server.py:<module>] Accepted connection from ('127.0.0.1', 60602)
+2025-06-08 19:05:02,381 [INFO] [device.py:send_hello] Sent header: HELLO
+2025-06-08 19:05:02,381 [INFO] [server.py:recv_exact] Receiving exactly 6 bytes...
+2025-06-08 19:05:02,381 [INFO] [server.py:recv_exact] Received 6 bytes successfully
+2025-06-08 19:05:02,381 [INFO] [server.py:<module>] Received header: b'<HELO>'
+2025-06-08 19:05:02,381 [INFO] [server.py:<module>] Expecting hello
+2025-06-08 19:05:02,381 [INFO] [server.py:recv_certificate] Receiving certificate header (length)...
+2025-06-08 19:05:02,381 [INFO] [server.py:recv_exact] Receiving exactly 4 bytes...
+2025-06-08 19:05:02,382 [INFO] [ca_cert.py:send_certificate] Sent certificate length: 881
+2025-06-08 19:05:02,383 [INFO] [ca_cert.py:send_certificate] Sent certificate
+2025-06-08 19:05:02,383 [INFO] [server.py:recv_exact] Received 4 bytes successfully
+2025-06-08 19:05:02,383 [INFO] [server.py:recv_certificate] Length bytes (raw): 00000371
+2025-06-08 19:05:02,383 [INFO] [server.py:recv_certificate] Expecting certificate of 881 bytes
+2025-06-08 19:05:02,383 [INFO] [server.py:recv_exact] Receiving exactly 881 bytes...
+2025-06-08 19:05:02,383 [INFO] [server.py:recv_exact] Received 881 bytes successfully
+2025-06-08 19:05:02,383 [INFO] [server.py:recv_certificate] Received certificate from client
+2025-06-08 19:05:02,386 [INFO] [server.py:recv_certificate] Sent acknowledgement
+2025-06-08 19:05:02,387 [INFO] [server.py:<module>] Certificate validated successfully
+2025-06-08 19:05:02,387 [INFO] [server.py:recv_exact] Receiving exactly 16 bytes...
+2025-06-08 19:05:02,389 [INFO] [ca_cert.py:send_certificate] Server acknowledgement: CERT_RECEIVED
+2025-06-08 19:05:02,389 [INFO] [device.py:send_hello] Sent nonce: b'h\xd9\xeb\xee\x8b\xb3 \x1d,\r\xe0\xb9\xdf\xff\xe6\xd0'
+2025-06-08 19:05:02,389 [INFO] [server.py:recv_exact] Received 16 bytes successfully
+2025-06-08 19:05:02,389 [INFO] [server.py:<module>] Received nonce: b'h\xd9\xeb\xee\x8b\xb3 \x1d,\r\xe0\xb9\xdf\xff\xe6\xd0'
+2025-06-08 19:05:02,389 [INFO] [server.py:<module>] Sent acknowledgement
+2025-06-08 19:05:02,389 [INFO] [server.py:send_hello] Sent header: HELLO
+2025-06-08 19:05:02,390 [INFO] [ca_cert.py:send_certificate] Sent certificate length: 881
+2025-06-08 19:05:02,390 [INFO] [ca_cert.py:send_certificate] Sent certificate
+2025-06-08 19:05:02,391 [INFO] [device.py:send_hello] Server acknowledgement: HELLO_RECEIVED
+2025-06-08 19:05:02,392 [INFO] [device.py:recv_hello] Received header: HELLO
+2025-06-08 19:05:02,392 [INFO] [device.py:recv_hello] Recieving server certificate length..
+2025-06-08 19:05:02,394 [INFO] [device.py:recv_hello] Expecting server cert length 881 bytes.
+2025-06-08 19:05:02,395 [INFO] [device.py:recv_hello] Received server certificate: 
+2025-06-08 19:05:02,397 [INFO] [device.py:recv_hello] Sent acknowledgement
+2025-06-08 19:05:02,406 [INFO] [device.py:recv_hello] Server certificate validated successfully
+2025-06-08 19:05:02,406 [INFO] [device.py:recv_hello] Recieving server nonce..
+2025-06-08 19:05:02,427 [INFO] [ca_cert.py:send_certificate] Server acknowledgement: CERT_RECEIVED
+2025-06-08 19:05:02,441 [INFO] [server.py:send_hello] Sent nonce: b"W\xca\xde\xfc\xf7F%\xe0Z\xd4'\xa2\x16{\xe5\xc6"
+2025-06-08 19:05:02,441 [INFO] [device.py:recv_hello] Received nonce: b"W\xca\xde\xfc\xf7F%\xe0Z\xd4'\xa2\x16{\xe5\xc6"
+2025-06-08 19:05:02,441 [INFO] [device.py:recv_hello] Sent acknowledgement
+2025-06-08 19:05:02,442 [INFO] [device.py:send_pre_master_secret] Sent pre-master secret
+2025-06-08 19:05:02,443 [INFO] [server.py:send_hello] Device acknowledgement: NONCE_RECEIVED
+2025-06-08 19:05:02,443 [INFO] [server.py:recv_exact] Receiving exactly 6 bytes...
+2025-06-08 19:05:02,443 [INFO] [server.py:recv_exact] Received 6 bytes successfully
+2025-06-08 19:05:02,443 [INFO] [server.py:<module>] Received header: b'<PREM>'
+2025-06-08 19:05:02,443 [INFO] [server.py:<module>] Expecting pre-master secret
+2025-06-08 19:05:02,443 [INFO] [server.py:recv_exact] Receiving exactly 256 bytes...
+2025-06-08 19:05:02,443 [INFO] [server.py:recv_exact] Received 256 bytes successfully
+2025-06-08 19:05:02,445 [INFO] [server.py:<module>] Received pre-master secret: b'\xd7L\x0e+"\xa0e\xb2\xcd6\x8f\xa3\xcefR\x0c\xd5\xda\x15o\xef\xce\x14\xc0F\xe3\xf9-\x95[\xe2p'
+2025-06-08 19:05:02,445 [INFO] [server.py:<module>] Sent acknowledgement
+2025-06-08 19:05:02,446 [INFO] [server.py:<module>] Derived keys: {'client_enc_key': b'\xd9\xa8\xf3\x0b\x85\r\x08\xa0\x00\xcf\x85#X\xe4\xd1\xa3', 'server_enc_key': b'\x1d\xd8\x9d\x87\x18D\xe40\xf4\x9e\x06\x88\xd2\xce\xdb\xdd', 'client_mac_key': b'\xa4bL\xb2l\x9c\xadp\x8b\x81huW\xcc\xd8\xbb', 'server_mac_key': b'\xea\x0b4e\x8c-\xb7\xa5\xbb}\x831\x8d\xf5,\xe0', 'iv': b's\x1b\r\xb6\xb7\x8e\xcb\xee}.\xd0\x8eQ@\x18\xd0'}
+2025-06-08 19:05:02,446 [INFO] [server.py:recv_exact] Receiving exactly 6 bytes...
+2025-06-08 19:05:02,447 [INFO] [device.py:send_pre_master_secret] Server acknowledgement: PREM_RECEIVED
+2025-06-08 19:05:02,447 [INFO] [device.py:<module>] Derived keys: {'client_enc_key': b'\xd9\xa8\xf3\x0b\x85\r\x08\xa0\x00\xcf\x85#X\xe4\xd1\xa3', 'server_enc_key': b'\x1d\xd8\x9d\x87\x18D\xe40\xf4\x9e\x06\x88\xd2\xce\xdb\xdd', 'client_mac_key': b'\xa4bL\xb2l\x9c\xadp\x8b\x81huW\xcc\xd8\xbb', 'server_mac_key': b'\xea\x0b4e\x8c-\xb7\xa5\xbb}\x831\x8d\xf5,\xe0', 'iv': b's\x1b\r\xb6\xb7\x8e\xcb\xee}.\xd0\x8eQ@\x18\xd0'}
+2025-06-08 19:05:02,447 [INFO] [device.py:send_secure_text] Sent header: SECX
+2025-06-08 19:05:02,447 [INFO] [server.py:recv_exact] Received 6 bytes successfully
+2025-06-08 19:05:02,447 [INFO] [server.py:<module>] Received header: b'<SECX>'
+2025-06-08 19:05:02,447 [INFO] [server.py:<module>] Expecting secure text
+2025-06-08 19:05:02,447 [INFO] [server.py:recv_exact] Receiving exactly 256 bytes...
+2025-06-08 19:05:02,447 [ERROR] [device.py:send_secure_text] Failed to send secure text
+Traceback (most recent call last):
+  File "/Users/omerfarukbulut/info_sec/device.py", line 185, in send_secure_text
+    encrypted_message = encrypt_aes_with_hmac(message, sym_key, mac_key, iv)
+  File "/Users/omerfarukbulut/info_sec/rsa_keys.py", line 113, in encrypt_aes_with_hmac
+    padder = padding.PKCS7(128).padder()
+             ^^^^^^^^^^^^^
+AttributeError: module 'cryptography.hazmat.primitives.asymmetric.padding' has no attribute 'PKCS7'
+2025-06-08 19:05:02,464 [WARNING] [server.py:recv_exact] Connection interrupted during receive
+2025-06-08 19:05:02,465 [INFO] [server.py:recv_exact] Received 0 bytes successfully
+2025-06-08 19:05:02,465 [INFO] [server.py:recv_exact] Receiving exactly 256 bytes...
+2025-06-08 19:05:02,465 [ERROR] [server.py:recv_secure_text] Failed to receive secure text
+Traceback (most recent call last):
+  File "/Users/omerfarukbulut/info_sec/server.py", line 97, in recv_secure_text
+    encrypted_message = recv_exact(client_socket, 256)
+  File "/Users/omerfarukbulut/info_sec/server.py", line 37, in recv_exact
+    packet = sock.recv(size - len(data))
+             ^^^^^^^^^
+AttributeError: 'bytes' object has no attribute 'recv'
+2025-06-08 19:05:02,465 [ERROR] [server.py:<module>] Failed to receive secure text
+Traceback (most recent call last):
+  File "/Users/omerfarukbulut/info_sec/server.py", line 204, in <module>
+    decrypted_message = recv_secure_text(encrypted_message, DERIVED_KEYS)
+  File "/Users/omerfarukbulut/info_sec/server.py", line 106, in recv_secure_text
+    raise e
+  File "/Users/omerfarukbulut/info_sec/server.py", line 97, in recv_secure_text
+    encrypted_message = recv_exact(client_socket, 256)
+  File "/Users/omerfarukbulut/info_sec/server.py", line 37, in recv_exact
+    packet = sock.recv(size - len(data))
+             ^^^^^^^^^
+AttributeError: 'bytes' object has no attribute 'recv'
+2025-06-08 19:05:02,466 [ERROR] [server.py:<module>] An error occurred during communication.
+Traceback (most recent call last):
+  File "/Users/omerfarukbulut/info_sec/server.py", line 212, in <module>
+    raise e
+  File "/Users/omerfarukbulut/info_sec/server.py", line 204, in <module>
+    decrypted_message = recv_secure_text(encrypted_message, DERIVED_KEYS)
+  File "/Users/omerfarukbulut/info_sec/server.py", line 106, in recv_secure_text
+    raise e
+  File "/Users/omerfarukbulut/info_sec/server.py", line 97, in recv_secure_text
+    encrypted_message = recv_exact(client_socket, 256)
+  File "/Users/omerfarukbulut/info_sec/server.py", line 37, in recv_exact
+    packet = sock.recv(size - len(data))
+             ^^^^^^^^^
+AttributeError: 'bytes' object has no attribute 'recv'
+2025-06-08 19:05:02,467 [INFO] [server.py:<module>] Server shut down
+2025-06-08 19:06:53,876 [INFO] [server.py:<module>] Server starting
+2025-06-08 19:06:53,946 [INFO] [server.py:<module>] Server listening on port 9999
+2025-06-08 19:06:55,761 [INFO] [device.py:<module>] Device started
+2025-06-08 19:06:55,830 [INFO] [device.py:<module>] Connected to server
+2025-06-08 19:06:55,830 [INFO] [server.py:<module>] Accepted connection from ('127.0.0.1', 60633)
+2025-06-08 19:06:55,830 [INFO] [device.py:send_hello] Sent header: HELLO
+2025-06-08 19:06:55,830 [INFO] [server.py:recv_exact] Receiving exactly 6 bytes...
+2025-06-08 19:06:55,830 [INFO] [server.py:recv_exact] Received 6 bytes successfully
+2025-06-08 19:06:55,830 [INFO] [server.py:<module>] Received header: b'<HELO>'
+2025-06-08 19:06:55,830 [INFO] [server.py:<module>] Expecting hello
+2025-06-08 19:06:55,830 [INFO] [server.py:recv_certificate] Receiving certificate header (length)...
+2025-06-08 19:06:55,830 [INFO] [server.py:recv_exact] Receiving exactly 4 bytes...
+2025-06-08 19:06:55,831 [INFO] [ca_cert.py:send_certificate] Sent certificate length: 881
+2025-06-08 19:06:55,831 [INFO] [server.py:recv_exact] Received 4 bytes successfully
+2025-06-08 19:06:55,831 [INFO] [server.py:recv_certificate] Length bytes (raw): 00000371
+2025-06-08 19:06:55,831 [INFO] [ca_cert.py:send_certificate] Sent certificate
+2025-06-08 19:06:55,831 [INFO] [server.py:recv_certificate] Expecting certificate of 881 bytes
+2025-06-08 19:06:55,831 [INFO] [server.py:recv_exact] Receiving exactly 881 bytes...
+2025-06-08 19:06:55,831 [INFO] [server.py:recv_exact] Received 881 bytes successfully
+2025-06-08 19:06:55,831 [INFO] [server.py:recv_certificate] Received certificate from client
+2025-06-08 19:06:55,835 [INFO] [server.py:recv_certificate] Sent acknowledgement
+2025-06-08 19:06:55,836 [INFO] [server.py:<module>] Certificate validated successfully
+2025-06-08 19:06:55,837 [INFO] [server.py:recv_exact] Receiving exactly 16 bytes...
+2025-06-08 19:06:55,840 [INFO] [ca_cert.py:send_certificate] Server acknowledgement: CERT_RECEIVED
+2025-06-08 19:06:55,841 [INFO] [device.py:send_hello] Sent nonce: b'\xeb#\xadM@:7\x0b\xbd+w\t\x16\xda\x10m'
+2025-06-08 19:06:55,842 [INFO] [server.py:recv_exact] Received 16 bytes successfully
+2025-06-08 19:06:55,843 [INFO] [server.py:<module>] Received nonce: b'\xeb#\xadM@:7\x0b\xbd+w\t\x16\xda\x10m'
+2025-06-08 19:06:55,844 [INFO] [server.py:<module>] Sent acknowledgement
+2025-06-08 19:06:55,844 [INFO] [server.py:send_hello] Sent header: HELLO
+2025-06-08 19:06:55,854 [INFO] [ca_cert.py:send_certificate] Sent certificate length: 881
+2025-06-08 19:06:55,854 [INFO] [ca_cert.py:send_certificate] Sent certificate
+2025-06-08 19:06:55,855 [INFO] [device.py:send_hello] Server acknowledgement: HELLO_RECEIVED
+2025-06-08 19:06:55,855 [INFO] [device.py:recv_hello] Received header: HELLO
+2025-06-08 19:06:55,855 [INFO] [device.py:recv_hello] Recieving server certificate length..
+2025-06-08 19:06:55,855 [INFO] [device.py:recv_hello] Expecting server cert length 881 bytes.
+2025-06-08 19:06:55,855 [INFO] [device.py:recv_hello] Received server certificate: 
+2025-06-08 19:06:55,855 [INFO] [device.py:recv_hello] Sent acknowledgement
+2025-06-08 19:06:55,868 [INFO] [device.py:recv_hello] Server certificate validated successfully
+2025-06-08 19:06:55,869 [INFO] [device.py:recv_hello] Recieving server nonce..
+2025-06-08 19:06:55,895 [INFO] [ca_cert.py:send_certificate] Server acknowledgement: CERT_RECEIVED
+2025-06-08 19:06:55,896 [INFO] [server.py:send_hello] Sent nonce: b'\xfb\x0b\xd2\xe8\n\xd6\x08.\x07\xae\x8e\x80\x0b\xe0xt'
+2025-06-08 19:06:55,896 [INFO] [device.py:recv_hello] Received nonce: b'\xfb\x0b\xd2\xe8\n\xd6\x08.\x07\xae\x8e\x80\x0b\xe0xt'
+2025-06-08 19:06:55,896 [INFO] [device.py:recv_hello] Sent acknowledgement
+2025-06-08 19:06:55,896 [INFO] [device.py:send_pre_master_secret] Sent pre-master secret
+2025-06-08 19:06:55,897 [INFO] [server.py:send_hello] Device acknowledgement: NONCE_RECEIVED
+2025-06-08 19:06:55,897 [INFO] [server.py:recv_exact] Receiving exactly 6 bytes...
+2025-06-08 19:06:55,897 [INFO] [server.py:recv_exact] Received 6 bytes successfully
+2025-06-08 19:06:55,897 [INFO] [server.py:<module>] Received header: b'<PREM>'
+2025-06-08 19:06:55,897 [INFO] [server.py:<module>] Expecting pre-master secret
+2025-06-08 19:06:55,897 [INFO] [server.py:recv_exact] Receiving exactly 256 bytes...
+2025-06-08 19:06:55,897 [INFO] [server.py:recv_exact] Received 256 bytes successfully
+2025-06-08 19:06:55,899 [INFO] [server.py:<module>] Received pre-master secret: b' \xc7\x8f\x0fa\xcb\xe5\xe9kQ\x90\x84I\xb0\x1a`\xc8H\xaa4\xb6)\xa0A\x90C\x8e\x14\xd5\xf7\x1f\xdd'
+2025-06-08 19:06:55,899 [INFO] [server.py:<module>] Sent acknowledgement
+2025-06-08 19:06:55,899 [INFO] [server.py:<module>] Derived keys: {'client_enc_key': b'S5\xe8\x82\t\x04y}<i\xbdhL5\xdd\xa7', 'server_enc_key': b';\xcd`\xf9\x072\xb9\xf3\\\x94\xdf\x0e\x1fk\xce\xc8', 'client_mac_key': b'\xfb\xcc\x0101\xf2=\xad\xe4*\x82R\x92Nl\xbe', 'server_mac_key': b'$\xc6\xd1\xf9\xc3\t1W\xa5b\xc8\xfe\x8b\x0e\x08\xfe', 'iv': b'\x13\x13\x8fA\x08\xc8\x8a\x84z>~\xe4[\xdf~;'}
+2025-06-08 19:06:55,899 [INFO] [server.py:recv_exact] Receiving exactly 6 bytes...
+2025-06-08 19:06:55,900 [INFO] [device.py:send_pre_master_secret] Server acknowledgement: PREM_RECEIVED
+2025-06-08 19:06:55,900 [INFO] [device.py:<module>] Derived keys: {'client_enc_key': b'S5\xe8\x82\t\x04y}<i\xbdhL5\xdd\xa7', 'server_enc_key': b';\xcd`\xf9\x072\xb9\xf3\\\x94\xdf\x0e\x1fk\xce\xc8', 'client_mac_key': b'\xfb\xcc\x0101\xf2=\xad\xe4*\x82R\x92Nl\xbe', 'server_mac_key': b'$\xc6\xd1\xf9\xc3\t1W\xa5b\xc8\xfe\x8b\x0e\x08\xfe', 'iv': b'\x13\x13\x8fA\x08\xc8\x8a\x84z>~\xe4[\xdf~;'}
+2025-06-08 19:06:55,900 [INFO] [device.py:send_secure_text] Sent header: SECX
+2025-06-08 19:06:55,900 [INFO] [server.py:recv_exact] Received 6 bytes successfully
+2025-06-08 19:06:55,900 [INFO] [server.py:<module>] Received header: b'<SECX>'
+2025-06-08 19:06:55,900 [INFO] [server.py:<module>] Expecting secure text
+2025-06-08 19:06:55,900 [INFO] [server.py:recv_exact] Receiving exactly 256 bytes...
+2025-06-08 19:06:55,900 [ERROR] [device.py:send_secure_text] Failed to send secure text
+Traceback (most recent call last):
+  File "/Users/omerfarukbulut/info_sec/device.py", line 185, in send_secure_text
+    encrypted_message = encrypt_aes_with_hmac(message, sym_key, mac_key, iv)
+  File "/Users/omerfarukbulut/info_sec/rsa_keys.py", line 115, in encrypt_aes_with_hmac
+    padded_message = padder.update(message) + padder.finalize()
+                     ~~~~~~~~~~~~~^^^^^^^^^
+TypeError: argument 'buf': Cannot convert "<class 'str'>" instance to a buffer.
+Did you mean to pass a bytestring instead?
+2025-06-08 19:06:55,918 [WARNING] [server.py:recv_exact] Connection interrupted during receive
+2025-06-08 19:06:55,919 [INFO] [server.py:recv_exact] Received 0 bytes successfully
+2025-06-08 19:06:55,919 [INFO] [server.py:recv_exact] Receiving exactly 256 bytes...
+2025-06-08 19:06:55,919 [ERROR] [server.py:recv_secure_text] Failed to receive secure text
+Traceback (most recent call last):
+  File "/Users/omerfarukbulut/info_sec/server.py", line 97, in recv_secure_text
+    encrypted_message = recv_exact(client_socket, 256)
+  File "/Users/omerfarukbulut/info_sec/server.py", line 37, in recv_exact
+    packet = sock.recv(size - len(data))
+             ^^^^^^^^^
+AttributeError: 'bytes' object has no attribute 'recv'
+2025-06-08 19:06:55,920 [ERROR] [server.py:<module>] Failed to receive secure text
+Traceback (most recent call last):
+  File "/Users/omerfarukbulut/info_sec/server.py", line 204, in <module>
+    decrypted_message = recv_secure_text(encrypted_message, DERIVED_KEYS)
+  File "/Users/omerfarukbulut/info_sec/server.py", line 106, in recv_secure_text
+    raise e
+  File "/Users/omerfarukbulut/info_sec/server.py", line 97, in recv_secure_text
+    encrypted_message = recv_exact(client_socket, 256)
+  File "/Users/omerfarukbulut/info_sec/server.py", line 37, in recv_exact
+    packet = sock.recv(size - len(data))
+             ^^^^^^^^^
+AttributeError: 'bytes' object has no attribute 'recv'
+2025-06-08 19:06:55,921 [ERROR] [server.py:<module>] An error occurred during communication.
+Traceback (most recent call last):
+  File "/Users/omerfarukbulut/info_sec/server.py", line 212, in <module>
+    raise e
+  File "/Users/omerfarukbulut/info_sec/server.py", line 204, in <module>
+    decrypted_message = recv_secure_text(encrypted_message, DERIVED_KEYS)
+  File "/Users/omerfarukbulut/info_sec/server.py", line 106, in recv_secure_text
+    raise e
+  File "/Users/omerfarukbulut/info_sec/server.py", line 97, in recv_secure_text
+    encrypted_message = recv_exact(client_socket, 256)
+  File "/Users/omerfarukbulut/info_sec/server.py", line 37, in recv_exact
+    packet = sock.recv(size - len(data))
+             ^^^^^^^^^
+AttributeError: 'bytes' object has no attribute 'recv'
+2025-06-08 19:06:55,921 [INFO] [server.py:<module>] Server shut down
+2025-06-08 19:08:45,748 [INFO] [server.py:<module>] Server starting
+2025-06-08 19:08:45,817 [INFO] [server.py:<module>] Server listening on port 9999
+2025-06-08 19:08:47,541 [INFO] [device.py:<module>] Device started
+2025-06-08 19:08:47,608 [INFO] [device.py:<module>] Connected to server
+2025-06-08 19:08:47,608 [INFO] [device.py:send_hello] Sent header: HELLO
+2025-06-08 19:08:47,608 [INFO] [server.py:<module>] Accepted connection from ('127.0.0.1', 60651)
+2025-06-08 19:08:47,608 [INFO] [server.py:recv_exact] Receiving exactly 6 bytes...
+2025-06-08 19:08:47,608 [INFO] [server.py:recv_exact] Received 6 bytes successfully
+2025-06-08 19:08:47,608 [INFO] [server.py:<module>] Received header: b'<HELO>'
+2025-06-08 19:08:47,608 [INFO] [server.py:<module>] Expecting hello
+2025-06-08 19:08:47,608 [INFO] [server.py:recv_certificate] Receiving certificate header (length)...
+2025-06-08 19:08:47,608 [INFO] [server.py:recv_exact] Receiving exactly 4 bytes...
+2025-06-08 19:08:47,609 [INFO] [ca_cert.py:send_certificate] Sent certificate length: 881
+2025-06-08 19:08:47,609 [INFO] [ca_cert.py:send_certificate] Sent certificate
+2025-06-08 19:08:47,609 [INFO] [server.py:recv_exact] Received 4 bytes successfully
+2025-06-08 19:08:47,609 [INFO] [server.py:recv_certificate] Length bytes (raw): 00000371
+2025-06-08 19:08:47,609 [INFO] [server.py:recv_certificate] Expecting certificate of 881 bytes
+2025-06-08 19:08:47,609 [INFO] [server.py:recv_exact] Receiving exactly 881 bytes...
+2025-06-08 19:08:47,609 [INFO] [server.py:recv_exact] Received 881 bytes successfully
+2025-06-08 19:08:47,609 [INFO] [server.py:recv_certificate] Received certificate from client
+2025-06-08 19:08:47,611 [INFO] [server.py:recv_certificate] Sent acknowledgement
+2025-06-08 19:08:47,612 [INFO] [server.py:<module>] Certificate validated successfully
+2025-06-08 19:08:47,612 [INFO] [server.py:recv_exact] Receiving exactly 16 bytes...
+2025-06-08 19:08:47,614 [INFO] [ca_cert.py:send_certificate] Server acknowledgement: CERT_RECEIVED
+2025-06-08 19:08:47,614 [INFO] [device.py:send_hello] Sent nonce: b'\xb2H\xe2\x9fq\xb9@e|\xfc\xea\xdfw\x85\xe1j'
+2025-06-08 19:08:47,614 [INFO] [server.py:recv_exact] Received 16 bytes successfully
+2025-06-08 19:08:47,614 [INFO] [server.py:<module>] Received nonce: b'\xb2H\xe2\x9fq\xb9@e|\xfc\xea\xdfw\x85\xe1j'
+2025-06-08 19:08:47,614 [INFO] [server.py:<module>] Sent acknowledgement
+2025-06-08 19:08:47,614 [INFO] [server.py:send_hello] Sent header: HELLO
+2025-06-08 19:08:47,614 [INFO] [ca_cert.py:send_certificate] Sent certificate length: 881
+2025-06-08 19:08:47,614 [INFO] [ca_cert.py:send_certificate] Sent certificate
+2025-06-08 19:08:47,615 [INFO] [device.py:send_hello] Server acknowledgement: HELLO_RECEIVED
+2025-06-08 19:08:47,615 [INFO] [device.py:recv_hello] Received header: HELLO
+2025-06-08 19:08:47,615 [INFO] [device.py:recv_hello] Recieving server certificate length..
+2025-06-08 19:08:47,615 [INFO] [device.py:recv_hello] Expecting server cert length 881 bytes.
+2025-06-08 19:08:47,615 [INFO] [device.py:recv_hello] Received server certificate: 
+2025-06-08 19:08:47,616 [INFO] [device.py:recv_hello] Sent acknowledgement
+2025-06-08 19:08:47,616 [INFO] [device.py:recv_hello] Server certificate validated successfully
+2025-06-08 19:08:47,616 [INFO] [device.py:recv_hello] Recieving server nonce..
+2025-06-08 19:08:47,618 [INFO] [ca_cert.py:send_certificate] Server acknowledgement: CERT_RECEIVED
+2025-06-08 19:08:47,618 [INFO] [server.py:send_hello] Sent nonce: b'\xb8\xae\xf7\xa7\x8c\xf7\x13\x84\xb6\xc1d\x03a\x05]\x05'
+2025-06-08 19:08:47,618 [INFO] [device.py:recv_hello] Received nonce: b'\xb8\xae\xf7\xa7\x8c\xf7\x13\x84\xb6\xc1d\x03a\x05]\x05'
+2025-06-08 19:08:47,618 [INFO] [device.py:recv_hello] Sent acknowledgement
+2025-06-08 19:08:47,619 [INFO] [device.py:send_pre_master_secret] Sent pre-master secret
+2025-06-08 19:08:47,620 [INFO] [server.py:send_hello] Device acknowledgement: NONCE_RECEIVED
+2025-06-08 19:08:47,620 [INFO] [server.py:recv_exact] Receiving exactly 6 bytes...
+2025-06-08 19:08:47,620 [INFO] [server.py:recv_exact] Received 6 bytes successfully
+2025-06-08 19:08:47,620 [INFO] [server.py:<module>] Received header: b'<PREM>'
+2025-06-08 19:08:47,620 [INFO] [server.py:<module>] Expecting pre-master secret
+2025-06-08 19:08:47,620 [INFO] [server.py:recv_exact] Receiving exactly 256 bytes...
+2025-06-08 19:08:47,620 [INFO] [server.py:recv_exact] Received 256 bytes successfully
+2025-06-08 19:08:47,621 [INFO] [server.py:<module>] Received pre-master secret: b'\xc5\x92\x9f],\x14>`\xde\xac\x1b\x01Zr\xba7g\xef"\xd3H@\xd0\xb4U\xb4\x83A\x0b\xef\x04\xe8'
+2025-06-08 19:08:47,621 [INFO] [server.py:<module>] Sent acknowledgement
+2025-06-08 19:08:47,621 [INFO] [server.py:<module>] Derived keys: {'client_enc_key': b'\xcb\x1c8\xbdP\x99\xdb\xa3+w\x82 \xd1t\x1ao', 'server_enc_key': b'\x14\xea\x9b\xa8?\x9b\xd2\xea\x92L\x99\xb0\xd7\xc4w\xbb', 'client_mac_key': b'\xeb\xa40\x1b\xe7\xebn\xd7\x10\xa4R\x8dU\xff\x19h', 'server_mac_key': b'\t\x16\xba\xbb\x03D\xc7\xb6EI\xa9]\xa6)\x91\x90', 'iv': b'\x9a\x04$\x9d\xdb\xc0\x7f\xfc/\xf7\xae\x83\xd9+1e'}
+2025-06-08 19:08:47,622 [INFO] [server.py:recv_exact] Receiving exactly 6 bytes...
+2025-06-08 19:08:47,622 [INFO] [device.py:send_pre_master_secret] Server acknowledgement: PREM_RECEIVED
+2025-06-08 19:08:47,622 [INFO] [device.py:<module>] Derived keys: {'client_enc_key': b'\xcb\x1c8\xbdP\x99\xdb\xa3+w\x82 \xd1t\x1ao', 'server_enc_key': b'\x14\xea\x9b\xa8?\x9b\xd2\xea\x92L\x99\xb0\xd7\xc4w\xbb', 'client_mac_key': b'\xeb\xa40\x1b\xe7\xebn\xd7\x10\xa4R\x8dU\xff\x19h', 'server_mac_key': b'\t\x16\xba\xbb\x03D\xc7\xb6EI\xa9]\xa6)\x91\x90', 'iv': b'\x9a\x04$\x9d\xdb\xc0\x7f\xfc/\xf7\xae\x83\xd9+1e'}
+2025-06-08 19:08:47,622 [INFO] [device.py:send_secure_text] Sent header: SECX
+2025-06-08 19:08:47,622 [INFO] [server.py:recv_exact] Received 6 bytes successfully
+2025-06-08 19:08:47,623 [INFO] [server.py:<module>] Received header: b'<SECX>'
+2025-06-08 19:08:47,623 [INFO] [server.py:<module>] Expecting secure text
+2025-06-08 19:08:47,623 [INFO] [server.py:recv_exact] Receiving exactly 256 bytes...
+2025-06-08 19:08:47,623 [ERROR] [device.py:send_secure_text] Failed to send secure text
+Traceback (most recent call last):
+  File "/Users/omerfarukbulut/info_sec/device.py", line 185, in send_secure_text
+    encrypted_message = encrypt_aes_with_hmac(message, sym_key, mac_key, iv)
+  File "/Users/omerfarukbulut/info_sec/rsa_keys.py", line 122, in encrypt_aes_with_hmac
+    h = hmac.HMAC(mac_key, hashes.SHA256())
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/hmac.py", line 56, in __init__
+    raise TypeError("Missing required argument 'digestmod'.")
+TypeError: Missing required argument 'digestmod'.
+2025-06-08 19:08:47,628 [WARNING] [server.py:recv_exact] Connection interrupted during receive
+2025-06-08 19:08:47,628 [INFO] [server.py:recv_exact] Received 0 bytes successfully
+2025-06-08 19:08:47,628 [INFO] [server.py:recv_exact] Receiving exactly 256 bytes...
+2025-06-08 19:08:47,628 [ERROR] [server.py:recv_secure_text] Failed to receive secure text
+Traceback (most recent call last):
+  File "/Users/omerfarukbulut/info_sec/server.py", line 97, in recv_secure_text
+    encrypted_message = recv_exact(client_socket, 256)
+  File "/Users/omerfarukbulut/info_sec/server.py", line 37, in recv_exact
+    packet = sock.recv(size - len(data))
+             ^^^^^^^^^
+AttributeError: 'bytes' object has no attribute 'recv'
+2025-06-08 19:08:47,629 [ERROR] [server.py:<module>] Failed to receive secure text
+Traceback (most recent call last):
+  File "/Users/omerfarukbulut/info_sec/server.py", line 204, in <module>
+    decrypted_message = recv_secure_text(encrypted_message, DERIVED_KEYS)
+  File "/Users/omerfarukbulut/info_sec/server.py", line 106, in recv_secure_text
+    raise e
+  File "/Users/omerfarukbulut/info_sec/server.py", line 97, in recv_secure_text
+    encrypted_message = recv_exact(client_socket, 256)
+  File "/Users/omerfarukbulut/info_sec/server.py", line 37, in recv_exact
+    packet = sock.recv(size - len(data))
+             ^^^^^^^^^
+AttributeError: 'bytes' object has no attribute 'recv'
+2025-06-08 19:08:47,629 [ERROR] [server.py:<module>] An error occurred during communication.
+Traceback (most recent call last):
+  File "/Users/omerfarukbulut/info_sec/server.py", line 212, in <module>
+    raise e
+  File "/Users/omerfarukbulut/info_sec/server.py", line 204, in <module>
+    decrypted_message = recv_secure_text(encrypted_message, DERIVED_KEYS)
+  File "/Users/omerfarukbulut/info_sec/server.py", line 106, in recv_secure_text
+    raise e
+  File "/Users/omerfarukbulut/info_sec/server.py", line 97, in recv_secure_text
+    encrypted_message = recv_exact(client_socket, 256)
+  File "/Users/omerfarukbulut/info_sec/server.py", line 37, in recv_exact
+    packet = sock.recv(size - len(data))
+             ^^^^^^^^^
+AttributeError: 'bytes' object has no attribute 'recv'
+2025-06-08 19:08:47,630 [INFO] [server.py:<module>] Server shut down
+2025-06-08 19:09:44,559 [INFO] [server.py:<module>] Server starting
+2025-06-08 19:09:44,627 [INFO] [server.py:<module>] Server listening on port 9999
+2025-06-08 19:09:46,355 [INFO] [device.py:<module>] Device started
+2025-06-08 19:09:46,422 [INFO] [device.py:<module>] Connected to server
+2025-06-08 19:09:46,423 [INFO] [device.py:send_hello] Sent header: HELLO
+2025-06-08 19:09:46,423 [INFO] [server.py:<module>] Accepted connection from ('127.0.0.1', 60662)
+2025-06-08 19:09:46,423 [INFO] [server.py:recv_exact] Receiving exactly 6 bytes...
+2025-06-08 19:09:46,423 [INFO] [server.py:recv_exact] Received 6 bytes successfully
+2025-06-08 19:09:46,423 [INFO] [server.py:<module>] Received header: b'<HELO>'
+2025-06-08 19:09:46,423 [INFO] [server.py:<module>] Expecting hello
+2025-06-08 19:09:46,423 [INFO] [server.py:recv_certificate] Receiving certificate header (length)...
+2025-06-08 19:09:46,423 [INFO] [server.py:recv_exact] Receiving exactly 4 bytes...
+2025-06-08 19:09:46,424 [INFO] [ca_cert.py:send_certificate] Sent certificate length: 881
+2025-06-08 19:09:46,424 [INFO] [ca_cert.py:send_certificate] Sent certificate
+2025-06-08 19:09:46,424 [INFO] [server.py:recv_exact] Received 4 bytes successfully
+2025-06-08 19:09:46,424 [INFO] [server.py:recv_certificate] Length bytes (raw): 00000371
+2025-06-08 19:09:46,424 [INFO] [server.py:recv_certificate] Expecting certificate of 881 bytes
+2025-06-08 19:09:46,424 [INFO] [server.py:recv_exact] Receiving exactly 881 bytes...
+2025-06-08 19:09:46,424 [INFO] [server.py:recv_exact] Received 881 bytes successfully
+2025-06-08 19:09:46,424 [INFO] [server.py:recv_certificate] Received certificate from client
+2025-06-08 19:09:46,426 [INFO] [server.py:recv_certificate] Sent acknowledgement
+2025-06-08 19:09:46,428 [INFO] [server.py:<module>] Certificate validated successfully
+2025-06-08 19:09:46,428 [INFO] [server.py:recv_exact] Receiving exactly 16 bytes...
+2025-06-08 19:09:46,429 [INFO] [ca_cert.py:send_certificate] Server acknowledgement: CERT_RECEIVED
+2025-06-08 19:09:46,430 [INFO] [device.py:send_hello] Sent nonce: b'\x98\xf4\x12q\xe2\xd3mi\x85\xa8\x89\xf7\xc4F\\\x0c'
+2025-06-08 19:09:46,430 [INFO] [server.py:recv_exact] Received 16 bytes successfully
+2025-06-08 19:09:46,430 [INFO] [server.py:<module>] Received nonce: b'\x98\xf4\x12q\xe2\xd3mi\x85\xa8\x89\xf7\xc4F\\\x0c'
+2025-06-08 19:09:46,430 [INFO] [server.py:<module>] Sent acknowledgement
+2025-06-08 19:09:46,430 [INFO] [server.py:send_hello] Sent header: HELLO
+2025-06-08 19:09:46,431 [INFO] [ca_cert.py:send_certificate] Sent certificate length: 881
+2025-06-08 19:09:46,431 [INFO] [ca_cert.py:send_certificate] Sent certificate
+2025-06-08 19:09:46,431 [INFO] [device.py:send_hello] Server acknowledgement: HELLO_RECEIVED
+2025-06-08 19:09:46,431 [INFO] [device.py:recv_hello] Received header: HELLO
+2025-06-08 19:09:46,431 [INFO] [device.py:recv_hello] Recieving server certificate length..
+2025-06-08 19:09:46,431 [INFO] [device.py:recv_hello] Expecting server cert length 881 bytes.
+2025-06-08 19:09:46,431 [INFO] [device.py:recv_hello] Received server certificate: 
+2025-06-08 19:09:46,432 [INFO] [device.py:recv_hello] Sent acknowledgement
+2025-06-08 19:09:46,432 [INFO] [device.py:recv_hello] Server certificate validated successfully
+2025-06-08 19:09:46,432 [INFO] [device.py:recv_hello] Recieving server nonce..
+2025-06-08 19:09:46,434 [INFO] [ca_cert.py:send_certificate] Server acknowledgement: CERT_RECEIVED
+2025-06-08 19:09:46,434 [INFO] [server.py:send_hello] Sent nonce: b'.H|\x9aO\x9d\x12G\xb0t\x16l?\x0cG\x06'
+2025-06-08 19:09:46,434 [INFO] [device.py:recv_hello] Received nonce: b'.H|\x9aO\x9d\x12G\xb0t\x16l?\x0cG\x06'
+2025-06-08 19:09:46,435 [INFO] [device.py:recv_hello] Sent acknowledgement
+2025-06-08 19:09:46,435 [INFO] [device.py:send_pre_master_secret] Sent pre-master secret
+2025-06-08 19:09:46,436 [INFO] [server.py:send_hello] Device acknowledgement: NONCE_RECEIVED
+2025-06-08 19:09:46,436 [INFO] [server.py:recv_exact] Receiving exactly 6 bytes...
+2025-06-08 19:09:46,436 [INFO] [server.py:recv_exact] Received 6 bytes successfully
+2025-06-08 19:09:46,436 [INFO] [server.py:<module>] Received header: b'<PREM>'
+2025-06-08 19:09:46,436 [INFO] [server.py:<module>] Expecting pre-master secret
+2025-06-08 19:09:46,436 [INFO] [server.py:recv_exact] Receiving exactly 256 bytes...
+2025-06-08 19:09:46,436 [INFO] [server.py:recv_exact] Received 256 bytes successfully
+2025-06-08 19:09:46,437 [INFO] [server.py:<module>] Received pre-master secret: b'T\xcd\x0b\xfcj\x89\x1a\xadis\x042\x9a\n\x86n\x9dG\xcbQ\xba\xec\xf4f\x9d\x1c\x04\x99 yK\xcb'
+2025-06-08 19:09:46,437 [INFO] [server.py:<module>] Sent acknowledgement
+2025-06-08 19:09:46,437 [INFO] [server.py:<module>] Derived keys: {'client_enc_key': b']m*c&\xbd\xc6\n/\xa9\xeb/\x13\xc0\x03q', 'server_enc_key': b'i\x9bb\x19d6=\xeb\x90\xe7\x97\x91\x8eQl\x96', 'client_mac_key': b'\xf9\x0f\xf4\xe5ag-\xf3\xe1\xd6\x99\xc5\xd2\\\x1a\xa9', 'server_mac_key': b'\xc8E@;T\xdf\xe9\x0e\xd0\xca\xe3`\xd3\xcf\x96\xd8', 'iv': b'K\xafV<\x80i\xe1\xdf_\xaa\x18\xa5\x15\xf2\x88\xa2'}
+2025-06-08 19:09:46,437 [INFO] [server.py:recv_exact] Receiving exactly 6 bytes...
+2025-06-08 19:09:46,438 [INFO] [device.py:send_pre_master_secret] Server acknowledgement: PREM_RECEIVED
+2025-06-08 19:09:46,438 [INFO] [device.py:<module>] Derived keys: {'client_enc_key': b']m*c&\xbd\xc6\n/\xa9\xeb/\x13\xc0\x03q', 'server_enc_key': b'i\x9bb\x19d6=\xeb\x90\xe7\x97\x91\x8eQl\x96', 'client_mac_key': b'\xf9\x0f\xf4\xe5ag-\xf3\xe1\xd6\x99\xc5\xd2\\\x1a\xa9', 'server_mac_key': b'\xc8E@;T\xdf\xe9\x0e\xd0\xca\xe3`\xd3\xcf\x96\xd8', 'iv': b'K\xafV<\x80i\xe1\xdf_\xaa\x18\xa5\x15\xf2\x88\xa2'}
+2025-06-08 19:09:46,438 [INFO] [device.py:send_secure_text] Sent header: SECX
+2025-06-08 19:09:46,438 [INFO] [server.py:recv_exact] Received 6 bytes successfully
+2025-06-08 19:09:46,438 [INFO] [server.py:<module>] Received header: b'<SECX>'
+2025-06-08 19:09:46,438 [INFO] [server.py:<module>] Expecting secure text
+2025-06-08 19:09:46,438 [INFO] [server.py:recv_exact] Receiving exactly 256 bytes...
+2025-06-08 19:09:46,440 [ERROR] [device.py:send_secure_text] Failed to send secure text
+Traceback (most recent call last):
+  File "/Users/omerfarukbulut/info_sec/device.py", line 185, in send_secure_text
+    encrypted_message = encrypt_aes_with_hmac(message.encode(), sym_key, mac_key, iv)
+  File "/Users/omerfarukbulut/info_sec/rsa_keys.py", line 122, in encrypt_aes_with_hmac
+    h = hmac.HMAC(mac_key, hashes.SHA256())
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/hmac.py", line 56, in __init__
+    raise TypeError("Missing required argument 'digestmod'.")
+TypeError: Missing required argument 'digestmod'.
+2025-06-08 19:09:46,447 [WARNING] [server.py:recv_exact] Connection interrupted during receive
+2025-06-08 19:09:46,447 [INFO] [server.py:recv_exact] Received 0 bytes successfully
+2025-06-08 19:09:46,447 [INFO] [server.py:recv_exact] Receiving exactly 256 bytes...
+2025-06-08 19:09:46,447 [ERROR] [server.py:recv_secure_text] Failed to receive secure text
+Traceback (most recent call last):
+  File "/Users/omerfarukbulut/info_sec/server.py", line 97, in recv_secure_text
+    encrypted_message = recv_exact(client_socket, 256)
+  File "/Users/omerfarukbulut/info_sec/server.py", line 37, in recv_exact
+    packet = sock.recv(size - len(data))
+             ^^^^^^^^^
+AttributeError: 'bytes' object has no attribute 'recv'
+2025-06-08 19:09:46,448 [ERROR] [server.py:<module>] Failed to receive secure text
+Traceback (most recent call last):
+  File "/Users/omerfarukbulut/info_sec/server.py", line 204, in <module>
+    decrypted_message = recv_secure_text(encrypted_message, DERIVED_KEYS)
+  File "/Users/omerfarukbulut/info_sec/server.py", line 106, in recv_secure_text
+    raise e
+  File "/Users/omerfarukbulut/info_sec/server.py", line 97, in recv_secure_text
+    encrypted_message = recv_exact(client_socket, 256)
+  File "/Users/omerfarukbulut/info_sec/server.py", line 37, in recv_exact
+    packet = sock.recv(size - len(data))
+             ^^^^^^^^^
+AttributeError: 'bytes' object has no attribute 'recv'
+2025-06-08 19:09:46,448 [ERROR] [server.py:<module>] An error occurred during communication.
+Traceback (most recent call last):
+  File "/Users/omerfarukbulut/info_sec/server.py", line 212, in <module>
+    raise e
+  File "/Users/omerfarukbulut/info_sec/server.py", line 204, in <module>
+    decrypted_message = recv_secure_text(encrypted_message, DERIVED_KEYS)
+  File "/Users/omerfarukbulut/info_sec/server.py", line 106, in recv_secure_text
+    raise e
+  File "/Users/omerfarukbulut/info_sec/server.py", line 97, in recv_secure_text
+    encrypted_message = recv_exact(client_socket, 256)
+  File "/Users/omerfarukbulut/info_sec/server.py", line 37, in recv_exact
+    packet = sock.recv(size - len(data))
+             ^^^^^^^^^
+AttributeError: 'bytes' object has no attribute 'recv'
+2025-06-08 19:09:46,449 [INFO] [server.py:<module>] Server shut down
+2025-06-08 19:10:41,666 [INFO] [server.py:<module>] Server starting
+2025-06-08 19:10:41,736 [INFO] [server.py:<module>] Server listening on port 9999
+2025-06-08 19:10:44,735 [INFO] [device.py:<module>] Device started
+2025-06-08 19:10:44,803 [INFO] [device.py:<module>] Connected to server
+2025-06-08 19:10:44,803 [INFO] [server.py:<module>] Accepted connection from ('127.0.0.1', 60671)
+2025-06-08 19:10:44,803 [INFO] [device.py:send_hello] Sent header: HELLO
+2025-06-08 19:10:44,803 [INFO] [server.py:recv_exact] Receiving exactly 6 bytes...
+2025-06-08 19:10:44,803 [INFO] [server.py:recv_exact] Received 6 bytes successfully
+2025-06-08 19:10:44,803 [INFO] [server.py:<module>] Received header: b'<HELO>'
+2025-06-08 19:10:44,803 [INFO] [server.py:<module>] Expecting hello
+2025-06-08 19:10:44,803 [INFO] [server.py:recv_certificate] Receiving certificate header (length)...
+2025-06-08 19:10:44,803 [INFO] [server.py:recv_exact] Receiving exactly 4 bytes...
+2025-06-08 19:10:44,804 [INFO] [ca_cert.py:send_certificate] Sent certificate length: 881
+2025-06-08 19:10:44,804 [INFO] [ca_cert.py:send_certificate] Sent certificate
+2025-06-08 19:10:44,804 [INFO] [server.py:recv_exact] Received 4 bytes successfully
+2025-06-08 19:10:44,804 [INFO] [server.py:recv_certificate] Length bytes (raw): 00000371
+2025-06-08 19:10:44,804 [INFO] [server.py:recv_certificate] Expecting certificate of 881 bytes
+2025-06-08 19:10:44,804 [INFO] [server.py:recv_exact] Receiving exactly 881 bytes...
+2025-06-08 19:10:44,804 [INFO] [server.py:recv_exact] Received 881 bytes successfully
+2025-06-08 19:10:44,804 [INFO] [server.py:recv_certificate] Received certificate from client
+2025-06-08 19:10:44,807 [INFO] [server.py:recv_certificate] Sent acknowledgement
+2025-06-08 19:10:44,809 [INFO] [server.py:<module>] Certificate validated successfully
+2025-06-08 19:10:44,809 [INFO] [server.py:recv_exact] Receiving exactly 16 bytes...
+2025-06-08 19:10:44,810 [INFO] [ca_cert.py:send_certificate] Server acknowledgement: CERT_RECEIVED
+2025-06-08 19:10:44,810 [INFO] [device.py:send_hello] Sent nonce: b'\xd3\xe2?\xc1Kp\xe8\xa6\xfb\xe0\xe13\xa0vOh'
+2025-06-08 19:10:44,810 [INFO] [server.py:recv_exact] Received 16 bytes successfully
+2025-06-08 19:10:44,810 [INFO] [server.py:<module>] Received nonce: b'\xd3\xe2?\xc1Kp\xe8\xa6\xfb\xe0\xe13\xa0vOh'
+2025-06-08 19:10:44,810 [INFO] [server.py:<module>] Sent acknowledgement
+2025-06-08 19:10:44,810 [INFO] [server.py:send_hello] Sent header: HELLO
+2025-06-08 19:10:44,811 [INFO] [ca_cert.py:send_certificate] Sent certificate length: 881
+2025-06-08 19:10:44,811 [INFO] [ca_cert.py:send_certificate] Sent certificate
+2025-06-08 19:10:44,811 [INFO] [device.py:send_hello] Server acknowledgement: HELLO_RECEIVED
+2025-06-08 19:10:44,811 [INFO] [device.py:recv_hello] Received header: HELLO
+2025-06-08 19:10:44,811 [INFO] [device.py:recv_hello] Recieving server certificate length..
+2025-06-08 19:10:44,811 [INFO] [device.py:recv_hello] Expecting server cert length 881 bytes.
+2025-06-08 19:10:44,811 [INFO] [device.py:recv_hello] Received server certificate: 
+2025-06-08 19:10:44,812 [INFO] [device.py:recv_hello] Sent acknowledgement
+2025-06-08 19:10:44,812 [INFO] [device.py:recv_hello] Server certificate validated successfully
+2025-06-08 19:10:44,812 [INFO] [device.py:recv_hello] Recieving server nonce..
+2025-06-08 19:10:44,814 [INFO] [ca_cert.py:send_certificate] Server acknowledgement: CERT_RECEIVED
+2025-06-08 19:10:44,814 [INFO] [server.py:send_hello] Sent nonce: b'[\xd0x\xddZ\x11;.9\xf3&\x82b\xea6>'
+2025-06-08 19:10:44,814 [INFO] [device.py:recv_hello] Received nonce: b'[\xd0x\xddZ\x11;.9\xf3&\x82b\xea6>'
+2025-06-08 19:10:44,814 [INFO] [device.py:recv_hello] Sent acknowledgement
+2025-06-08 19:10:44,814 [INFO] [device.py:send_pre_master_secret] Sent pre-master secret
+2025-06-08 19:10:44,815 [INFO] [server.py:send_hello] Device acknowledgement: NONCE_RECEIVED
+2025-06-08 19:10:44,815 [INFO] [server.py:recv_exact] Receiving exactly 6 bytes...
+2025-06-08 19:10:44,815 [INFO] [server.py:recv_exact] Received 6 bytes successfully
+2025-06-08 19:10:44,815 [INFO] [server.py:<module>] Received header: b'<PREM>'
+2025-06-08 19:10:44,815 [INFO] [server.py:<module>] Expecting pre-master secret
+2025-06-08 19:10:44,815 [INFO] [server.py:recv_exact] Receiving exactly 256 bytes...
+2025-06-08 19:10:44,815 [INFO] [server.py:recv_exact] Received 256 bytes successfully
+2025-06-08 19:10:44,817 [INFO] [server.py:<module>] Received pre-master secret: b'\xde\xe5\xc49e\xbe\n\xeb\xaet\xc0\xc2M^\xff\x80\xba3\xec\xd8K\x80\xfcW\x05+\xc9t}\xbc\xb9\xda'
+2025-06-08 19:10:44,817 [INFO] [server.py:<module>] Sent acknowledgement
+2025-06-08 19:10:44,818 [INFO] [device.py:send_pre_master_secret] Server acknowledgement: PREM_RECEIVED
+2025-06-08 19:10:44,817 [ERROR] [server.py:<module>] Failed to receive pre-master secret
+Traceback (most recent call last):
+  File "/Users/omerfarukbulut/info_sec/server.py", line 195, in <module>
+    DERIVED_KEYS = derive_keys(MASTER_SECRET, NONCE_DEVICE, NONCE_SERVER)
+  File "/Users/omerfarukbulut/info_sec/rsa_keys.py", line 105, in derive_keys
+    "client_enc_key": hkdf_expand(b"client_enc", 16),   # 128-bit AES key
+                      ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+  File "/Users/omerfarukbulut/info_sec/rsa_keys.py", line 101, in hkdf_expand
+    return hmac.new(master_secret, info, hashlib.sha256).digest()[:length]
+           ^^^^^^^^
+AttributeError: module 'cryptography.hazmat.primitives.hmac' has no attribute 'new'
+2025-06-08 19:10:44,819 [ERROR] [server.py:<module>] An error occurred during communication.
+Traceback (most recent call last):
+  File "/Users/omerfarukbulut/info_sec/server.py", line 199, in <module>
+    raise e
+  File "/Users/omerfarukbulut/info_sec/server.py", line 195, in <module>
+    DERIVED_KEYS = derive_keys(MASTER_SECRET, NONCE_DEVICE, NONCE_SERVER)
+  File "/Users/omerfarukbulut/info_sec/rsa_keys.py", line 105, in derive_keys
+    "client_enc_key": hkdf_expand(b"client_enc", 16),   # 128-bit AES key
+                      ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+  File "/Users/omerfarukbulut/info_sec/rsa_keys.py", line 101, in hkdf_expand
+    return hmac.new(master_secret, info, hashlib.sha256).digest()[:length]
+           ^^^^^^^^
+AttributeError: module 'cryptography.hazmat.primitives.hmac' has no attribute 'new'
+2025-06-08 19:10:44,820 [INFO] [server.py:<module>] Server shut down
+2025-06-08 19:12:46,250 [INFO] [server.py:<module>] Server starting
+2025-06-08 19:12:46,318 [INFO] [server.py:<module>] Server listening on port 9999
+2025-06-08 19:12:48,840 [INFO] [device.py:<module>] Device started
+2025-06-08 19:12:48,906 [INFO] [device.py:<module>] Connected to server
+2025-06-08 19:12:48,907 [INFO] [device.py:send_hello] Sent header: HELLO
+2025-06-08 19:12:48,906 [INFO] [server.py:<module>] Accepted connection from ('127.0.0.1', 60690)
+2025-06-08 19:12:48,907 [INFO] [server.py:recv_exact] Receiving exactly 6 bytes...
+2025-06-08 19:12:48,907 [INFO] [server.py:recv_exact] Received 6 bytes successfully
+2025-06-08 19:12:48,907 [INFO] [server.py:<module>] Received header: b'<HELO>'
+2025-06-08 19:12:48,907 [INFO] [server.py:<module>] Expecting hello
+2025-06-08 19:12:48,907 [INFO] [server.py:recv_certificate] Receiving certificate header (length)...
+2025-06-08 19:12:48,907 [INFO] [server.py:recv_exact] Receiving exactly 4 bytes...
+2025-06-08 19:12:48,908 [INFO] [ca_cert.py:send_certificate] Sent certificate length: 881
+2025-06-08 19:12:48,908 [INFO] [ca_cert.py:send_certificate] Sent certificate
+2025-06-08 19:12:48,908 [INFO] [server.py:recv_exact] Received 4 bytes successfully
+2025-06-08 19:12:48,908 [INFO] [server.py:recv_certificate] Length bytes (raw): 00000371
+2025-06-08 19:12:48,908 [INFO] [server.py:recv_certificate] Expecting certificate of 881 bytes
+2025-06-08 19:12:48,908 [INFO] [server.py:recv_exact] Receiving exactly 881 bytes...
+2025-06-08 19:12:48,908 [INFO] [server.py:recv_exact] Received 881 bytes successfully
+2025-06-08 19:12:48,908 [INFO] [server.py:recv_certificate] Received certificate from client
+2025-06-08 19:12:48,911 [INFO] [server.py:recv_certificate] Sent acknowledgement
+2025-06-08 19:12:48,912 [INFO] [server.py:<module>] Certificate validated successfully
+2025-06-08 19:12:48,912 [INFO] [server.py:recv_exact] Receiving exactly 16 bytes...
+2025-06-08 19:12:48,914 [INFO] [ca_cert.py:send_certificate] Server acknowledgement: CERT_RECEIVED
+2025-06-08 19:12:48,914 [INFO] [device.py:send_hello] Sent nonce: b'\xe8\x10\xf7\xab\xe30\x1a\xd3?\x9d~ISk^\x84'
+2025-06-08 19:12:48,914 [INFO] [server.py:recv_exact] Received 16 bytes successfully
+2025-06-08 19:12:48,914 [INFO] [server.py:<module>] Received nonce: b'\xe8\x10\xf7\xab\xe30\x1a\xd3?\x9d~ISk^\x84'
+2025-06-08 19:12:48,914 [INFO] [server.py:<module>] Sent acknowledgement
+2025-06-08 19:12:48,914 [INFO] [server.py:send_hello] Sent header: HELLO
+2025-06-08 19:12:48,915 [INFO] [ca_cert.py:send_certificate] Sent certificate length: 881
+2025-06-08 19:12:48,915 [INFO] [ca_cert.py:send_certificate] Sent certificate
+2025-06-08 19:12:48,916 [INFO] [device.py:send_hello] Server acknowledgement: HELLO_RECEIVED
+2025-06-08 19:12:48,916 [INFO] [device.py:recv_hello] Received header: HELLO
+2025-06-08 19:12:48,916 [INFO] [device.py:recv_hello] Recieving server certificate length..
+2025-06-08 19:12:48,916 [INFO] [device.py:recv_hello] Expecting server cert length 881 bytes.
+2025-06-08 19:12:48,916 [INFO] [device.py:recv_hello] Received server certificate: 
+2025-06-08 19:12:48,916 [INFO] [device.py:recv_hello] Sent acknowledgement
+2025-06-08 19:12:48,916 [INFO] [device.py:recv_hello] Server certificate validated successfully
+2025-06-08 19:12:48,916 [INFO] [device.py:recv_hello] Recieving server nonce..
+2025-06-08 19:12:48,918 [INFO] [ca_cert.py:send_certificate] Server acknowledgement: CERT_RECEIVED
+2025-06-08 19:12:48,918 [INFO] [server.py:send_hello] Sent nonce: b'R\xfb\xfd\xc7K\xb7\x8b\xd2\xa5oR\xe0\x81]I\xb9'
+2025-06-08 19:12:48,918 [INFO] [device.py:recv_hello] Received nonce: b'R\xfb\xfd\xc7K\xb7\x8b\xd2\xa5oR\xe0\x81]I\xb9'
+2025-06-08 19:12:48,918 [INFO] [device.py:recv_hello] Sent acknowledgement
+2025-06-08 19:12:48,919 [INFO] [device.py:send_pre_master_secret] Sent pre-master secret
+2025-06-08 19:12:48,920 [INFO] [server.py:send_hello] Device acknowledgement: NONCE_RECEIVED
+2025-06-08 19:12:48,920 [INFO] [server.py:recv_exact] Receiving exactly 6 bytes...
+2025-06-08 19:12:48,920 [INFO] [server.py:recv_exact] Received 6 bytes successfully
+2025-06-08 19:12:48,920 [INFO] [server.py:<module>] Received header: b'<PREM>'
+2025-06-08 19:12:48,920 [INFO] [server.py:<module>] Expecting pre-master secret
+2025-06-08 19:12:48,920 [INFO] [server.py:recv_exact] Receiving exactly 256 bytes...
+2025-06-08 19:12:48,920 [INFO] [server.py:recv_exact] Received 256 bytes successfully
+2025-06-08 19:12:48,921 [INFO] [server.py:<module>] Received pre-master secret: b'\x8fu\xfb\xb1g\xd2\xa1\x94acD\n~\xbc,\xef\t\xce\x99\x08^\x15\x03\xee\x94\xa8\xeeX\xe3.n\x8b'
+2025-06-08 19:12:48,921 [INFO] [server.py:<module>] Sent acknowledgement
+2025-06-08 19:12:48,921 [INFO] [server.py:<module>] Derived keys: {'client_enc_key': b'\xbd\xf0!\x01\x01\x00\xee:\x12\x86g\x1f+;P"', 'server_enc_key': b'\xb5\x0e\x0bK@\xf7\xce\x8eo\xf6K\xe3\x88x\x04\x81', 'client_mac_key': b'JENt\xa3\x0f0\xf4"\xad\xc8dL\x16\xbb\xa8', 'server_mac_key': b'?\xee\xb9\x19\x0bf\x8e[\x12\xf2\xd6n\xfb\xff\xc9\x1d', 'iv': b'\x0e\xf9\xe3~c\xe7U\xed\x05c\xc3c5$gQ'}
+2025-06-08 19:12:48,921 [INFO] [server.py:recv_exact] Receiving exactly 6 bytes...
+2025-06-08 19:12:48,922 [INFO] [device.py:send_pre_master_secret] Server acknowledgement: PREM_RECEIVED
+2025-06-08 19:12:48,922 [INFO] [device.py:<module>] Derived keys: {'client_enc_key': b'\xbd\xf0!\x01\x01\x00\xee:\x12\x86g\x1f+;P"', 'server_enc_key': b'\xb5\x0e\x0bK@\xf7\xce\x8eo\xf6K\xe3\x88x\x04\x81', 'client_mac_key': b'JENt\xa3\x0f0\xf4"\xad\xc8dL\x16\xbb\xa8', 'server_mac_key': b'?\xee\xb9\x19\x0bf\x8e[\x12\xf2\xd6n\xfb\xff\xc9\x1d', 'iv': b'\x0e\xf9\xe3~c\xe7U\xed\x05c\xc3c5$gQ'}
+2025-06-08 19:12:48,922 [INFO] [device.py:send_secure_text] Sent header: SECX
+2025-06-08 19:12:48,922 [INFO] [server.py:recv_exact] Received 6 bytes successfully
+2025-06-08 19:12:48,922 [INFO] [server.py:<module>] Received header: b'<SECX>'
+2025-06-08 19:12:48,922 [INFO] [server.py:<module>] Expecting secure text
+2025-06-08 19:12:48,922 [INFO] [server.py:recv_exact] Receiving exactly 256 bytes...
+2025-06-08 19:12:48,924 [INFO] [device.py:send_secure_text] Sent encrypted message
+2025-06-08 19:14:00,520 [INFO] [server.py:<module>] Server shut down
+2025-06-08 19:14:00,517 [ERROR] [device.py:send_secure_text] Failed to send secure text
+Traceback (most recent call last):
+  File "/Users/omerfarukbulut/info_sec/device.py", line 190, in send_secure_text
+    ack_msg = decrypt_message(ack, private_key)
+  File "/Users/omerfarukbulut/info_sec/rsa_keys.py", line 80, in decrypt_message
+    raise ValueError(f"Encrypted message length is invalid. Got {len(encrypted_message)} bytes, expected 256 bytes.")
+ValueError: Encrypted message length is invalid. Got 0 bytes, expected 256 bytes.
+2025-06-08 19:14:02,410 [INFO] [server.py:<module>] Server starting
+2025-06-08 19:14:04,770 [INFO] [server.py:<module>] Server starting
+2025-06-08 19:14:07,971 [INFO] [server.py:<module>] Server starting
+2025-06-08 19:14:13,054 [INFO] [server.py:<module>] Server starting
+2025-06-08 19:14:24,532 [INFO] [server.py:<module>] Server starting
+2025-06-08 19:14:29,260 [INFO] [server.py:<module>] Server starting
+2025-06-08 19:14:35,008 [INFO] [server.py:<module>] Server starting
+2025-06-08 19:14:35,074 [INFO] [server.py:<module>] Server listening on port 9999
+2025-06-08 19:14:37,818 [INFO] [device.py:<module>] Device started
+2025-06-08 19:14:37,887 [INFO] [device.py:<module>] Connected to server
+2025-06-08 19:14:37,887 [INFO] [device.py:send_hello] Sent header: HELLO
+2025-06-08 19:14:37,887 [INFO] [server.py:<module>] Accepted connection from ('127.0.0.1', 60700)
+2025-06-08 19:14:37,887 [INFO] [server.py:recv_exact] Receiving exactly 6 bytes...
+2025-06-08 19:14:37,887 [INFO] [server.py:recv_exact] Received 6 bytes successfully
+2025-06-08 19:14:37,887 [INFO] [server.py:<module>] Received header: b'<HELO>'
+2025-06-08 19:14:37,887 [INFO] [server.py:<module>] Expecting hello
+2025-06-08 19:14:37,887 [INFO] [server.py:recv_certificate] Receiving certificate header (length)...
+2025-06-08 19:14:37,887 [INFO] [server.py:recv_exact] Receiving exactly 4 bytes...
+2025-06-08 19:14:37,887 [INFO] [ca_cert.py:send_certificate] Sent certificate length: 881
+2025-06-08 19:14:37,887 [INFO] [ca_cert.py:send_certificate] Sent certificate
+2025-06-08 19:14:37,887 [INFO] [server.py:recv_exact] Received 4 bytes successfully
+2025-06-08 19:14:37,887 [INFO] [server.py:recv_certificate] Length bytes (raw): 00000371
+2025-06-08 19:14:37,887 [INFO] [server.py:recv_certificate] Expecting certificate of 881 bytes
+2025-06-08 19:14:37,887 [INFO] [server.py:recv_exact] Receiving exactly 881 bytes...
+2025-06-08 19:14:37,887 [INFO] [server.py:recv_exact] Received 881 bytes successfully
+2025-06-08 19:14:37,887 [INFO] [server.py:recv_certificate] Received certificate from client
+2025-06-08 19:14:37,890 [INFO] [server.py:recv_certificate] Sent acknowledgement
+2025-06-08 19:14:37,892 [INFO] [server.py:<module>] Certificate validated successfully
+2025-06-08 19:14:37,892 [INFO] [server.py:recv_exact] Receiving exactly 16 bytes...
+2025-06-08 19:14:37,893 [INFO] [ca_cert.py:send_certificate] Server acknowledgement: CERT_RECEIVED
+2025-06-08 19:14:37,893 [INFO] [device.py:send_hello] Sent nonce: b'\xf1\xd0^\xbf\xef\x11\xc2p\x9a\xfe{mh\x8f\xcb\xb5'
+2025-06-08 19:14:37,893 [INFO] [server.py:recv_exact] Received 16 bytes successfully
+2025-06-08 19:14:37,893 [INFO] [server.py:<module>] Received nonce: b'\xf1\xd0^\xbf\xef\x11\xc2p\x9a\xfe{mh\x8f\xcb\xb5'
+2025-06-08 19:14:37,893 [INFO] [server.py:<module>] Sent acknowledgement
+2025-06-08 19:14:37,893 [INFO] [server.py:send_hello] Sent header: HELLO
+2025-06-08 19:14:37,894 [INFO] [ca_cert.py:send_certificate] Sent certificate length: 881
+2025-06-08 19:14:37,894 [INFO] [ca_cert.py:send_certificate] Sent certificate
+2025-06-08 19:14:37,894 [INFO] [device.py:send_hello] Server acknowledgement: HELLO_RECEIVED
+2025-06-08 19:14:37,894 [INFO] [device.py:recv_hello] Received header: HELLO
+2025-06-08 19:14:37,894 [INFO] [device.py:recv_hello] Recieving server certificate length..
+2025-06-08 19:14:37,894 [INFO] [device.py:recv_hello] Expecting server cert length 881 bytes.
+2025-06-08 19:14:37,894 [INFO] [device.py:recv_hello] Received server certificate: 
+2025-06-08 19:14:37,895 [INFO] [device.py:recv_hello] Sent acknowledgement
+2025-06-08 19:14:37,895 [INFO] [device.py:recv_hello] Server certificate validated successfully
+2025-06-08 19:14:37,895 [INFO] [device.py:recv_hello] Recieving server nonce..
+2025-06-08 19:14:37,897 [INFO] [ca_cert.py:send_certificate] Server acknowledgement: CERT_RECEIVED
+2025-06-08 19:14:37,897 [INFO] [server.py:send_hello] Sent nonce: b'\x17rr\x89A{\xa3\x1bV\xd0z\xfcH\xb4A:'
+2025-06-08 19:14:37,897 [INFO] [device.py:recv_hello] Received nonce: b'\x17rr\x89A{\xa3\x1bV\xd0z\xfcH\xb4A:'
+2025-06-08 19:14:37,897 [INFO] [device.py:recv_hello] Sent acknowledgement
+2025-06-08 19:14:37,897 [INFO] [device.py:send_pre_master_secret] Sent pre-master secret
+2025-06-08 19:14:37,898 [INFO] [server.py:send_hello] Device acknowledgement: NONCE_RECEIVED
+2025-06-08 19:14:37,898 [INFO] [server.py:recv_exact] Receiving exactly 6 bytes...
+2025-06-08 19:14:37,898 [INFO] [server.py:recv_exact] Received 6 bytes successfully
+2025-06-08 19:14:37,898 [INFO] [server.py:<module>] Received header: b'<PREM>'
+2025-06-08 19:14:37,898 [INFO] [server.py:<module>] Expecting pre-master secret
+2025-06-08 19:14:37,898 [INFO] [server.py:recv_exact] Receiving exactly 256 bytes...
+2025-06-08 19:14:37,898 [INFO] [server.py:recv_exact] Received 256 bytes successfully
+2025-06-08 19:14:37,899 [INFO] [server.py:<module>] Received pre-master secret: b'{\xf2\x02\x13Cl\npI\x8a\xb0spF\xd0\xd8\x12\xcd\xb8\xad\x85;\x0f\xc0\x14\xbc\x8b(\xb3\xe21\xc1'
+2025-06-08 19:14:37,900 [INFO] [server.py:<module>] Sent acknowledgement
+2025-06-08 19:14:37,900 [INFO] [server.py:<module>] Derived keys: {'client_enc_key': b'\x87\x19\x97\x15\x9b \xa6\x91\xace\xd9\x97\x8e\xdb\\\xd4', 'server_enc_key': b'\xb9l8\x8d\x81\x01\x81M\xdb$_\xa6\x91q\x1d,', 'client_mac_key': b'\xadA\x9d]N\xc0\xb8Y\xf0F\x8fy\xe3\xd2\xfd\x01', 'server_mac_key': b'DH\x0ePc$\xe6\xb6\x8eR\xe9\xfd\xd6\r*\xfc', 'iv': b'\xd9\x00:<\xd8K\x92\xfe>\x02\x8c\xd0\xe5d\x83k'}
+2025-06-08 19:14:37,900 [INFO] [server.py:recv_exact] Receiving exactly 6 bytes...
+2025-06-08 19:14:37,901 [INFO] [device.py:send_pre_master_secret] Server acknowledgement: PREM_RECEIVED
+2025-06-08 19:14:37,901 [INFO] [device.py:<module>] Derived keys: {'client_enc_key': b'\x87\x19\x97\x15\x9b \xa6\x91\xace\xd9\x97\x8e\xdb\\\xd4', 'server_enc_key': b'\xb9l8\x8d\x81\x01\x81M\xdb$_\xa6\x91q\x1d,', 'client_mac_key': b'\xadA\x9d]N\xc0\xb8Y\xf0F\x8fy\xe3\xd2\xfd\x01', 'server_mac_key': b'DH\x0ePc$\xe6\xb6\x8eR\xe9\xfd\xd6\r*\xfc', 'iv': b'\xd9\x00:<\xd8K\x92\xfe>\x02\x8c\xd0\xe5d\x83k'}
+2025-06-08 19:14:37,901 [INFO] [device.py:send_secure_text] Sent header: SECX
+2025-06-08 19:14:37,901 [INFO] [server.py:recv_exact] Received 6 bytes successfully
+2025-06-08 19:14:37,901 [INFO] [server.py:<module>] Received header: b'<SECX>'
+2025-06-08 19:14:37,901 [INFO] [server.py:<module>] Expecting secure text
+2025-06-08 19:14:37,901 [INFO] [server.py:recv_exact] Receiving exactly 256 bytes...
+2025-06-08 19:14:37,902 [INFO] [device.py:send_secure_text] Sent encrypted message
+2025-06-08 19:32:33,263 [INFO] [server.py:<module>] Server shut down
+2025-06-08 19:32:33,264 [ERROR] [device.py:send_secure_text] Failed to send secure text
+Traceback (most recent call last):
+  File "/Users/omerfarukbulut/info_sec/device.py", line 190, in send_secure_text
+    ack_msg = decrypt_message(ack, private_key)
+  File "/Users/omerfarukbulut/info_sec/rsa_keys.py", line 80, in decrypt_message
+    raise ValueError(f"Encrypted message length is invalid. Got {len(encrypted_message)} bytes, expected 256 bytes.")
+ValueError: Encrypted message length is invalid. Got 0 bytes, expected 256 bytes.
+2025-06-08 19:32:34,310 [INFO] [server.py:<module>] Server starting
+2025-06-08 19:32:40,471 [INFO] [server.py:<module>] Server starting
+2025-06-08 19:32:42,327 [INFO] [server.py:<module>] Server starting
+2025-06-08 19:32:43,713 [INFO] [server.py:<module>] Server starting
+2025-06-08 19:32:44,427 [INFO] [server.py:<module>] Server starting
+2025-06-08 19:32:44,998 [INFO] [server.py:<module>] Server starting
+2025-06-08 19:32:45,486 [INFO] [server.py:<module>] Server starting
+2025-06-08 19:32:45,700 [INFO] [server.py:<module>] Server starting
+2025-06-08 19:32:46,500 [INFO] [server.py:<module>] Server starting
+2025-06-08 19:32:46,820 [INFO] [server.py:<module>] Server starting
+2025-06-08 19:32:47,097 [INFO] [server.py:<module>] Server starting
+2025-06-08 19:32:47,406 [INFO] [server.py:<module>] Server starting
+2025-06-08 19:32:48,046 [INFO] [server.py:<module>] Server starting
+2025-06-08 19:32:48,556 [INFO] [server.py:<module>] Server starting
+2025-06-08 19:32:49,083 [INFO] [server.py:<module>] Server starting
+2025-06-08 19:32:49,611 [INFO] [server.py:<module>] Server starting
+2025-06-08 19:32:53,782 [INFO] [server.py:<module>] Server starting
+2025-06-08 19:33:00,008 [INFO] [server.py:<module>] Server starting
+2025-06-08 19:33:01,731 [INFO] [server.py:<module>] Server starting
+2025-06-08 19:33:04,878 [INFO] [server.py:<module>] Server starting
+2025-06-08 19:33:04,944 [INFO] [server.py:<module>] Server listening on port 9999
+2025-06-08 19:33:08,041 [INFO] [device.py:<module>] Device started
+2025-06-08 19:33:08,108 [INFO] [device.py:<module>] Connected to server
+2025-06-08 19:33:08,108 [INFO] [device.py:send_hello] Sent header: HELLO
+2025-06-08 19:33:08,108 [INFO] [server.py:<module>] Accepted connection from ('127.0.0.1', 60813)
+2025-06-08 19:33:08,109 [INFO] [server.py:recv_exact] Receiving exactly 6 bytes...
+2025-06-08 19:33:08,109 [INFO] [server.py:recv_exact] Received 6 bytes successfully
+2025-06-08 19:33:08,109 [INFO] [server.py:<module>] Received header: b'<HELO>'
+2025-06-08 19:33:08,109 [INFO] [server.py:<module>] Expecting hello
+2025-06-08 19:33:08,109 [INFO] [server.py:recv_certificate] Receiving certificate header (length)...
+2025-06-08 19:33:08,109 [INFO] [server.py:recv_exact] Receiving exactly 4 bytes...
+2025-06-08 19:33:08,109 [INFO] [ca_cert.py:send_certificate] Sent certificate length: 881
+2025-06-08 19:33:08,109 [INFO] [server.py:recv_exact] Received 4 bytes successfully
+2025-06-08 19:33:08,109 [INFO] [ca_cert.py:send_certificate] Sent certificate
+2025-06-08 19:33:08,109 [INFO] [server.py:recv_certificate] Length bytes (raw): 00000371
+2025-06-08 19:33:08,109 [INFO] [server.py:recv_certificate] Expecting certificate of 881 bytes
+2025-06-08 19:33:08,109 [INFO] [server.py:recv_exact] Receiving exactly 881 bytes...
+2025-06-08 19:33:08,109 [INFO] [server.py:recv_exact] Received 881 bytes successfully
+2025-06-08 19:33:08,109 [INFO] [server.py:recv_certificate] Received certificate from client
+2025-06-08 19:33:08,110 [INFO] [server.py:recv_certificate] Sent acknowledgement
+2025-06-08 19:33:08,110 [INFO] [server.py:<module>] Certificate validated successfully
+2025-06-08 19:33:08,110 [INFO] [server.py:recv_exact] Receiving exactly 16 bytes...
+2025-06-08 19:33:08,112 [INFO] [ca_cert.py:send_certificate] Server acknowledgement: CERT_RECEIVED
+2025-06-08 19:33:08,112 [INFO] [device.py:send_hello] Sent nonce: b'\xa0\xe1mYP\xd6\xea]\r\x8a\xf8\xedw\x9cp\x08'
+2025-06-08 19:33:08,112 [INFO] [server.py:recv_exact] Received 16 bytes successfully
+2025-06-08 19:33:08,112 [INFO] [server.py:<module>] Received nonce: b'\xa0\xe1mYP\xd6\xea]\r\x8a\xf8\xedw\x9cp\x08'
+2025-06-08 19:33:08,112 [INFO] [server.py:<module>] Sent acknowledgement
+2025-06-08 19:33:08,112 [INFO] [server.py:send_hello] Sent header: HELLO
+2025-06-08 19:33:08,113 [INFO] [ca_cert.py:send_certificate] Sent certificate length: 881
+2025-06-08 19:33:08,113 [INFO] [ca_cert.py:send_certificate] Sent certificate
+2025-06-08 19:33:08,114 [INFO] [device.py:send_hello] Server acknowledgement: HELLO_RECEIVED
+2025-06-08 19:33:08,114 [INFO] [device.py:recv_hello] Received header: HELLO
+2025-06-08 19:33:08,114 [INFO] [device.py:recv_hello] Recieving server certificate length..
+2025-06-08 19:33:08,114 [INFO] [device.py:recv_hello] Expecting server cert length 881 bytes.
+2025-06-08 19:33:08,114 [INFO] [device.py:recv_hello] Received server certificate: 
+2025-06-08 19:33:08,114 [INFO] [device.py:recv_hello] Sent acknowledgement
+2025-06-08 19:33:08,114 [INFO] [device.py:recv_hello] Server certificate validated successfully
+2025-06-08 19:33:08,114 [INFO] [device.py:recv_hello] Recieving server nonce..
+2025-06-08 19:33:08,116 [INFO] [ca_cert.py:send_certificate] Server acknowledgement: CERT_RECEIVED
+2025-06-08 19:33:08,117 [INFO] [device.py:recv_hello] Received nonce: b'\xda\x16bc\xba\xc2%3M\xe1,\xcd\xe4Q\xe6\x14'
+2025-06-08 19:33:08,117 [INFO] [server.py:send_hello] Sent nonce: b'\xda\x16bc\xba\xc2%3M\xe1,\xcd\xe4Q\xe6\x14'
+2025-06-08 19:33:08,117 [INFO] [device.py:recv_hello] Sent acknowledgement
+2025-06-08 19:33:08,117 [INFO] [device.py:send_pre_master_secret] Sent pre-master secret
+2025-06-08 19:33:08,118 [INFO] [server.py:send_hello] Device acknowledgement: NONCE_RECEIVED
+2025-06-08 19:33:08,118 [INFO] [server.py:recv_exact] Receiving exactly 6 bytes...
+2025-06-08 19:33:08,118 [INFO] [server.py:recv_exact] Received 6 bytes successfully
+2025-06-08 19:33:08,118 [INFO] [server.py:<module>] Received header: b'<PREM>'
+2025-06-08 19:33:08,118 [INFO] [server.py:<module>] Expecting pre-master secret
+2025-06-08 19:33:08,118 [INFO] [server.py:recv_exact] Receiving exactly 256 bytes...
+2025-06-08 19:33:08,118 [INFO] [server.py:recv_exact] Received 256 bytes successfully
+2025-06-08 19:33:08,119 [INFO] [server.py:<module>] Received pre-master secret: b';\xe6n\x169\xdd\xaa\x99\xc2<\xc3\xec\xac\x0eI\xa7\xb9\xcd\x08\x14\xe7\x95\xd3\xac\xaa\xc9\xe8\xc4\xceu\xa5\x15'
+2025-06-08 19:33:08,119 [INFO] [server.py:<module>] Sent acknowledgement
+2025-06-08 19:33:08,120 [INFO] [server.py:<module>] Derived keys: {'client_enc_key': b"\x02\xf9\xe6C\x14'\xb0)Qqz\xf7|G?I", 'server_enc_key': b'S\x05q(T\xf0\xb0#\xc5\xf2\x9c\xcb\r\xcbY\x92', 'client_mac_key': b'\x13\xf4\x89bU\x82\x89\x01\xa7\x98a\xddA\x9b7\x86', 'server_mac_key': b'1\x03\x06\xfe\x927\x84\xba\xa9=\x97){p\xa2\x94', 'iv': b'\xe3\xbcF\xa6\\\xd6\x14@_?\x92\x8d5Ci\xd5'}
+2025-06-08 19:33:08,120 [INFO] [server.py:recv_exact] Receiving exactly 6 bytes...
+2025-06-08 19:33:08,121 [INFO] [device.py:send_pre_master_secret] Server acknowledgement: PREM_RECEIVED
+2025-06-08 19:33:08,121 [INFO] [device.py:<module>] Derived keys: {'client_enc_key': b"\x02\xf9\xe6C\x14'\xb0)Qqz\xf7|G?I", 'server_enc_key': b'S\x05q(T\xf0\xb0#\xc5\xf2\x9c\xcb\r\xcbY\x92', 'client_mac_key': b'\x13\xf4\x89bU\x82\x89\x01\xa7\x98a\xddA\x9b7\x86', 'server_mac_key': b'1\x03\x06\xfe\x927\x84\xba\xa9=\x97){p\xa2\x94', 'iv': b'\xe3\xbcF\xa6\\\xd6\x14@_?\x92\x8d5Ci\xd5'}
+2025-06-08 19:33:08,121 [INFO] [device.py:send_secure_text] Sent header: SECX
+2025-06-08 19:33:08,121 [INFO] [server.py:recv_exact] Received 6 bytes successfully
+2025-06-08 19:33:08,121 [INFO] [server.py:<module>] Received header: b'<SECX>'
+2025-06-08 19:33:08,121 [INFO] [server.py:<module>] Expecting secure text
+2025-06-08 19:33:08,121 [INFO] [server.py:recv_exact] Receiving exactly 256 bytes...
+2025-06-08 19:33:08,121 [INFO] [device.py:send_secure_text] Sent encrypted message
+2025-06-08 19:33:46,580 [INFO] [server.py:<module>] Server shut down
+2025-06-08 19:33:46,581 [ERROR] [device.py:send_secure_text] Failed to send secure text
+Traceback (most recent call last):
+  File "/Users/omerfarukbulut/info_sec/device.py", line 190, in send_secure_text
+    ack_msg = decrypt_message(ack, private_key)
+  File "/Users/omerfarukbulut/info_sec/rsa_keys.py", line 80, in decrypt_message
+    raise ValueError(f"Encrypted message length is invalid. Got {len(encrypted_message)} bytes, expected 256 bytes.")
+ValueError: Encrypted message length is invalid. Got 0 bytes, expected 256 bytes.
+2025-06-08 19:33:48,876 [INFO] [server.py:<module>] Server starting
+2025-06-08 19:33:49,998 [INFO] [server.py:<module>] Server starting
+2025-06-08 19:33:54,556 [INFO] [server.py:<module>] Server starting
+2025-06-08 19:33:56,111 [INFO] [server.py:<module>] Server starting
+2025-06-08 19:43:18,460 [INFO] [server.py:<module>] Server starting
+2025-06-08 19:43:18,529 [INFO] [server.py:<module>] Server listening on port 9999
+2025-06-08 19:43:21,718 [INFO] [device.py:<module>] Device started
+2025-06-08 19:43:21,786 [INFO] [device.py:<module>] Connected to server
+2025-06-08 19:43:21,786 [INFO] [device.py:send_hello] Sent header: HELLO
+2025-06-08 19:43:21,786 [INFO] [server.py:<module>] Accepted connection from ('127.0.0.1', 60863)
+2025-06-08 19:43:21,786 [INFO] [server.py:recv_exact] Receiving exactly 6 bytes...
+2025-06-08 19:43:21,786 [INFO] [server.py:recv_exact] Received 6 bytes successfully
+2025-06-08 19:43:21,786 [INFO] [server.py:<module>] Received header: b'<HELO>'
+2025-06-08 19:43:21,786 [INFO] [server.py:<module>] Expecting hello
+2025-06-08 19:43:21,786 [INFO] [server.py:recv_certificate] Receiving certificate header (length)...
+2025-06-08 19:43:21,786 [INFO] [server.py:recv_exact] Receiving exactly 4 bytes...
+2025-06-08 19:43:21,787 [INFO] [ca_cert.py:send_certificate] Sent certificate length: 881
+2025-06-08 19:43:21,787 [INFO] [ca_cert.py:send_certificate] Sent certificate
+2025-06-08 19:43:21,787 [INFO] [server.py:recv_exact] Received 4 bytes successfully
+2025-06-08 19:43:21,787 [INFO] [server.py:recv_certificate] Length bytes (raw): 00000371
+2025-06-08 19:43:21,787 [INFO] [server.py:recv_certificate] Expecting certificate of 881 bytes
+2025-06-08 19:43:21,787 [INFO] [server.py:recv_exact] Receiving exactly 881 bytes...
+2025-06-08 19:43:21,787 [INFO] [server.py:recv_exact] Received 881 bytes successfully
+2025-06-08 19:43:21,787 [INFO] [server.py:recv_certificate] Received certificate from client
+2025-06-08 19:43:21,788 [INFO] [server.py:recv_certificate] Sent acknowledgement
+2025-06-08 19:43:21,789 [INFO] [server.py:<module>] Certificate validated successfully
+2025-06-08 19:43:21,789 [INFO] [server.py:recv_exact] Receiving exactly 16 bytes...
+2025-06-08 19:43:21,791 [INFO] [ca_cert.py:send_certificate] Server acknowledgement: CERT_RECEIVED
+2025-06-08 19:43:21,791 [INFO] [device.py:send_hello] Sent nonce: b'@\t\xd2\x98\xbbBE\xe044\xe8\x02\x14\x80`\xa2'
+2025-06-08 19:43:21,791 [INFO] [server.py:recv_exact] Received 16 bytes successfully
+2025-06-08 19:43:21,791 [INFO] [server.py:<module>] Received nonce: b'@\t\xd2\x98\xbbBE\xe044\xe8\x02\x14\x80`\xa2'
+2025-06-08 19:43:21,791 [INFO] [server.py:<module>] Sent acknowledgement
+2025-06-08 19:43:21,792 [INFO] [server.py:send_hello] Sent header: HELLO
+2025-06-08 19:43:21,792 [INFO] [ca_cert.py:send_certificate] Sent certificate length: 881
+2025-06-08 19:43:21,792 [INFO] [ca_cert.py:send_certificate] Sent certificate
+2025-06-08 19:43:21,793 [INFO] [device.py:send_hello] Server acknowledgement: HELLO_RECEIVED
+2025-06-08 19:43:21,793 [INFO] [device.py:recv_hello] Received header: HELLO
+2025-06-08 19:43:21,793 [INFO] [device.py:recv_hello] Recieving server certificate length..
+2025-06-08 19:43:21,793 [INFO] [device.py:recv_hello] Expecting server cert length 881 bytes.
+2025-06-08 19:43:21,793 [INFO] [device.py:recv_hello] Received server certificate: 
+2025-06-08 19:43:21,793 [INFO] [device.py:recv_hello] Sent acknowledgement
+2025-06-08 19:43:21,793 [INFO] [device.py:recv_hello] Server certificate validated successfully
+2025-06-08 19:43:21,793 [INFO] [device.py:recv_hello] Recieving server nonce..
+2025-06-08 19:43:21,796 [INFO] [ca_cert.py:send_certificate] Server acknowledgement: CERT_RECEIVED
+2025-06-08 19:43:21,796 [INFO] [server.py:send_hello] Sent nonce: b'"xJ\xa0\x8e~\'P\x18q\xb1\xdcd\xef$\xfb'
+2025-06-08 19:43:21,796 [INFO] [device.py:recv_hello] Received nonce: b'"xJ\xa0\x8e~\'P\x18q\xb1\xdcd\xef$\xfb'
+2025-06-08 19:43:21,796 [INFO] [device.py:recv_hello] Sent acknowledgement
+2025-06-08 19:43:21,796 [INFO] [device.py:send_pre_master_secret] Sent pre-master secret
+2025-06-08 19:43:21,797 [INFO] [server.py:send_hello] Device acknowledgement: NONCE_RECEIVED
+2025-06-08 19:43:21,797 [INFO] [server.py:recv_exact] Receiving exactly 6 bytes...
+2025-06-08 19:43:21,797 [INFO] [server.py:recv_exact] Received 6 bytes successfully
+2025-06-08 19:43:21,797 [INFO] [server.py:<module>] Received header: b'<PREM>'
+2025-06-08 19:43:21,797 [INFO] [server.py:<module>] Expecting pre-master secret
+2025-06-08 19:43:21,797 [INFO] [server.py:recv_exact] Receiving exactly 256 bytes...
+2025-06-08 19:43:21,797 [INFO] [server.py:recv_exact] Received 256 bytes successfully
+2025-06-08 19:43:21,798 [INFO] [server.py:<module>] Received pre-master secret: b'\xa4\x92s\x1fn\xf0?\xa2/f^\xa3H\xbf\\\x0f\xe3\xbd*\xd1\xb4\x92\xfe\x0b\xc5\x08\x8f\x90\xf9\x1e\xe5:'
+2025-06-08 19:43:21,798 [INFO] [server.py:<module>] Sent acknowledgement
+2025-06-08 19:43:21,798 [INFO] [server.py:<module>] Derived keys: {'client_enc_key': b'K\n\xf1\xb9W\xfe\xf0\x81\x02b88)\xa45\x16', 'server_enc_key': b'TGu\x06\xc6\xaa\xc3\x00\x08H\x16\xe6?\xb2\x92\xa9', 'client_mac_key': b'\xfc\xd1\x83\xf1\x00\x9a\xc1\xb2-\xb5.R\x9c\x88\xbcv', 'server_mac_key': b'm%]\x07\xb6\xef\xccz\xb6\xe3\x8e \xb3\xedF\x96', 'iv': b'\x04\x05K\x0e@\xe9\xb5U\x98\xa1\xd0\xb4<#\x1d`'}
+2025-06-08 19:43:21,798 [INFO] [server.py:recv_exact] Receiving exactly 6 bytes...
+2025-06-08 19:43:21,799 [INFO] [device.py:send_pre_master_secret] Server acknowledgement: PREM_RECEIVED
+2025-06-08 19:43:21,800 [INFO] [device.py:<module>] Derived keys: {'client_enc_key': b'K\n\xf1\xb9W\xfe\xf0\x81\x02b88)\xa45\x16', 'server_enc_key': b'TGu\x06\xc6\xaa\xc3\x00\x08H\x16\xe6?\xb2\x92\xa9', 'client_mac_key': b'\xfc\xd1\x83\xf1\x00\x9a\xc1\xb2-\xb5.R\x9c\x88\xbcv', 'server_mac_key': b'm%]\x07\xb6\xef\xccz\xb6\xe3\x8e \xb3\xedF\x96', 'iv': b'\x04\x05K\x0e@\xe9\xb5U\x98\xa1\xd0\xb4<#\x1d`'}
+2025-06-08 19:43:21,800 [INFO] [device.py:send_secure_text] Sent header: SECX
+2025-06-08 19:43:21,800 [INFO] [server.py:recv_exact] Received 6 bytes successfully
+2025-06-08 19:43:21,800 [INFO] [server.py:<module>] Received header: b'<SECX>'
+2025-06-08 19:43:21,800 [INFO] [server.py:<module>] Expecting secure text
+2025-06-08 19:43:21,800 [INFO] [server.py:recv_exact] Receiving exactly 256 bytes...
+2025-06-08 19:43:21,800 [INFO] [device.py:send_secure_text] Sent encrypted message
+2025-06-08 19:45:23,002 [INFO] [server.py:<module>] Server shut down
+2025-06-08 19:45:23,003 [ERROR] [device.py:send_secure_text] Failed to send secure text
+Traceback (most recent call last):
+  File "/Users/omerfarukbulut/info_sec/device.py", line 190, in send_secure_text
+    ack_msg = decrypt_message(ack, private_key)
+  File "/Users/omerfarukbulut/info_sec/rsa_keys.py", line 80, in decrypt_message
+    raise ValueError(f"Encrypted message length is invalid. Got {len(encrypted_message)} bytes, expected 256 bytes.")
+ValueError: Encrypted message length is invalid. Got 0 bytes, expected 256 bytes.
+2025-06-08 19:45:24,432 [INFO] [server.py:<module>] Server starting
+2025-06-08 19:48:34,585 [INFO] [server.py:<module>] Server starting
+2025-06-08 19:48:34,653 [INFO] [server.py:<module>] Server listening on port 9999
+2025-06-08 19:48:36,523 [INFO] [device.py:<module>] Device started
+2025-06-08 19:48:36,590 [INFO] [device.py:<module>] Connected to server
+2025-06-08 19:48:36,590 [INFO] [device.py:send_hello] Sent header: HELLO
+2025-06-08 19:48:36,590 [INFO] [server.py:<module>] Accepted connection from ('127.0.0.1', 60915)
+2025-06-08 19:48:36,590 [INFO] [server.py:recv_exact] Receiving exactly 6 bytes...
+2025-06-08 19:48:36,590 [INFO] [server.py:recv_exact] Received 6 bytes successfully
+2025-06-08 19:48:36,591 [INFO] [server.py:<module>] Received header: b'<HELO>'
+2025-06-08 19:48:36,591 [INFO] [server.py:<module>] Expecting hello
+2025-06-08 19:48:36,591 [INFO] [server.py:recv_certificate] Receiving certificate header (length)...
+2025-06-08 19:48:36,591 [INFO] [server.py:recv_exact] Receiving exactly 4 bytes...
+2025-06-08 19:48:36,591 [INFO] [ca_cert.py:send_certificate] Sent certificate length: 881
+2025-06-08 19:48:36,591 [INFO] [ca_cert.py:send_certificate] Sent certificate
+2025-06-08 19:48:36,591 [INFO] [server.py:recv_exact] Received 4 bytes successfully
+2025-06-08 19:48:36,591 [INFO] [server.py:recv_certificate] Length bytes (raw): 00000371
+2025-06-08 19:48:36,591 [INFO] [server.py:recv_certificate] Expecting certificate of 881 bytes
+2025-06-08 19:48:36,591 [INFO] [server.py:recv_exact] Receiving exactly 881 bytes...
+2025-06-08 19:48:36,591 [INFO] [server.py:recv_exact] Received 881 bytes successfully
+2025-06-08 19:48:36,591 [INFO] [server.py:recv_certificate] Received certificate from client
+2025-06-08 19:48:36,594 [INFO] [server.py:recv_certificate] Sent acknowledgement
+2025-06-08 19:48:36,595 [INFO] [server.py:<module>] Certificate validated successfully
+2025-06-08 19:48:36,595 [INFO] [server.py:recv_exact] Receiving exactly 16 bytes...
+2025-06-08 19:48:36,597 [INFO] [ca_cert.py:send_certificate] Server acknowledgement: CERT_RECEIVED
+2025-06-08 19:48:36,597 [INFO] [device.py:send_hello] Sent nonce: b'n\xae_\x1d\xd3%\x9f\rC\xc4\xb1v\x1b(\xa1\xec'
+2025-06-08 19:48:36,597 [INFO] [server.py:recv_exact] Received 16 bytes successfully
+2025-06-08 19:48:36,597 [INFO] [server.py:<module>] Received nonce: b'n\xae_\x1d\xd3%\x9f\rC\xc4\xb1v\x1b(\xa1\xec'
+2025-06-08 19:48:36,597 [INFO] [server.py:<module>] Sent acknowledgement
+2025-06-08 19:48:36,597 [INFO] [server.py:send_hello] Sent header: HELLO
+2025-06-08 19:48:36,597 [INFO] [ca_cert.py:send_certificate] Sent certificate length: 881
+2025-06-08 19:48:36,597 [INFO] [ca_cert.py:send_certificate] Sent certificate
+2025-06-08 19:48:36,598 [INFO] [device.py:send_hello] Server acknowledgement: HELLO_RECEIVED
+2025-06-08 19:48:36,598 [INFO] [device.py:recv_hello] Received header: HELLO
+2025-06-08 19:48:36,598 [INFO] [device.py:recv_hello] Recieving server certificate length..
+2025-06-08 19:48:36,598 [INFO] [device.py:recv_hello] Expecting server cert length 881 bytes.
+2025-06-08 19:48:36,598 [INFO] [device.py:recv_hello] Received server certificate: 
+2025-06-08 19:48:36,599 [INFO] [device.py:recv_hello] Sent acknowledgement
+2025-06-08 19:48:36,599 [INFO] [device.py:recv_hello] Server certificate validated successfully
+2025-06-08 19:48:36,599 [INFO] [device.py:recv_hello] Recieving server nonce..
+2025-06-08 19:48:36,601 [INFO] [ca_cert.py:send_certificate] Server acknowledgement: CERT_RECEIVED
+2025-06-08 19:48:36,601 [INFO] [server.py:send_hello] Sent nonce: b'\x0b\x0b\x08\xc6V\x0f\x8d\xaa\xfa\x8f\xd3l\xb8\x81\x92\xef'
+2025-06-08 19:48:36,601 [INFO] [device.py:recv_hello] Received nonce: b'\x0b\x0b\x08\xc6V\x0f\x8d\xaa\xfa\x8f\xd3l\xb8\x81\x92\xef'
+2025-06-08 19:48:36,601 [INFO] [device.py:recv_hello] Sent acknowledgement
+2025-06-08 19:48:36,602 [INFO] [device.py:send_pre_master_secret] Sent pre-master secret
+2025-06-08 19:48:36,602 [INFO] [server.py:send_hello] Device acknowledgement: NONCE_RECEIVED
+2025-06-08 19:48:36,603 [INFO] [server.py:recv_exact] Receiving exactly 6 bytes...
+2025-06-08 19:48:36,603 [INFO] [server.py:recv_exact] Received 6 bytes successfully
+2025-06-08 19:48:36,603 [INFO] [server.py:<module>] Received header: b'<PREM>'
+2025-06-08 19:48:36,603 [INFO] [server.py:<module>] Expecting pre-master secret
+2025-06-08 19:48:36,603 [INFO] [server.py:recv_exact] Receiving exactly 256 bytes...
+2025-06-08 19:48:36,603 [INFO] [server.py:recv_exact] Received 256 bytes successfully
+2025-06-08 19:48:36,604 [INFO] [server.py:<module>] Received pre-master secret: b'J\xeb\xb75\xc9H\xad\xd2.a$n\xa5\xf0\xd1\xb3\x168\xb3\x19\x8euu\x08p\xf6\xc8\xc7\x10m\x0c\x14'
+2025-06-08 19:48:36,604 [INFO] [server.py:<module>] Sent acknowledgement
+2025-06-08 19:48:36,604 [INFO] [server.py:<module>] Derived keys: {'client_enc_key': b'\xe0E\xc8]\x02\xe89\xf3\xd6\x9a1\xdepn\x02\xc6', 'server_enc_key': b'\xdd\xed\xd8C\xe1n\x1b\xdc\xa0N.2\xf9\xe0\xcb-', 'client_mac_key': b'\x98\xe1.\x13e#\x0e6e\xbb7\x0b\x1f\xeb\xf6A', 'server_mac_key': b'\xf2o\x87\x17\xae7\xc6\x9c\xd1\x8a\xa33j\xfeSh', 'iv': b'\xd49\xe2WLB\xd3\xb4\xc9o\xd3DK\x96\xf0\x97'}
+2025-06-08 19:48:36,604 [INFO] [server.py:recv_exact] Receiving exactly 6 bytes...
+2025-06-08 19:48:36,605 [INFO] [device.py:send_pre_master_secret] Server acknowledgement: PREM_RECEIVED
+2025-06-08 19:48:36,605 [INFO] [device.py:<module>] Derived keys: {'client_enc_key': b'\xe0E\xc8]\x02\xe89\xf3\xd6\x9a1\xdepn\x02\xc6', 'server_enc_key': b'\xdd\xed\xd8C\xe1n\x1b\xdc\xa0N.2\xf9\xe0\xcb-', 'client_mac_key': b'\x98\xe1.\x13e#\x0e6e\xbb7\x0b\x1f\xeb\xf6A', 'server_mac_key': b'\xf2o\x87\x17\xae7\xc6\x9c\xd1\x8a\xa33j\xfeSh', 'iv': b'\xd49\xe2WLB\xd3\xb4\xc9o\xd3DK\x96\xf0\x97'}
+2025-06-08 19:48:36,605 [INFO] [device.py:send_secure_text] Sent header: SECX
+2025-06-08 19:48:36,605 [INFO] [server.py:recv_exact] Received 6 bytes successfully
+2025-06-08 19:48:36,605 [INFO] [server.py:<module>] Received header: b'<SECX>'
+2025-06-08 19:48:36,605 [INFO] [server.py:<module>] Expecting secure text
+2025-06-08 19:48:36,605 [INFO] [server.py:recv_exact] Receiving exactly 4 bytes...
+2025-06-08 19:48:36,606 [INFO] [device.py:send_secure_text] Sent encrypted message
+2025-06-08 19:48:36,606 [INFO] [server.py:recv_exact] Received 4 bytes successfully
+2025-06-08 19:48:36,606 [INFO] [server.py:recv_exact] Receiving exactly 48 bytes...
+2025-06-08 19:48:36,606 [INFO] [server.py:recv_exact] Received 48 bytes successfully
+2025-06-08 19:48:36,606 [ERROR] [server.py:recv_secure_text] Failed to receive secure text
+Traceback (most recent call last):
+  File "/Users/omerfarukbulut/info_sec/server.py", line 104, in recv_secure_text
+    decrypted_message = decrypt_aes_with_hmac(encrypted_message, aes_key, mac_key, iv)
+  File "/Users/omerfarukbulut/info_sec/rsa_keys.py", line 143, in decrypt_aes_with_hmac
+    h.verify(mac)
+    ~~~~~~~~^^^^^
+cryptography.exceptions.InvalidSignature: Signature did not match digest.
+2025-06-08 19:48:36,607 [ERROR] [server.py:<module>] Failed to receive secure text
+Traceback (most recent call last):
+  File "/Users/omerfarukbulut/info_sec/server.py", line 206, in <module>
+    decrypted_message = recv_secure_text(client, DERIVED_KEYS)
+  File "/Users/omerfarukbulut/info_sec/server.py", line 109, in recv_secure_text
+    raise e
+  File "/Users/omerfarukbulut/info_sec/server.py", line 104, in recv_secure_text
+    decrypted_message = decrypt_aes_with_hmac(encrypted_message, aes_key, mac_key, iv)
+  File "/Users/omerfarukbulut/info_sec/rsa_keys.py", line 143, in decrypt_aes_with_hmac
+    h.verify(mac)
+    ~~~~~~~~^^^^^
+cryptography.exceptions.InvalidSignature: Signature did not match digest.
+2025-06-08 19:48:36,607 [ERROR] [server.py:<module>] An error occurred during communication.
+Traceback (most recent call last):
+  File "/Users/omerfarukbulut/info_sec/server.py", line 214, in <module>
+    raise e
+  File "/Users/omerfarukbulut/info_sec/server.py", line 206, in <module>
+    decrypted_message = recv_secure_text(client, DERIVED_KEYS)
+  File "/Users/omerfarukbulut/info_sec/server.py", line 109, in recv_secure_text
+    raise e
+  File "/Users/omerfarukbulut/info_sec/server.py", line 104, in recv_secure_text
+    decrypted_message = decrypt_aes_with_hmac(encrypted_message, aes_key, mac_key, iv)
+  File "/Users/omerfarukbulut/info_sec/rsa_keys.py", line 143, in decrypt_aes_with_hmac
+    h.verify(mac)
+    ~~~~~~~~^^^^^
+cryptography.exceptions.InvalidSignature: Signature did not match digest.
+2025-06-08 19:48:36,608 [INFO] [server.py:<module>] Server shut down
+2025-06-08 19:48:36,608 [ERROR] [device.py:send_secure_text] Failed to send secure text
+Traceback (most recent call last):
+  File "/Users/omerfarukbulut/info_sec/device.py", line 191, in send_secure_text
+    ack_msg = decrypt_message(ack, private_key)
+  File "/Users/omerfarukbulut/info_sec/rsa_keys.py", line 80, in decrypt_message
+    raise ValueError(f"Encrypted message length is invalid. Got {len(encrypted_message)} bytes, expected 256 bytes.")
+ValueError: Encrypted message length is invalid. Got 0 bytes, expected 256 bytes.
+2025-06-08 19:50:27,596 [INFO] [server.py:<module>] Server starting
+2025-06-08 19:50:27,663 [INFO] [server.py:<module>] Server listening on port 9999
+2025-06-08 19:50:29,728 [INFO] [device.py:<module>] Device started
+2025-06-08 19:50:29,795 [INFO] [device.py:<module>] Connected to server
+2025-06-08 19:50:29,795 [INFO] [device.py:send_hello] Sent header: HELLO
+2025-06-08 19:50:29,795 [INFO] [server.py:<module>] Accepted connection from ('127.0.0.1', 60929)
+2025-06-08 19:50:29,795 [INFO] [server.py:recv_exact] Receiving exactly 6 bytes...
+2025-06-08 19:50:29,795 [INFO] [server.py:recv_exact] Received 6 bytes successfully
+2025-06-08 19:50:29,795 [INFO] [server.py:<module>] Received header: b'<HELO>'
+2025-06-08 19:50:29,795 [INFO] [server.py:<module>] Expecting hello
+2025-06-08 19:50:29,795 [INFO] [server.py:recv_certificate] Receiving certificate header (length)...
+2025-06-08 19:50:29,795 [INFO] [server.py:recv_exact] Receiving exactly 4 bytes...
+2025-06-08 19:50:29,796 [INFO] [ca_cert.py:send_certificate] Sent certificate length: 881
+2025-06-08 19:50:29,796 [INFO] [server.py:recv_exact] Received 4 bytes successfully
+2025-06-08 19:50:29,796 [INFO] [ca_cert.py:send_certificate] Sent certificate
+2025-06-08 19:50:29,796 [INFO] [server.py:recv_certificate] Length bytes (raw): 00000371
+2025-06-08 19:50:29,796 [INFO] [server.py:recv_certificate] Expecting certificate of 881 bytes
+2025-06-08 19:50:29,796 [INFO] [server.py:recv_exact] Receiving exactly 881 bytes...
+2025-06-08 19:50:29,796 [INFO] [server.py:recv_exact] Received 881 bytes successfully
+2025-06-08 19:50:29,796 [INFO] [server.py:recv_certificate] Received certificate from client
+2025-06-08 19:50:29,798 [INFO] [server.py:recv_certificate] Sent acknowledgement
+2025-06-08 19:50:29,799 [INFO] [server.py:<module>] Certificate validated successfully
+2025-06-08 19:50:29,799 [INFO] [server.py:recv_exact] Receiving exactly 16 bytes...
+2025-06-08 19:50:29,801 [INFO] [ca_cert.py:send_certificate] Server acknowledgement: CERT_RECEIVED
+2025-06-08 19:50:29,801 [INFO] [device.py:send_hello] Sent nonce: b'O*\xfd\xdf\x00\xf1af\x94y8Z\x92\x10\xe1!'
+2025-06-08 19:50:29,801 [INFO] [server.py:recv_exact] Received 16 bytes successfully
+2025-06-08 19:50:29,801 [INFO] [server.py:<module>] Received nonce: b'O*\xfd\xdf\x00\xf1af\x94y8Z\x92\x10\xe1!'
+2025-06-08 19:50:29,801 [INFO] [server.py:<module>] Sent acknowledgement
+2025-06-08 19:50:29,801 [INFO] [server.py:send_hello] Sent header: HELLO
+2025-06-08 19:50:29,801 [INFO] [ca_cert.py:send_certificate] Sent certificate length: 881
+2025-06-08 19:50:29,802 [INFO] [ca_cert.py:send_certificate] Sent certificate
+2025-06-08 19:50:29,802 [INFO] [device.py:send_hello] Server acknowledgement: HELLO_RECEIVED
+2025-06-08 19:50:29,802 [INFO] [device.py:recv_hello] Received header: HELLO
+2025-06-08 19:50:29,802 [INFO] [device.py:recv_hello] Recieving server certificate length..
+2025-06-08 19:50:29,802 [INFO] [device.py:recv_hello] Expecting server cert length 881 bytes.
+2025-06-08 19:50:29,802 [INFO] [device.py:recv_hello] Received server certificate: 
+2025-06-08 19:50:29,803 [INFO] [device.py:recv_hello] Sent acknowledgement
+2025-06-08 19:50:29,803 [INFO] [device.py:recv_hello] Server certificate validated successfully
+2025-06-08 19:50:29,803 [INFO] [device.py:recv_hello] Recieving server nonce..
+2025-06-08 19:50:29,805 [INFO] [ca_cert.py:send_certificate] Server acknowledgement: CERT_RECEIVED
+2025-06-08 19:50:29,805 [INFO] [server.py:send_hello] Sent nonce: b"\xe3\x8a\x95\xf0\xff\xa01?p\x91\x01\xa3'$\xd6%"
+2025-06-08 19:50:29,805 [INFO] [device.py:recv_hello] Received nonce: b"\xe3\x8a\x95\xf0\xff\xa01?p\x91\x01\xa3'$\xd6%"
+2025-06-08 19:50:29,806 [INFO] [device.py:recv_hello] Sent acknowledgement
+2025-06-08 19:50:29,806 [INFO] [device.py:send_pre_master_secret] Sent pre-master secret
+2025-06-08 19:50:29,807 [INFO] [server.py:send_hello] Device acknowledgement: NONCE_RECEIVED
+2025-06-08 19:50:29,807 [INFO] [server.py:recv_exact] Receiving exactly 6 bytes...
+2025-06-08 19:50:29,807 [INFO] [server.py:recv_exact] Received 6 bytes successfully
+2025-06-08 19:50:29,807 [INFO] [server.py:<module>] Received header: b'<PREM>'
+2025-06-08 19:50:29,807 [INFO] [server.py:<module>] Expecting pre-master secret
+2025-06-08 19:50:29,807 [INFO] [server.py:recv_exact] Receiving exactly 256 bytes...
+2025-06-08 19:50:29,807 [INFO] [server.py:recv_exact] Received 256 bytes successfully
+2025-06-08 19:50:29,808 [INFO] [server.py:<module>] Received pre-master secret: b'V\x7f\x19<G\xf7\xeff\x9b\xae\x02\x87\xf1\xbd\xd3Y\x80U\x92q&"\xd6\x1c\xa4l\x9dCQFa,'
+2025-06-08 19:50:29,808 [INFO] [server.py:<module>] Sent acknowledgement
+2025-06-08 19:50:29,808 [INFO] [server.py:<module>] Derived keys: {'client_enc_key': b'\x90\x139\x9d?\xdd\xb7\xd3\x01\xac\xe7\x02&\x18u\x1b', 'server_enc_key': b'\x17+zZ89\xdeGb\xec\x1du\xc1\x88\x11\x8c', 'client_mac_key': b'_\xc3Xh\xc3\xa2^h\x07\xe2as\xed\xcc\x9fA', 'server_mac_key': b'\xa2\xa7\xe84\xf9\xe0+\xc6\xc3u\xd6\xeb\x9a<\xe0\xc0', 'iv': b'\xeb*\x98\x84/O\xb4\xa3\xf4\xa4\x0b6\x19\x0f&\xf7'}
+2025-06-08 19:50:29,808 [INFO] [server.py:recv_exact] Receiving exactly 6 bytes...
+2025-06-08 19:50:29,810 [INFO] [device.py:send_pre_master_secret] Server acknowledgement: PREM_RECEIVED
+2025-06-08 19:50:29,810 [INFO] [device.py:<module>] Derived keys: {'client_enc_key': b'\x90\x139\x9d?\xdd\xb7\xd3\x01\xac\xe7\x02&\x18u\x1b', 'server_enc_key': b'\x17+zZ89\xdeGb\xec\x1du\xc1\x88\x11\x8c', 'client_mac_key': b'_\xc3Xh\xc3\xa2^h\x07\xe2as\xed\xcc\x9fA', 'server_mac_key': b'\xa2\xa7\xe84\xf9\xe0+\xc6\xc3u\xd6\xeb\x9a<\xe0\xc0', 'iv': b'\xeb*\x98\x84/O\xb4\xa3\xf4\xa4\x0b6\x19\x0f&\xf7'}
+2025-06-08 19:50:29,810 [INFO] [device.py:send_secure_text] Sent header: SECX
+2025-06-08 19:50:29,810 [INFO] [server.py:recv_exact] Received 6 bytes successfully
+2025-06-08 19:50:29,810 [INFO] [server.py:<module>] Received header: b'<SECX>'
+2025-06-08 19:50:29,810 [INFO] [server.py:<module>] Expecting secure text
+2025-06-08 19:50:29,810 [INFO] [server.py:recv_exact] Receiving exactly 4 bytes...
+2025-06-08 19:50:29,811 [INFO] [device.py:send_secure_text] Sent encrypted message
+2025-06-08 19:50:29,811 [INFO] [server.py:recv_exact] Received 4 bytes successfully
+2025-06-08 19:50:29,811 [INFO] [server.py:recv_exact] Receiving exactly 48 bytes...
+2025-06-08 19:50:29,811 [INFO] [server.py:recv_exact] Received 48 bytes successfully
+2025-06-08 19:50:29,811 [ERROR] [server.py:recv_secure_text] Failed to receive secure text
+Traceback (most recent call last):
+  File "/Users/omerfarukbulut/info_sec/server.py", line 104, in recv_secure_text
+    decrypted_message = decrypt_aes_with_hmac(encrypted_message, aes_key, mac_key, iv)
+  File "/Users/omerfarukbulut/info_sec/rsa_keys.py", line 147, in decrypt_aes_with_hmac
+    plaintext = decrypter.update(padded_message) + decrypter.finalize()
+                                 ^^^^^^^^^^^^^^
+UnboundLocalError: cannot access local variable 'padded_message' where it is not associated with a value
+2025-06-08 19:50:29,812 [ERROR] [server.py:<module>] Failed to receive secure text
+Traceback (most recent call last):
+  File "/Users/omerfarukbulut/info_sec/server.py", line 206, in <module>
+    decrypted_message = recv_secure_text(client, DERIVED_KEYS)
+  File "/Users/omerfarukbulut/info_sec/server.py", line 109, in recv_secure_text
+    raise e
+  File "/Users/omerfarukbulut/info_sec/server.py", line 104, in recv_secure_text
+    decrypted_message = decrypt_aes_with_hmac(encrypted_message, aes_key, mac_key, iv)
+  File "/Users/omerfarukbulut/info_sec/rsa_keys.py", line 147, in decrypt_aes_with_hmac
+    plaintext = decrypter.update(padded_message) + decrypter.finalize()
+                                 ^^^^^^^^^^^^^^
+UnboundLocalError: cannot access local variable 'padded_message' where it is not associated with a value
+2025-06-08 19:50:29,812 [ERROR] [server.py:<module>] An error occurred during communication.
+Traceback (most recent call last):
+  File "/Users/omerfarukbulut/info_sec/server.py", line 214, in <module>
+    raise e
+  File "/Users/omerfarukbulut/info_sec/server.py", line 206, in <module>
+    decrypted_message = recv_secure_text(client, DERIVED_KEYS)
+  File "/Users/omerfarukbulut/info_sec/server.py", line 109, in recv_secure_text
+    raise e
+  File "/Users/omerfarukbulut/info_sec/server.py", line 104, in recv_secure_text
+    decrypted_message = decrypt_aes_with_hmac(encrypted_message, aes_key, mac_key, iv)
+  File "/Users/omerfarukbulut/info_sec/rsa_keys.py", line 147, in decrypt_aes_with_hmac
+    plaintext = decrypter.update(padded_message) + decrypter.finalize()
+                                 ^^^^^^^^^^^^^^
+UnboundLocalError: cannot access local variable 'padded_message' where it is not associated with a value
+2025-06-08 19:50:29,813 [INFO] [server.py:<module>] Server shut down
+2025-06-08 19:50:29,813 [ERROR] [device.py:send_secure_text] Failed to send secure text
+Traceback (most recent call last):
+  File "/Users/omerfarukbulut/info_sec/device.py", line 191, in send_secure_text
+    ack_msg = decrypt_message(ack, private_key)
+  File "/Users/omerfarukbulut/info_sec/rsa_keys.py", line 80, in decrypt_message
+    raise ValueError(f"Encrypted message length is invalid. Got {len(encrypted_message)} bytes, expected 256 bytes.")
+ValueError: Encrypted message length is invalid. Got 0 bytes, expected 256 bytes.
+2025-06-08 19:52:41,745 [INFO] [server.py:<module>] Server starting
+2025-06-08 19:52:41,813 [INFO] [server.py:<module>] Server listening on port 9999
+2025-06-08 19:52:43,516 [INFO] [device.py:<module>] Device started
+2025-06-08 19:52:43,583 [INFO] [device.py:<module>] Connected to server
+2025-06-08 19:52:43,583 [INFO] [device.py:send_hello] Sent header: HELLO
+2025-06-08 19:52:43,583 [INFO] [server.py:<module>] Accepted connection from ('127.0.0.1', 60945)
+2025-06-08 19:52:43,583 [INFO] [server.py:recv_exact] Receiving exactly 6 bytes...
+2025-06-08 19:52:43,583 [INFO] [server.py:recv_exact] Received 6 bytes successfully
+2025-06-08 19:52:43,583 [INFO] [server.py:<module>] Received header: b'<HELO>'
+2025-06-08 19:52:43,583 [INFO] [server.py:<module>] Expecting hello
+2025-06-08 19:52:43,583 [INFO] [server.py:recv_certificate] Receiving certificate header (length)...
+2025-06-08 19:52:43,583 [INFO] [server.py:recv_exact] Receiving exactly 4 bytes...
+2025-06-08 19:52:43,584 [INFO] [ca_cert.py:send_certificate] Sent certificate length: 881
+2025-06-08 19:52:43,584 [INFO] [server.py:recv_exact] Received 4 bytes successfully
+2025-06-08 19:52:43,584 [INFO] [ca_cert.py:send_certificate] Sent certificate
+2025-06-08 19:52:43,584 [INFO] [server.py:recv_certificate] Length bytes (raw): 00000371
+2025-06-08 19:52:43,584 [INFO] [server.py:recv_certificate] Expecting certificate of 881 bytes
+2025-06-08 19:52:43,584 [INFO] [server.py:recv_exact] Receiving exactly 881 bytes...
+2025-06-08 19:52:43,584 [INFO] [server.py:recv_exact] Received 881 bytes successfully
+2025-06-08 19:52:43,584 [INFO] [server.py:recv_certificate] Received certificate from client
+2025-06-08 19:52:43,587 [INFO] [server.py:recv_certificate] Sent acknowledgement
+2025-06-08 19:52:43,589 [INFO] [server.py:<module>] Certificate validated successfully
+2025-06-08 19:52:43,589 [INFO] [server.py:recv_exact] Receiving exactly 16 bytes...
+2025-06-08 19:52:43,591 [INFO] [ca_cert.py:send_certificate] Server acknowledgement: CERT_RECEIVED
+2025-06-08 19:52:43,591 [INFO] [device.py:send_hello] Sent nonce: b'&+\x93\xdc7\xd3|\xbe^f\xa0\x14L\x86?\xfe'
+2025-06-08 19:52:43,591 [INFO] [server.py:recv_exact] Received 16 bytes successfully
+2025-06-08 19:52:43,591 [INFO] [server.py:<module>] Received nonce: b'&+\x93\xdc7\xd3|\xbe^f\xa0\x14L\x86?\xfe'
+2025-06-08 19:52:43,591 [INFO] [server.py:<module>] Sent acknowledgement
+2025-06-08 19:52:43,591 [INFO] [server.py:send_hello] Sent header: HELLO
+2025-06-08 19:52:43,591 [INFO] [ca_cert.py:send_certificate] Sent certificate length: 881
+2025-06-08 19:52:43,591 [INFO] [ca_cert.py:send_certificate] Sent certificate
+2025-06-08 19:52:43,592 [INFO] [device.py:send_hello] Server acknowledgement: HELLO_RECEIVED
+2025-06-08 19:52:43,592 [INFO] [device.py:recv_hello] Received header: HELLO
+2025-06-08 19:52:43,592 [INFO] [device.py:recv_hello] Recieving server certificate length..
+2025-06-08 19:52:43,592 [INFO] [device.py:recv_hello] Expecting server cert length 881 bytes.
+2025-06-08 19:52:43,592 [INFO] [device.py:recv_hello] Received server certificate: 
+2025-06-08 19:52:43,592 [INFO] [device.py:recv_hello] Sent acknowledgement
+2025-06-08 19:52:43,592 [INFO] [device.py:recv_hello] Server certificate validated successfully
+2025-06-08 19:52:43,593 [INFO] [device.py:recv_hello] Recieving server nonce..
+2025-06-08 19:52:43,594 [INFO] [ca_cert.py:send_certificate] Server acknowledgement: CERT_RECEIVED
+2025-06-08 19:52:43,595 [INFO] [server.py:send_hello] Sent nonce: b'%\xba\xf2>\x02E\xb5Y\x0eE,1hmUk'
+2025-06-08 19:52:43,595 [INFO] [device.py:recv_hello] Received nonce: b'%\xba\xf2>\x02E\xb5Y\x0eE,1hmUk'
+2025-06-08 19:52:43,595 [INFO] [device.py:recv_hello] Sent acknowledgement
+2025-06-08 19:52:43,595 [INFO] [device.py:send_pre_master_secret] Sent pre-master secret
+2025-06-08 19:52:43,596 [INFO] [server.py:send_hello] Device acknowledgement: NONCE_RECEIVED
+2025-06-08 19:52:43,596 [INFO] [server.py:recv_exact] Receiving exactly 6 bytes...
+2025-06-08 19:52:43,596 [INFO] [server.py:recv_exact] Received 6 bytes successfully
+2025-06-08 19:52:43,596 [INFO] [server.py:<module>] Received header: b'<PREM>'
+2025-06-08 19:52:43,596 [INFO] [server.py:<module>] Expecting pre-master secret
+2025-06-08 19:52:43,596 [INFO] [server.py:recv_exact] Receiving exactly 256 bytes...
+2025-06-08 19:52:43,596 [INFO] [server.py:recv_exact] Received 256 bytes successfully
+2025-06-08 19:52:43,598 [INFO] [server.py:<module>] Received pre-master secret: b'\xf8<\xc2&xF\x8b\xa9&\xf0E\xf4\x11\x04cp\x87\xe8\xb9\xaf\x84\xaay \xd0\n\x95K\x8cNO\x9c'
+2025-06-08 19:52:43,598 [INFO] [server.py:<module>] Sent acknowledgement
+2025-06-08 19:52:43,598 [INFO] [server.py:<module>] Derived keys: {'client_enc_key': b'\x8c\x16{\xaf (WY\x89?\x19\xd2)\xe7\x9c\x8e', 'server_enc_key': b'lZ\xa7\xd6\x1ct\t(\xc6(\n\x0bO\x16\x00\x83', 'client_mac_key': b'\x89\x93o\xa1K\xa2\xf6\x16\x18T\x9a\x89\xcc\xa2\xcdx', 'server_mac_key': b'83\xea\xbb\xc3"{\x11\xc0\xe8\x18\xbd\xd6}\xda\xb3', 'iv': b'#c\x07\x9bFM\x91\x95a\xc8\tn\xb3\xf0x\x9f'}
+2025-06-08 19:52:43,598 [INFO] [server.py:recv_exact] Receiving exactly 6 bytes...
+2025-06-08 19:52:43,599 [INFO] [device.py:send_pre_master_secret] Server acknowledgement: PREM_RECEIVED
+2025-06-08 19:52:43,599 [INFO] [device.py:<module>] Derived keys: {'client_enc_key': b'\x8c\x16{\xaf (WY\x89?\x19\xd2)\xe7\x9c\x8e', 'server_enc_key': b'lZ\xa7\xd6\x1ct\t(\xc6(\n\x0bO\x16\x00\x83', 'client_mac_key': b'\x89\x93o\xa1K\xa2\xf6\x16\x18T\x9a\x89\xcc\xa2\xcdx', 'server_mac_key': b'83\xea\xbb\xc3"{\x11\xc0\xe8\x18\xbd\xd6}\xda\xb3', 'iv': b'#c\x07\x9bFM\x91\x95a\xc8\tn\xb3\xf0x\x9f'}
+2025-06-08 19:52:43,599 [INFO] [device.py:send_secure_text] Sent header: SECX
+2025-06-08 19:52:43,599 [INFO] [server.py:recv_exact] Received 6 bytes successfully
+2025-06-08 19:52:43,599 [INFO] [server.py:<module>] Received header: b'<SECX>'
+2025-06-08 19:52:43,599 [INFO] [server.py:<module>] Expecting secure text
+2025-06-08 19:52:43,599 [INFO] [server.py:recv_exact] Receiving exactly 4 bytes...
+2025-06-08 19:52:43,600 [INFO] [device.py:send_secure_text] Sent encrypted message
+2025-06-08 19:52:43,600 [INFO] [server.py:recv_exact] Received 4 bytes successfully
+2025-06-08 19:52:43,600 [INFO] [server.py:recv_exact] Receiving exactly 48 bytes...
+2025-06-08 19:52:43,600 [INFO] [server.py:recv_exact] Received 48 bytes successfully
+2025-06-08 19:52:43,601 [ERROR] [server.py:recv_secure_text] Failed to receive secure text
+Traceback (most recent call last):
+  File "/Users/omerfarukbulut/info_sec/server.py", line 104, in recv_secure_text
+    decrypted_message = decrypt_aes_with_hmac(encrypted_message, aes_key, mac_key, iv)
+  File "/Users/omerfarukbulut/info_sec/rsa_keys.py", line 151, in decrypt_aes_with_hmac
+    unpadder = padding.PKCS7(128).unpadder()
+               ^^^^^^^^^^^^^
+AttributeError: module 'cryptography.hazmat.primitives.asymmetric.padding' has no attribute 'PKCS7'
+2025-06-08 19:52:43,602 [ERROR] [server.py:<module>] Failed to receive secure text
+Traceback (most recent call last):
+  File "/Users/omerfarukbulut/info_sec/server.py", line 206, in <module>
+    decrypted_message = recv_secure_text(client, DERIVED_KEYS)
+  File "/Users/omerfarukbulut/info_sec/server.py", line 109, in recv_secure_text
+    raise e
+  File "/Users/omerfarukbulut/info_sec/server.py", line 104, in recv_secure_text
+    decrypted_message = decrypt_aes_with_hmac(encrypted_message, aes_key, mac_key, iv)
+  File "/Users/omerfarukbulut/info_sec/rsa_keys.py", line 151, in decrypt_aes_with_hmac
+    unpadder = padding.PKCS7(128).unpadder()
+               ^^^^^^^^^^^^^
+AttributeError: module 'cryptography.hazmat.primitives.asymmetric.padding' has no attribute 'PKCS7'
+2025-06-08 19:52:43,602 [ERROR] [server.py:<module>] An error occurred during communication.
+Traceback (most recent call last):
+  File "/Users/omerfarukbulut/info_sec/server.py", line 214, in <module>
+    raise e
+  File "/Users/omerfarukbulut/info_sec/server.py", line 206, in <module>
+    decrypted_message = recv_secure_text(client, DERIVED_KEYS)
+  File "/Users/omerfarukbulut/info_sec/server.py", line 109, in recv_secure_text
+    raise e
+  File "/Users/omerfarukbulut/info_sec/server.py", line 104, in recv_secure_text
+    decrypted_message = decrypt_aes_with_hmac(encrypted_message, aes_key, mac_key, iv)
+  File "/Users/omerfarukbulut/info_sec/rsa_keys.py", line 151, in decrypt_aes_with_hmac
+    unpadder = padding.PKCS7(128).unpadder()
+               ^^^^^^^^^^^^^
+AttributeError: module 'cryptography.hazmat.primitives.asymmetric.padding' has no attribute 'PKCS7'
+2025-06-08 19:52:43,603 [INFO] [server.py:<module>] Server shut down
+2025-06-08 19:52:43,603 [ERROR] [device.py:send_secure_text] Failed to send secure text
+Traceback (most recent call last):
+  File "/Users/omerfarukbulut/info_sec/device.py", line 191, in send_secure_text
+    ack_msg = decrypt_message(ack, private_key)
+  File "/Users/omerfarukbulut/info_sec/rsa_keys.py", line 80, in decrypt_message
+    raise ValueError(f"Encrypted message length is invalid. Got {len(encrypted_message)} bytes, expected 256 bytes.")
+ValueError: Encrypted message length is invalid. Got 0 bytes, expected 256 bytes.
+2025-06-08 19:53:28,179 [INFO] [server.py:<module>] Server starting
+2025-06-08 19:53:28,248 [INFO] [server.py:<module>] Server listening on port 9999
+2025-06-08 19:53:29,732 [INFO] [device.py:<module>] Device started
+2025-06-08 19:53:29,800 [INFO] [device.py:<module>] Connected to server
+2025-06-08 19:53:29,800 [INFO] [server.py:<module>] Accepted connection from ('127.0.0.1', 60950)
+2025-06-08 19:53:29,800 [INFO] [device.py:send_hello] Sent header: HELLO
+2025-06-08 19:53:29,800 [INFO] [server.py:recv_exact] Receiving exactly 6 bytes...
+2025-06-08 19:53:29,800 [INFO] [server.py:recv_exact] Received 6 bytes successfully
+2025-06-08 19:53:29,800 [INFO] [server.py:<module>] Received header: b'<HELO>'
+2025-06-08 19:53:29,800 [INFO] [server.py:<module>] Expecting hello
+2025-06-08 19:53:29,800 [INFO] [server.py:recv_certificate] Receiving certificate header (length)...
+2025-06-08 19:53:29,801 [INFO] [server.py:recv_exact] Receiving exactly 4 bytes...
+2025-06-08 19:53:29,801 [INFO] [ca_cert.py:send_certificate] Sent certificate length: 881
+2025-06-08 19:53:29,801 [INFO] [server.py:recv_exact] Received 4 bytes successfully
+2025-06-08 19:53:29,801 [INFO] [ca_cert.py:send_certificate] Sent certificate
+2025-06-08 19:53:29,801 [INFO] [server.py:recv_certificate] Length bytes (raw): 00000371
+2025-06-08 19:53:29,801 [INFO] [server.py:recv_certificate] Expecting certificate of 881 bytes
+2025-06-08 19:53:29,801 [INFO] [server.py:recv_exact] Receiving exactly 881 bytes...
+2025-06-08 19:53:29,801 [INFO] [server.py:recv_exact] Received 881 bytes successfully
+2025-06-08 19:53:29,801 [INFO] [server.py:recv_certificate] Received certificate from client
+2025-06-08 19:53:29,804 [INFO] [server.py:recv_certificate] Sent acknowledgement
+2025-06-08 19:53:29,806 [INFO] [server.py:<module>] Certificate validated successfully
+2025-06-08 19:53:29,806 [INFO] [server.py:recv_exact] Receiving exactly 16 bytes...
+2025-06-08 19:53:29,807 [INFO] [ca_cert.py:send_certificate] Server acknowledgement: CERT_RECEIVED
+2025-06-08 19:53:29,807 [INFO] [device.py:send_hello] Sent nonce: b'\xf1y\xd4\xce\x84W\x96\xeeH\xfd\xb9\xb6\xf5\xc4`\xdc'
+2025-06-08 19:53:29,807 [INFO] [server.py:recv_exact] Received 16 bytes successfully
+2025-06-08 19:53:29,807 [INFO] [server.py:<module>] Received nonce: b'\xf1y\xd4\xce\x84W\x96\xeeH\xfd\xb9\xb6\xf5\xc4`\xdc'
+2025-06-08 19:53:29,808 [INFO] [server.py:<module>] Sent acknowledgement
+2025-06-08 19:53:29,808 [INFO] [server.py:send_hello] Sent header: HELLO
+2025-06-08 19:53:29,808 [INFO] [ca_cert.py:send_certificate] Sent certificate length: 881
+2025-06-08 19:53:29,808 [INFO] [ca_cert.py:send_certificate] Sent certificate
+2025-06-08 19:53:29,809 [INFO] [device.py:send_hello] Server acknowledgement: HELLO_RECEIVED
+2025-06-08 19:53:29,809 [INFO] [device.py:recv_hello] Received header: HELLO
+2025-06-08 19:53:29,809 [INFO] [device.py:recv_hello] Recieving server certificate length..
+2025-06-08 19:53:29,809 [INFO] [device.py:recv_hello] Expecting server cert length 881 bytes.
+2025-06-08 19:53:29,809 [INFO] [device.py:recv_hello] Received server certificate: 
+2025-06-08 19:53:29,809 [INFO] [device.py:recv_hello] Sent acknowledgement
+2025-06-08 19:53:29,810 [INFO] [device.py:recv_hello] Server certificate validated successfully
+2025-06-08 19:53:29,810 [INFO] [device.py:recv_hello] Recieving server nonce..
+2025-06-08 19:53:29,812 [INFO] [ca_cert.py:send_certificate] Server acknowledgement: CERT_RECEIVED
+2025-06-08 19:53:29,812 [INFO] [server.py:send_hello] Sent nonce: b'\x95\x1c\x8c\x80p\xc3\x90\xc5\x004\xef0\x88\xa2\xadO'
+2025-06-08 19:53:29,812 [INFO] [device.py:recv_hello] Received nonce: b'\x95\x1c\x8c\x80p\xc3\x90\xc5\x004\xef0\x88\xa2\xadO'
+2025-06-08 19:53:29,812 [INFO] [device.py:recv_hello] Sent acknowledgement
+2025-06-08 19:53:29,813 [INFO] [device.py:send_pre_master_secret] Sent pre-master secret
+2025-06-08 19:53:29,814 [INFO] [server.py:send_hello] Device acknowledgement: NONCE_RECEIVED
+2025-06-08 19:53:29,814 [INFO] [server.py:recv_exact] Receiving exactly 6 bytes...
+2025-06-08 19:53:29,814 [INFO] [server.py:recv_exact] Received 6 bytes successfully
+2025-06-08 19:53:29,814 [INFO] [server.py:<module>] Received header: b'<PREM>'
+2025-06-08 19:53:29,814 [INFO] [server.py:<module>] Expecting pre-master secret
+2025-06-08 19:53:29,814 [INFO] [server.py:recv_exact] Receiving exactly 256 bytes...
+2025-06-08 19:53:29,814 [INFO] [server.py:recv_exact] Received 256 bytes successfully
+2025-06-08 19:53:29,815 [INFO] [server.py:<module>] Received pre-master secret: b'\xb3G6\xf9\xbd\xd0q\xcb\x00\xfb\x9az\xben\x1c\xa9L\x84\xb7\x14\x14\x8aS\xbc}2#9\xe1Uzo'
+2025-06-08 19:53:29,815 [INFO] [server.py:<module>] Sent acknowledgement
+2025-06-08 19:53:29,815 [INFO] [server.py:<module>] Derived keys: {'client_enc_key': b'\xa3\xc0Q}\xb4\x12\xef\x13\x92\xa9\n@\xe3\xdc|\x08', 'server_enc_key': b'zos\xf0\x9f\x9b\x85\x17\xb5K\xb6s\xb2Af\xc2', 'client_mac_key': b"zz=\xa3\x17g\x0e\x81h\xa6\xf6'\xd7\x84\x87\x9a", 'server_mac_key': b'\xd2\xd7\xde\x93\x1f\xbe\xe8\xdf\\\xe7\x81\x14\x0f{\xf4\x9b', 'iv': b'/\xbf\xd7\xdfg\xdf\xdc^1\x90\xb9\x06;@&S'}
+2025-06-08 19:53:29,815 [INFO] [server.py:recv_exact] Receiving exactly 6 bytes...
+2025-06-08 19:53:29,816 [INFO] [device.py:send_pre_master_secret] Server acknowledgement: PREM_RECEIVED
+2025-06-08 19:53:29,816 [INFO] [device.py:<module>] Derived keys: {'client_enc_key': b'\xa3\xc0Q}\xb4\x12\xef\x13\x92\xa9\n@\xe3\xdc|\x08', 'server_enc_key': b'zos\xf0\x9f\x9b\x85\x17\xb5K\xb6s\xb2Af\xc2', 'client_mac_key': b"zz=\xa3\x17g\x0e\x81h\xa6\xf6'\xd7\x84\x87\x9a", 'server_mac_key': b'\xd2\xd7\xde\x93\x1f\xbe\xe8\xdf\\\xe7\x81\x14\x0f{\xf4\x9b', 'iv': b'/\xbf\xd7\xdfg\xdf\xdc^1\x90\xb9\x06;@&S'}
+2025-06-08 19:53:29,816 [INFO] [device.py:send_secure_text] Sent header: SECX
+2025-06-08 19:53:29,816 [INFO] [server.py:recv_exact] Received 6 bytes successfully
+2025-06-08 19:53:29,816 [INFO] [server.py:<module>] Received header: b'<SECX>'
+2025-06-08 19:53:29,816 [INFO] [server.py:<module>] Expecting secure text
+2025-06-08 19:53:29,816 [INFO] [server.py:recv_exact] Receiving exactly 4 bytes...
+2025-06-08 19:53:29,818 [INFO] [device.py:send_secure_text] Sent encrypted message
+2025-06-08 19:53:29,818 [INFO] [server.py:recv_exact] Received 4 bytes successfully
+2025-06-08 19:53:29,818 [INFO] [server.py:recv_exact] Receiving exactly 48 bytes...
+2025-06-08 19:53:29,818 [INFO] [server.py:recv_exact] Received 48 bytes successfully
+2025-06-08 19:53:29,818 [ERROR] [server.py:recv_secure_text] Failed to receive secure text
+Traceback (most recent call last):
+  File "/Users/omerfarukbulut/info_sec/server.py", line 104, in recv_secure_text
+    decrypted_message = decrypt_aes_with_hmac(encrypted_message, aes_key, mac_key, iv)
+  File "/Users/omerfarukbulut/info_sec/rsa_keys.py", line 152, in decrypt_aes_with_hmac
+    plaintext = unpadder.update(padded) + unpadder.finalize()
+                                          ~~~~~~~~~~~~~~~~~^^
+ValueError: Invalid padding bytes.
+2025-06-08 19:53:29,819 [ERROR] [server.py:<module>] Failed to receive secure text
+Traceback (most recent call last):
+  File "/Users/omerfarukbulut/info_sec/server.py", line 206, in <module>
+    decrypted_message = recv_secure_text(client, DERIVED_KEYS)
+  File "/Users/omerfarukbulut/info_sec/server.py", line 109, in recv_secure_text
+    raise e
+  File "/Users/omerfarukbulut/info_sec/server.py", line 104, in recv_secure_text
+    decrypted_message = decrypt_aes_with_hmac(encrypted_message, aes_key, mac_key, iv)
+  File "/Users/omerfarukbulut/info_sec/rsa_keys.py", line 152, in decrypt_aes_with_hmac
+    plaintext = unpadder.update(padded) + unpadder.finalize()
+                                          ~~~~~~~~~~~~~~~~~^^
+ValueError: Invalid padding bytes.
+2025-06-08 19:53:29,820 [ERROR] [server.py:<module>] An error occurred during communication.
+Traceback (most recent call last):
+  File "/Users/omerfarukbulut/info_sec/server.py", line 214, in <module>
+    raise e
+  File "/Users/omerfarukbulut/info_sec/server.py", line 206, in <module>
+    decrypted_message = recv_secure_text(client, DERIVED_KEYS)
+  File "/Users/omerfarukbulut/info_sec/server.py", line 109, in recv_secure_text
+    raise e
+  File "/Users/omerfarukbulut/info_sec/server.py", line 104, in recv_secure_text
+    decrypted_message = decrypt_aes_with_hmac(encrypted_message, aes_key, mac_key, iv)
+  File "/Users/omerfarukbulut/info_sec/rsa_keys.py", line 152, in decrypt_aes_with_hmac
+    plaintext = unpadder.update(padded) + unpadder.finalize()
+                                          ~~~~~~~~~~~~~~~~~^^
+ValueError: Invalid padding bytes.
+2025-06-08 19:53:29,820 [INFO] [server.py:<module>] Server shut down
+2025-06-08 19:53:29,820 [ERROR] [device.py:send_secure_text] Failed to send secure text
+Traceback (most recent call last):
+  File "/Users/omerfarukbulut/info_sec/device.py", line 191, in send_secure_text
+    ack_msg = decrypt_message(ack, private_key)
+  File "/Users/omerfarukbulut/info_sec/rsa_keys.py", line 80, in decrypt_message
+    raise ValueError(f"Encrypted message length is invalid. Got {len(encrypted_message)} bytes, expected 256 bytes.")
+ValueError: Encrypted message length is invalid. Got 0 bytes, expected 256 bytes.
+2025-06-08 19:54:13,961 [INFO] [server.py:<module>] Server starting
+2025-06-08 19:54:14,029 [INFO] [server.py:<module>] Server listening on port 9999
+2025-06-08 19:54:16,185 [INFO] [device.py:<module>] Device started
+2025-06-08 19:54:16,252 [INFO] [device.py:<module>] Connected to server
+2025-06-08 19:54:16,252 [INFO] [device.py:send_hello] Sent header: HELLO
+2025-06-08 19:54:16,252 [INFO] [server.py:<module>] Accepted connection from ('127.0.0.1', 60956)
+2025-06-08 19:54:16,252 [INFO] [server.py:recv_exact] Receiving exactly 6 bytes...
+2025-06-08 19:54:16,252 [INFO] [server.py:recv_exact] Received 6 bytes successfully
+2025-06-08 19:54:16,252 [INFO] [server.py:<module>] Received header: b'<HELO>'
+2025-06-08 19:54:16,252 [INFO] [server.py:<module>] Expecting hello
+2025-06-08 19:54:16,252 [INFO] [server.py:recv_certificate] Receiving certificate header (length)...
+2025-06-08 19:54:16,252 [INFO] [server.py:recv_exact] Receiving exactly 4 bytes...
+2025-06-08 19:54:16,253 [INFO] [ca_cert.py:send_certificate] Sent certificate length: 881
+2025-06-08 19:54:16,253 [INFO] [ca_cert.py:send_certificate] Sent certificate
+2025-06-08 19:54:16,253 [INFO] [server.py:recv_exact] Received 4 bytes successfully
+2025-06-08 19:54:16,253 [INFO] [server.py:recv_certificate] Length bytes (raw): 00000371
+2025-06-08 19:54:16,253 [INFO] [server.py:recv_certificate] Expecting certificate of 881 bytes
+2025-06-08 19:54:16,253 [INFO] [server.py:recv_exact] Receiving exactly 881 bytes...
+2025-06-08 19:54:16,253 [INFO] [server.py:recv_exact] Received 881 bytes successfully
+2025-06-08 19:54:16,253 [INFO] [server.py:recv_certificate] Received certificate from client
+2025-06-08 19:54:16,256 [INFO] [server.py:recv_certificate] Sent acknowledgement
+2025-06-08 19:54:16,257 [INFO] [server.py:<module>] Certificate validated successfully
+2025-06-08 19:54:16,257 [INFO] [server.py:recv_exact] Receiving exactly 16 bytes...
+2025-06-08 19:54:16,258 [INFO] [ca_cert.py:send_certificate] Server acknowledgement: CERT_RECEIVED
+2025-06-08 19:54:16,259 [INFO] [device.py:send_hello] Sent nonce: b'\xa6YR I\xd4\x04X\x90S\xecY\xc4\xb5\xbf\xa2'
+2025-06-08 19:54:16,259 [INFO] [server.py:recv_exact] Received 16 bytes successfully
+2025-06-08 19:54:16,259 [INFO] [server.py:<module>] Received nonce: b'\xa6YR I\xd4\x04X\x90S\xecY\xc4\xb5\xbf\xa2'
+2025-06-08 19:54:16,259 [INFO] [server.py:<module>] Sent acknowledgement
+2025-06-08 19:54:16,259 [INFO] [server.py:send_hello] Sent header: HELLO
+2025-06-08 19:54:16,259 [INFO] [ca_cert.py:send_certificate] Sent certificate length: 881
+2025-06-08 19:54:16,259 [INFO] [ca_cert.py:send_certificate] Sent certificate
+2025-06-08 19:54:16,260 [INFO] [device.py:send_hello] Server acknowledgement: HELLO_RECEIVED
+2025-06-08 19:54:16,260 [INFO] [device.py:recv_hello] Received header: HELLO
+2025-06-08 19:54:16,260 [INFO] [device.py:recv_hello] Recieving server certificate length..
+2025-06-08 19:54:16,260 [INFO] [device.py:recv_hello] Expecting server cert length 881 bytes.
+2025-06-08 19:54:16,260 [INFO] [device.py:recv_hello] Received server certificate: 
+2025-06-08 19:54:16,260 [INFO] [device.py:recv_hello] Sent acknowledgement
+2025-06-08 19:54:16,261 [INFO] [device.py:recv_hello] Server certificate validated successfully
+2025-06-08 19:54:16,261 [INFO] [device.py:recv_hello] Recieving server nonce..
+2025-06-08 19:54:16,263 [INFO] [ca_cert.py:send_certificate] Server acknowledgement: CERT_RECEIVED
+2025-06-08 19:54:16,263 [INFO] [server.py:send_hello] Sent nonce: b'\xb2@\x9fk\x0f\xd1\x85\x02\x80O\x1d\xd2\x1dH\x85\x16'
+2025-06-08 19:54:16,263 [INFO] [device.py:recv_hello] Received nonce: b'\xb2@\x9fk\x0f\xd1\x85\x02\x80O\x1d\xd2\x1dH\x85\x16'
+2025-06-08 19:54:16,263 [INFO] [device.py:recv_hello] Sent acknowledgement
+2025-06-08 19:54:16,264 [INFO] [device.py:send_pre_master_secret] Sent pre-master secret
+2025-06-08 19:54:16,264 [INFO] [server.py:send_hello] Device acknowledgement: NONCE_RECEIVED
+2025-06-08 19:54:16,264 [INFO] [server.py:recv_exact] Receiving exactly 6 bytes...
+2025-06-08 19:54:16,264 [INFO] [server.py:recv_exact] Received 6 bytes successfully
+2025-06-08 19:54:16,264 [INFO] [server.py:<module>] Received header: b'<PREM>'
+2025-06-08 19:54:16,264 [INFO] [server.py:<module>] Expecting pre-master secret
+2025-06-08 19:54:16,265 [INFO] [server.py:recv_exact] Receiving exactly 256 bytes...
+2025-06-08 19:54:16,265 [INFO] [server.py:recv_exact] Received 256 bytes successfully
+2025-06-08 19:54:16,266 [INFO] [server.py:<module>] Received pre-master secret: b'\xc9\xc4;5\x10\x99\xafA\xd9\x90\xad\x89\x87"\xb7\xc9\xf0(\xc49\xfe0\x8a\x04\x17\xf17\xa0\xd5|L@'
+2025-06-08 19:54:16,266 [INFO] [server.py:<module>] Sent acknowledgement
+2025-06-08 19:54:16,266 [INFO] [server.py:<module>] Derived keys: {'client_enc_key': b'I\xad\xca\x97\xbdl\x80D\xec\xdbM\x8e~\xa5\x95\x92', 'server_enc_key': b'\x12\x19\x8e\xcan9\xb09\x8d\xf4\xd6IE\xb2\x15\xd8', 'client_mac_key': b'O\xac\xb9\xb3\x96\xbe\xc6\xb7t\xa7\xe5m2}I\x15', 'server_mac_key': b'Bu\xb2\x03\xaa\x8eK^\x11\x80\xd8c>\x1d)C', 'iv': b'\x03\x9d\xb8\x97H\xf6`\xd3\x82]>\x11;\xe8\x17x'}
+2025-06-08 19:54:16,266 [INFO] [server.py:recv_exact] Receiving exactly 6 bytes...
+2025-06-08 19:54:16,267 [INFO] [device.py:send_pre_master_secret] Server acknowledgement: PREM_RECEIVED
+2025-06-08 19:54:16,267 [INFO] [device.py:<module>] Derived keys: {'client_enc_key': b'I\xad\xca\x97\xbdl\x80D\xec\xdbM\x8e~\xa5\x95\x92', 'server_enc_key': b'\x12\x19\x8e\xcan9\xb09\x8d\xf4\xd6IE\xb2\x15\xd8', 'client_mac_key': b'O\xac\xb9\xb3\x96\xbe\xc6\xb7t\xa7\xe5m2}I\x15', 'server_mac_key': b'Bu\xb2\x03\xaa\x8eK^\x11\x80\xd8c>\x1d)C', 'iv': b'\x03\x9d\xb8\x97H\xf6`\xd3\x82]>\x11;\xe8\x17x'}
+2025-06-08 19:54:16,267 [INFO] [device.py:send_secure_text] Sent header: SECX
+2025-06-08 19:54:16,267 [INFO] [server.py:recv_exact] Received 6 bytes successfully
+2025-06-08 19:54:16,267 [INFO] [server.py:<module>] Received header: b'<SECX>'
+2025-06-08 19:54:16,268 [INFO] [server.py:<module>] Expecting secure text
+2025-06-08 19:54:16,268 [INFO] [server.py:recv_exact] Receiving exactly 4 bytes...
+2025-06-08 19:54:16,269 [INFO] [device.py:send_secure_text] Sent encrypted message
+2025-06-08 19:54:16,269 [INFO] [server.py:recv_exact] Received 4 bytes successfully
+2025-06-08 19:54:16,269 [INFO] [server.py:recv_exact] Receiving exactly 48 bytes...
+2025-06-08 19:54:16,269 [INFO] [server.py:recv_exact] Received 48 bytes successfully
+2025-06-08 19:54:16,269 [ERROR] [server.py:recv_secure_text] Failed to receive secure text
+Traceback (most recent call last):
+  File "/Users/omerfarukbulut/info_sec/server.py", line 104, in recv_secure_text
+    decrypted_message = decrypt_aes_with_hmac(encrypted_message, aes_key, mac_key, iv)
+  File "/Users/omerfarukbulut/info_sec/rsa_keys.py", line 152, in decrypt_aes_with_hmac
+    plaintext = unpadder.update(padded) + unpadder
+                ~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~
+TypeError: can't concat builtins.PKCS7UnpaddingContext to bytes
+2025-06-08 19:54:16,270 [ERROR] [server.py:<module>] Failed to receive secure text
+Traceback (most recent call last):
+  File "/Users/omerfarukbulut/info_sec/server.py", line 206, in <module>
+    decrypted_message = recv_secure_text(client, DERIVED_KEYS)
+  File "/Users/omerfarukbulut/info_sec/server.py", line 109, in recv_secure_text
+    raise e
+  File "/Users/omerfarukbulut/info_sec/server.py", line 104, in recv_secure_text
+    decrypted_message = decrypt_aes_with_hmac(encrypted_message, aes_key, mac_key, iv)
+  File "/Users/omerfarukbulut/info_sec/rsa_keys.py", line 152, in decrypt_aes_with_hmac
+    plaintext = unpadder.update(padded) + unpadder
+                ~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~
+TypeError: can't concat builtins.PKCS7UnpaddingContext to bytes
+2025-06-08 19:54:16,271 [ERROR] [server.py:<module>] An error occurred during communication.
+Traceback (most recent call last):
+  File "/Users/omerfarukbulut/info_sec/server.py", line 214, in <module>
+    raise e
+  File "/Users/omerfarukbulut/info_sec/server.py", line 206, in <module>
+    decrypted_message = recv_secure_text(client, DERIVED_KEYS)
+  File "/Users/omerfarukbulut/info_sec/server.py", line 109, in recv_secure_text
+    raise e
+  File "/Users/omerfarukbulut/info_sec/server.py", line 104, in recv_secure_text
+    decrypted_message = decrypt_aes_with_hmac(encrypted_message, aes_key, mac_key, iv)
+  File "/Users/omerfarukbulut/info_sec/rsa_keys.py", line 152, in decrypt_aes_with_hmac
+    plaintext = unpadder.update(padded) + unpadder
+                ~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~
+TypeError: can't concat builtins.PKCS7UnpaddingContext to bytes
+2025-06-08 19:54:16,271 [INFO] [server.py:<module>] Server shut down
+2025-06-08 19:54:16,271 [ERROR] [device.py:send_secure_text] Failed to send secure text
+Traceback (most recent call last):
+  File "/Users/omerfarukbulut/info_sec/device.py", line 191, in send_secure_text
+    ack_msg = decrypt_message(ack, private_key)
+  File "/Users/omerfarukbulut/info_sec/rsa_keys.py", line 80, in decrypt_message
+    raise ValueError(f"Encrypted message length is invalid. Got {len(encrypted_message)} bytes, expected 256 bytes.")
+ValueError: Encrypted message length is invalid. Got 0 bytes, expected 256 bytes.
+2025-06-08 19:55:24,409 [INFO] [server.py:<module>] Server starting
+2025-06-08 19:55:24,477 [INFO] [server.py:<module>] Server listening on port 9999
+2025-06-08 19:55:26,010 [INFO] [device.py:<module>] Device started
+2025-06-08 19:55:26,078 [INFO] [device.py:<module>] Connected to server
+2025-06-08 19:55:26,078 [INFO] [device.py:send_hello] Sent header: HELLO
+2025-06-08 19:55:26,078 [INFO] [server.py:<module>] Accepted connection from ('127.0.0.1', 60972)
+2025-06-08 19:55:26,078 [INFO] [server.py:recv_exact] Receiving exactly 6 bytes...
+2025-06-08 19:55:26,078 [INFO] [server.py:recv_exact] Received 6 bytes successfully
+2025-06-08 19:55:26,078 [INFO] [server.py:<module>] Received header: b'<HELO>'
+2025-06-08 19:55:26,078 [INFO] [server.py:<module>] Expecting hello
+2025-06-08 19:55:26,078 [INFO] [server.py:recv_certificate] Receiving certificate header (length)...
+2025-06-08 19:55:26,078 [INFO] [server.py:recv_exact] Receiving exactly 4 bytes...
+2025-06-08 19:55:26,079 [INFO] [ca_cert.py:send_certificate] Sent certificate length: 881
+2025-06-08 19:55:26,079 [INFO] [ca_cert.py:send_certificate] Sent certificate
+2025-06-08 19:55:26,079 [INFO] [server.py:recv_exact] Received 4 bytes successfully
+2025-06-08 19:55:26,079 [INFO] [server.py:recv_certificate] Length bytes (raw): 00000371
+2025-06-08 19:55:26,079 [INFO] [server.py:recv_certificate] Expecting certificate of 881 bytes
+2025-06-08 19:55:26,079 [INFO] [server.py:recv_exact] Receiving exactly 881 bytes...
+2025-06-08 19:55:26,079 [INFO] [server.py:recv_exact] Received 881 bytes successfully
+2025-06-08 19:55:26,079 [INFO] [server.py:recv_certificate] Received certificate from client
+2025-06-08 19:55:26,081 [INFO] [server.py:recv_certificate] Sent acknowledgement
+2025-06-08 19:55:26,083 [INFO] [server.py:<module>] Certificate validated successfully
+2025-06-08 19:55:26,083 [INFO] [server.py:recv_exact] Receiving exactly 16 bytes...
+2025-06-08 19:55:26,084 [INFO] [ca_cert.py:send_certificate] Server acknowledgement: CERT_RECEIVED
+2025-06-08 19:55:26,084 [INFO] [device.py:send_hello] Sent nonce: b'6\xb9"lz\xea9\xb1F\x9c\xe7\xf7\x00K?\x0c'
+2025-06-08 19:55:26,084 [INFO] [server.py:recv_exact] Received 16 bytes successfully
+2025-06-08 19:55:26,084 [INFO] [server.py:<module>] Received nonce: b'6\xb9"lz\xea9\xb1F\x9c\xe7\xf7\x00K?\x0c'
+2025-06-08 19:55:26,084 [INFO] [server.py:<module>] Sent acknowledgement
+2025-06-08 19:55:26,085 [INFO] [server.py:send_hello] Sent header: HELLO
+2025-06-08 19:55:26,085 [INFO] [ca_cert.py:send_certificate] Sent certificate length: 881
+2025-06-08 19:55:26,085 [INFO] [ca_cert.py:send_certificate] Sent certificate
+2025-06-08 19:55:26,086 [INFO] [device.py:send_hello] Server acknowledgement: HELLO_RECEIVED
+2025-06-08 19:55:26,086 [INFO] [device.py:recv_hello] Received header: HELLO
+2025-06-08 19:55:26,086 [INFO] [device.py:recv_hello] Recieving server certificate length..
+2025-06-08 19:55:26,086 [INFO] [device.py:recv_hello] Expecting server cert length 881 bytes.
+2025-06-08 19:55:26,086 [INFO] [device.py:recv_hello] Received server certificate: 
+2025-06-08 19:55:26,086 [INFO] [device.py:recv_hello] Sent acknowledgement
+2025-06-08 19:55:26,087 [INFO] [device.py:recv_hello] Server certificate validated successfully
+2025-06-08 19:55:26,087 [INFO] [device.py:recv_hello] Recieving server nonce..
+2025-06-08 19:55:26,089 [INFO] [ca_cert.py:send_certificate] Server acknowledgement: CERT_RECEIVED
+2025-06-08 19:55:26,089 [INFO] [server.py:send_hello] Sent nonce: b'\x8a\x90i\r\xc7\xcf\x1f/j(\xe4\xfaaq\xb8\xcf'
+2025-06-08 19:55:26,089 [INFO] [device.py:recv_hello] Received nonce: b'\x8a\x90i\r\xc7\xcf\x1f/j(\xe4\xfaaq\xb8\xcf'
+2025-06-08 19:55:26,089 [INFO] [device.py:recv_hello] Sent acknowledgement
+2025-06-08 19:55:26,089 [INFO] [device.py:send_pre_master_secret] Sent pre-master secret
+2025-06-08 19:55:26,090 [INFO] [server.py:send_hello] Device acknowledgement: NONCE_RECEIVED
+2025-06-08 19:55:26,090 [INFO] [server.py:recv_exact] Receiving exactly 6 bytes...
+2025-06-08 19:55:26,090 [INFO] [server.py:recv_exact] Received 6 bytes successfully
+2025-06-08 19:55:26,090 [INFO] [server.py:<module>] Received header: b'<PREM>'
+2025-06-08 19:55:26,090 [INFO] [server.py:<module>] Expecting pre-master secret
+2025-06-08 19:55:26,091 [INFO] [server.py:recv_exact] Receiving exactly 256 bytes...
+2025-06-08 19:55:26,091 [INFO] [server.py:recv_exact] Received 256 bytes successfully
+2025-06-08 19:55:26,092 [INFO] [server.py:<module>] Received pre-master secret: b"\t\xdf\x8a\x07\xf5B\xb8nJ\xab\xd1X'\xabv\x02Iv\x9ar\xd3\x8a\xc0W\xa4\x1c>\x1d\xeb\xb1\x9a\xfe"
+2025-06-08 19:55:26,092 [INFO] [server.py:<module>] Sent acknowledgement
+2025-06-08 19:55:26,092 [INFO] [server.py:<module>] Derived keys: {'client_enc_key': b'\xb1b|\x16\xea\xe10\x8f\xacP\xc7R_\xa8`\xd2', 'server_enc_key': b'\x899XnJ\xc1\xd2f\xf5\x8e\xc6L\xb6\x00\xaf\x9f', 'client_mac_key': b'\x7fj)U\xc60bSZ\xf7\xedw\x04\x06\xcf\x82', 'server_mac_key': b'R\xef\xbaOw\xab\x88\xd6\xf2\xaf\xe7\x9e@\xf6\x8b\xed', 'iv': b'\x11\xd5\xc7t\x08\xee\xad\x13 \x98\xed2N\xd0\xeb:'}
+2025-06-08 19:55:26,092 [INFO] [server.py:recv_exact] Receiving exactly 6 bytes...
+2025-06-08 19:55:26,093 [INFO] [device.py:send_pre_master_secret] Server acknowledgement: PREM_RECEIVED
+2025-06-08 19:55:26,093 [INFO] [device.py:<module>] Derived keys: {'client_enc_key': b'\xb1b|\x16\xea\xe10\x8f\xacP\xc7R_\xa8`\xd2', 'server_enc_key': b'\x899XnJ\xc1\xd2f\xf5\x8e\xc6L\xb6\x00\xaf\x9f', 'client_mac_key': b'\x7fj)U\xc60bSZ\xf7\xedw\x04\x06\xcf\x82', 'server_mac_key': b'R\xef\xbaOw\xab\x88\xd6\xf2\xaf\xe7\x9e@\xf6\x8b\xed', 'iv': b'\x11\xd5\xc7t\x08\xee\xad\x13 \x98\xed2N\xd0\xeb:'}
+2025-06-08 19:55:26,093 [INFO] [device.py:send_secure_text] Sent header: SECX
+2025-06-08 19:55:26,093 [INFO] [server.py:recv_exact] Received 6 bytes successfully
+2025-06-08 19:55:26,093 [INFO] [server.py:<module>] Received header: b'<SECX>'
+2025-06-08 19:55:26,093 [INFO] [server.py:<module>] Expecting secure text
+2025-06-08 19:55:26,093 [INFO] [server.py:recv_exact] Receiving exactly 4 bytes...
+2025-06-08 19:55:26,094 [INFO] [device.py:send_secure_text] Sent encrypted message
+2025-06-08 19:55:26,094 [INFO] [server.py:recv_exact] Received 4 bytes successfully
+2025-06-08 19:55:26,094 [INFO] [server.py:recv_exact] Receiving exactly 48 bytes...
+2025-06-08 19:55:26,094 [INFO] [server.py:recv_exact] Received 48 bytes successfully
+2025-06-08 19:55:26,095 [ERROR] [server.py:recv_secure_text] Failed to receive secure text
+Traceback (most recent call last):
+  File "/Users/omerfarukbulut/info_sec/server.py", line 104, in recv_secure_text
+    decrypted_message = decrypt_aes_with_hmac(encrypted_message, aes_key, mac_key, iv)
+  File "/Users/omerfarukbulut/info_sec/rsa_keys.py", line 152, in decrypt_aes_with_hmac
+    plaintext = unpadder.update(padded) + unpadder.finalize()
+                                          ~~~~~~~~~~~~~~~~~^^
+ValueError: Invalid padding bytes.
+2025-06-08 19:55:26,096 [ERROR] [server.py:<module>] Failed to receive secure text
+Traceback (most recent call last):
+  File "/Users/omerfarukbulut/info_sec/server.py", line 206, in <module>
+    decrypted_message = recv_secure_text(client, DERIVED_KEYS)
+  File "/Users/omerfarukbulut/info_sec/server.py", line 109, in recv_secure_text
+    raise e
+  File "/Users/omerfarukbulut/info_sec/server.py", line 104, in recv_secure_text
+    decrypted_message = decrypt_aes_with_hmac(encrypted_message, aes_key, mac_key, iv)
+  File "/Users/omerfarukbulut/info_sec/rsa_keys.py", line 152, in decrypt_aes_with_hmac
+    plaintext = unpadder.update(padded) + unpadder.finalize()
+                                          ~~~~~~~~~~~~~~~~~^^
+ValueError: Invalid padding bytes.
+2025-06-08 19:55:26,096 [ERROR] [server.py:<module>] An error occurred during communication.
+Traceback (most recent call last):
+  File "/Users/omerfarukbulut/info_sec/server.py", line 214, in <module>
+    raise e
+  File "/Users/omerfarukbulut/info_sec/server.py", line 206, in <module>
+    decrypted_message = recv_secure_text(client, DERIVED_KEYS)
+  File "/Users/omerfarukbulut/info_sec/server.py", line 109, in recv_secure_text
+    raise e
+  File "/Users/omerfarukbulut/info_sec/server.py", line 104, in recv_secure_text
+    decrypted_message = decrypt_aes_with_hmac(encrypted_message, aes_key, mac_key, iv)
+  File "/Users/omerfarukbulut/info_sec/rsa_keys.py", line 152, in decrypt_aes_with_hmac
+    plaintext = unpadder.update(padded) + unpadder.finalize()
+                                          ~~~~~~~~~~~~~~~~~^^
+ValueError: Invalid padding bytes.
+2025-06-08 19:55:26,097 [INFO] [server.py:<module>] Server shut down
+2025-06-08 19:55:26,097 [ERROR] [device.py:send_secure_text] Failed to send secure text
+Traceback (most recent call last):
+  File "/Users/omerfarukbulut/info_sec/device.py", line 191, in send_secure_text
+    ack_msg = decrypt_message(ack, private_key)
+  File "/Users/omerfarukbulut/info_sec/rsa_keys.py", line 80, in decrypt_message
+    raise ValueError(f"Encrypted message length is invalid. Got {len(encrypted_message)} bytes, expected 256 bytes.")
+ValueError: Encrypted message length is invalid. Got 0 bytes, expected 256 bytes.
+2025-06-08 19:56:03,433 [INFO] [server.py:<module>] Server starting
+2025-06-08 19:56:03,503 [INFO] [server.py:<module>] Server listening on port 9999
+2025-06-08 19:56:05,222 [INFO] [device.py:<module>] Device started
+2025-06-08 19:56:05,290 [INFO] [device.py:<module>] Connected to server
+2025-06-08 19:56:05,290 [INFO] [device.py:send_hello] Sent header: HELLO
+2025-06-08 19:56:05,290 [INFO] [server.py:<module>] Accepted connection from ('127.0.0.1', 60982)
+2025-06-08 19:56:05,290 [INFO] [server.py:recv_exact] Receiving exactly 6 bytes...
+2025-06-08 19:56:05,290 [INFO] [server.py:recv_exact] Received 6 bytes successfully
+2025-06-08 19:56:05,290 [INFO] [server.py:<module>] Received header: b'<HELO>'
+2025-06-08 19:56:05,290 [INFO] [server.py:<module>] Expecting hello
+2025-06-08 19:56:05,290 [INFO] [server.py:recv_certificate] Receiving certificate header (length)...
+2025-06-08 19:56:05,290 [INFO] [server.py:recv_exact] Receiving exactly 4 bytes...
+2025-06-08 19:56:05,290 [INFO] [ca_cert.py:send_certificate] Sent certificate length: 881
+2025-06-08 19:56:05,291 [INFO] [ca_cert.py:send_certificate] Sent certificate
+2025-06-08 19:56:05,291 [INFO] [server.py:recv_exact] Received 4 bytes successfully
+2025-06-08 19:56:05,291 [INFO] [server.py:recv_certificate] Length bytes (raw): 00000371
+2025-06-08 19:56:05,291 [INFO] [server.py:recv_certificate] Expecting certificate of 881 bytes
+2025-06-08 19:56:05,291 [INFO] [server.py:recv_exact] Receiving exactly 881 bytes...
+2025-06-08 19:56:05,291 [INFO] [server.py:recv_exact] Received 881 bytes successfully
+2025-06-08 19:56:05,291 [INFO] [server.py:recv_certificate] Received certificate from client
+2025-06-08 19:56:05,294 [INFO] [server.py:recv_certificate] Sent acknowledgement
+2025-06-08 19:56:05,294 [INFO] [server.py:<module>] Certificate validated successfully
+2025-06-08 19:56:05,295 [INFO] [server.py:recv_exact] Receiving exactly 16 bytes...
+2025-06-08 19:56:05,296 [INFO] [ca_cert.py:send_certificate] Server acknowledgement: CERT_RECEIVED
+2025-06-08 19:56:05,297 [INFO] [device.py:send_hello] Sent nonce: b'*\xdc\xba\x94\x07%CB\xa1\xa8\xc4\x02E\xe9\n\xc7'
+2025-06-08 19:56:05,297 [INFO] [server.py:recv_exact] Received 16 bytes successfully
+2025-06-08 19:56:05,297 [INFO] [server.py:<module>] Received nonce: b'*\xdc\xba\x94\x07%CB\xa1\xa8\xc4\x02E\xe9\n\xc7'
+2025-06-08 19:56:05,297 [INFO] [server.py:<module>] Sent acknowledgement
+2025-06-08 19:56:05,297 [INFO] [server.py:send_hello] Sent header: HELLO
+2025-06-08 19:56:05,297 [INFO] [ca_cert.py:send_certificate] Sent certificate length: 881
+2025-06-08 19:56:05,297 [INFO] [ca_cert.py:send_certificate] Sent certificate
+2025-06-08 19:56:05,298 [INFO] [device.py:send_hello] Server acknowledgement: HELLO_RECEIVED
+2025-06-08 19:56:05,298 [INFO] [device.py:recv_hello] Received header: HELLO
+2025-06-08 19:56:05,298 [INFO] [device.py:recv_hello] Recieving server certificate length..
+2025-06-08 19:56:05,298 [INFO] [device.py:recv_hello] Expecting server cert length 881 bytes.
+2025-06-08 19:56:05,298 [INFO] [device.py:recv_hello] Received server certificate: 
+2025-06-08 19:56:05,299 [INFO] [device.py:recv_hello] Sent acknowledgement
+2025-06-08 19:56:05,299 [INFO] [device.py:recv_hello] Server certificate validated successfully
+2025-06-08 19:56:05,299 [INFO] [device.py:recv_hello] Recieving server nonce..
+2025-06-08 19:56:05,301 [INFO] [ca_cert.py:send_certificate] Server acknowledgement: CERT_RECEIVED
+2025-06-08 19:56:05,301 [INFO] [server.py:send_hello] Sent nonce: b'\xb2V38\xf1Y\x84.4\x97\xec\x17BB\x1e\xaa'
+2025-06-08 19:56:05,301 [INFO] [device.py:recv_hello] Received nonce: b'\xb2V38\xf1Y\x84.4\x97\xec\x17BB\x1e\xaa'
+2025-06-08 19:56:05,301 [INFO] [device.py:recv_hello] Sent acknowledgement
+2025-06-08 19:56:05,302 [INFO] [device.py:send_pre_master_secret] Sent pre-master secret
+2025-06-08 19:56:05,303 [INFO] [server.py:send_hello] Device acknowledgement: NONCE_RECEIVED
+2025-06-08 19:56:05,303 [INFO] [server.py:recv_exact] Receiving exactly 6 bytes...
+2025-06-08 19:56:05,303 [INFO] [server.py:recv_exact] Received 6 bytes successfully
+2025-06-08 19:56:05,303 [INFO] [server.py:<module>] Received header: b'<PREM>'
+2025-06-08 19:56:05,303 [INFO] [server.py:<module>] Expecting pre-master secret
+2025-06-08 19:56:05,303 [INFO] [server.py:recv_exact] Receiving exactly 256 bytes...
+2025-06-08 19:56:05,303 [INFO] [server.py:recv_exact] Received 256 bytes successfully
+2025-06-08 19:56:05,304 [INFO] [server.py:<module>] Received pre-master secret: b'\x19\x88\xfak\xe3\xb3*\x89\xce\xd2\x8a\xe0\xfb\x80*<\xd0\xf9\xc5\xaa\xbb\x87\xc4\xe9\'\x92"\xd1C\n\xe5\xd5'
+2025-06-08 19:56:05,304 [INFO] [server.py:<module>] Sent acknowledgement
+2025-06-08 19:56:05,304 [INFO] [server.py:<module>] Derived keys: {'client_enc_key': b'<\x94+\x98\xdb3\xd29\x96G\xc2\xedM\xa8\xab\xe4', 'server_enc_key': b'\xd3\x1e\x81\x9d4\x82\xfbd\xd5\x19\xed\xed\xfb\xb4\xfd\x82', 'client_mac_key': b'\x1d\x89F\xcd\xe8@e\xf9\xb9\xf9*:\xd3\xc2\x91\x1e', 'server_mac_key': b'\xb9\xeaR\xf5@\x85\x80\xc7^0D\xdaNU\xe9\xe5', 'iv': b'[y\xc2Yi\xde0\xe9\x1aR\xd2\xc9\xdc\x98P\x11'}
+2025-06-08 19:56:05,304 [INFO] [server.py:recv_exact] Receiving exactly 6 bytes...
+2025-06-08 19:56:05,305 [INFO] [device.py:send_pre_master_secret] Server acknowledgement: PREM_RECEIVED
+2025-06-08 19:56:05,305 [INFO] [device.py:<module>] Derived keys: {'client_enc_key': b'<\x94+\x98\xdb3\xd29\x96G\xc2\xedM\xa8\xab\xe4', 'server_enc_key': b'\xd3\x1e\x81\x9d4\x82\xfbd\xd5\x19\xed\xed\xfb\xb4\xfd\x82', 'client_mac_key': b'\x1d\x89F\xcd\xe8@e\xf9\xb9\xf9*:\xd3\xc2\x91\x1e', 'server_mac_key': b'\xb9\xeaR\xf5@\x85\x80\xc7^0D\xdaNU\xe9\xe5', 'iv': b'[y\xc2Yi\xde0\xe9\x1aR\xd2\xc9\xdc\x98P\x11'}
+2025-06-08 19:56:05,305 [INFO] [device.py:send_secure_text] Sent header: SECX
+2025-06-08 19:56:05,305 [INFO] [server.py:recv_exact] Received 6 bytes successfully
+2025-06-08 19:56:05,305 [INFO] [server.py:<module>] Received header: b'<SECX>'
+2025-06-08 19:56:05,305 [INFO] [server.py:<module>] Expecting secure text
+2025-06-08 19:56:05,305 [INFO] [server.py:recv_exact] Receiving exactly 4 bytes...
+2025-06-08 19:56:05,306 [INFO] [device.py:send_secure_text] Sent encrypted message
+2025-06-08 19:56:05,306 [INFO] [server.py:recv_exact] Received 4 bytes successfully
+2025-06-08 19:56:05,306 [INFO] [server.py:recv_exact] Receiving exactly 48 bytes...
+2025-06-08 19:56:05,306 [INFO] [server.py:recv_exact] Received 48 bytes successfully
+2025-06-08 19:56:05,306 [INFO] [server.py:recv_secure_text] Decrypted message: b'Hello, world!'
+2025-06-08 19:56:05,307 [INFO] [server.py:<module>] Decrypted message: b'Hello, world!'
+2025-06-08 19:56:05,307 [INFO] [server.py:<module>] Sent acknowledgement
+2025-06-08 19:56:05,307 [INFO] [server.py:recv_exact] Receiving exactly 6 bytes...
+2025-06-08 19:56:05,308 [INFO] [device.py:send_secure_text] Server acknowledgement: SEC_TEXT_RECEIVED
+2025-06-08 19:56:05,308 [INFO] [device.py:send_end_of_file] Sent header: END
+2025-06-08 19:56:05,308 [INFO] [server.py:recv_exact] Received 6 bytes successfully
+2025-06-08 19:56:05,308 [INFO] [device.py:<module>] Device socket closed
+2025-06-08 19:56:05,308 [INFO] [server.py:<module>] Received header: b'<ENDD>'
+2025-06-08 19:56:05,308 [INFO] [server.py:<module>] Received end of file
+2025-06-08 19:56:05,308 [INFO] [server.py:<module>] Server closed
+2025-06-08 19:56:05,308 [INFO] [server.py:<module>] Server shut down

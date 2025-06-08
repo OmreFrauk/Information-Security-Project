@@ -1,10 +1,14 @@
-from cryptography.hazmat.primitives import serialization, hashes
+from cryptography.hazmat.primitives import serialization, hashes, hmac
+from cryptography.hazmat.primitives.kdf.hkdf import HKDF
+from cryptography.hazmat.primitives import padding as padding_utils
 from cryptography.hazmat.primitives.asymmetric import rsa, padding
 from cryptography.hazmat.backends import default_backend
 import base64
 from logger import logger
 import hashlib
-import hmac
+
+from cryptography.hazmat.primitives.ciphers import Cipher, algorithms, modes
+
 
 def generate_key_pair():
     # Generate private key
@@ -89,20 +93,61 @@ def decrypt_message(encrypted_message: bytes, private_key, decode=True):
         raise ValueError(f"Decryption failed: {e}")
 
 
-def derive_keys(master_secret,nonce1,nonce2):
+def derive_keys(master_secret: bytes, nonce1: bytes, nonce2: bytes):
     seed = nonce1 + nonce2
+    backend = default_backend()
 
-    
     def hkdf_expand(label: bytes, length: int) -> bytes:
-        info = label + seed
-        return hmac.new(master_secret, info, hashlib.sha256).digest()[:length]
-
+        hkdf = HKDF(
+            algorithm=hashes.SHA256(),
+            length=length,
+            salt=None,
+            info=label + seed,
+            backend=backend
+        )
+        return hkdf.derive(master_secret)
 
     return {
-        "client_enc_key": hkdf_expand(b"client_enc", 16),   # 128-bit AES key
+        "client_enc_key": hkdf_expand(b"client_enc", 16),
         "server_enc_key": hkdf_expand(b"server_enc", 16),
         "client_mac_key": hkdf_expand(b"client_mac", 16),
         "server_mac_key": hkdf_expand(b"server_mac", 16),
         "iv": hkdf_expand(b"iv", 16)
     }
 
+def encrypt_aes_with_hmac(message, key, mac_key, iv):
+    #AES-CBC-HMAC-SHA256
+    padder = padding_utils.PKCS7(128).padder()
+    padded_message = padder.update(message) + padder.finalize()
+
+    cipher = Cipher(algorithms.AES(key), modes.CBC(iv) )
+    encrypter = cipher.encryptor()
+    ciphertext = encrypter.update(padded_message) + encrypter.finalize()
+
+    #generate hmac
+    h = hmac.HMAC(mac_key, hashes.SHA256())
+    h.update(ciphertext)
+    mac = h.finalize()
+
+    return ciphertext + mac
+
+def decrypt_aes_with_hmac(data, key, mac_key, iv):
+    #AES-CBC-HMAC-SHA256
+    if len(data) < 32:
+        raise ValueError("Ciphertext is too short to contain MAC")
+    
+    ciphertext, mac = data[:-32], data[-32:]
+
+    # Verify HMAC
+    h = hmac.HMAC(mac_key, hashes.SHA256())
+    h.update(ciphertext)
+    h.verify(mac)
+
+    # AES-CBC Decryption
+    cipher = Cipher(algorithms.AES(key), modes.CBC(iv))
+    decryptor = cipher.decryptor()
+    padded = decryptor.update(ciphertext) + decryptor.finalize()
+
+    unpadder = padding_utils.PKCS7(128).unpadder()
+    plaintext = unpadder.update(padded) + unpadder.finalize()
+    return plaintext

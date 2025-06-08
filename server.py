@@ -1,5 +1,5 @@
 import socket
-from rsa_keys import decrypt_message, encrypt_message, load_private_key, load_public_key, derive_keys
+from rsa_keys import decrypt_message, encrypt_message, load_private_key, load_public_key, derive_keys, decrypt_aes_with_hmac
 from logger import logger
 from tqdm import tqdm
 from ca_cert import validate_certificate
@@ -92,7 +92,21 @@ def send_hello(client_socket):
         logger.exception("Failed to send hello")
         raise e
 
+def recv_secure_text(client_socket, keys=DERIVED_KEYS):
+    try:
+        length_bytes = recv_exact(client_socket, 4)
+        data_length = int.from_bytes(length_bytes, byteorder="big")
+        encrypted_message = recv_exact(client_socket, data_length)
 
+        aes_key = keys["client_enc_key"]
+        mac_key = keys["client_mac_key"]
+        iv = keys["iv"]
+        decrypted_message = decrypt_aes_with_hmac(encrypted_message, aes_key, mac_key, iv)
+        logger.info(f"Decrypted message: {decrypted_message}")
+        return decrypted_message
+    except Exception as e:
+        logger.exception("Failed to receive secure text")
+        raise e
 
 try:
     while True:
@@ -185,6 +199,19 @@ try:
                 logger.info(f"Derived keys: {DERIVED_KEYS}")
             except Exception as e:
                 logger.exception("Failed to receive pre-master secret")
+                raise e
+        
+        elif header == b"<SECX>":
+            try:
+                logger.info("Expecting secure text")
+                decrypted_message = recv_secure_text(client, DERIVED_KEYS)
+                logger.info(f"Decrypted message: {decrypted_message}")
+
+                ack = encrypt_message("SEC_TEXT_RECEIVED", device_public_key)
+                client.sendall(ack)
+                logger.info("Sent acknowledgement")
+            except Exception as e:
+                logger.exception("Failed to receive secure text")
                 raise e
 
         elif header == b"<ENDD>":

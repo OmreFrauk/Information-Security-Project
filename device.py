@@ -5,15 +5,14 @@ import os
 import tqdm
 import json
 from ca_cert import create_signed_certificate, validate_certificate, send_certificate
-from rsa_keys import derive_keys
+from rsa_keys import derive_keys, encrypt_aes_with_hmac
 NONCE_DEVICE = os.urandom(16)
-
 logger.info("Device started")
 # Load keys
 private_key = load_private_key("keys/device_private_key.pem")
 server_public_key = load_public_key("keys/server_public_key.pem")
 device_public_key = load_public_key("keys/device_public_key.pem")
-KEYS = None
+
 
 try:
     client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -174,12 +173,39 @@ def send_pre_master_secret(client_socket, server_public_key):
         logger.exception("Failed to send pre-master secret")
         raise e
 
+def send_secure_text(client_socket, message: str, keys):
+    try:
+        client_socket.sendall(b"<SECX>")
+        logger.info("Sent header: SECX")
+        
+        sym_key = keys["client_enc_key"]
+        mac_key = keys["client_mac_key"]
+        iv = keys["iv"]
+
+        encrypted_message = encrypt_aes_with_hmac(message.encode(), sym_key, mac_key, iv)
+        client_socket.sendall(len(encrypted_message).to_bytes(4, byteorder="big"))
+        client_socket.sendall(encrypted_message)
+        logger.info("Sent encrypted message")
+
+        ack = client_socket.recv(256)
+        ack_msg = decrypt_message(ack, private_key)
+        logger.info(f"Server acknowledgement: {ack_msg}")
+    except Exception as e:
+        logger.exception("Failed to send secure text")
+        raise e
+
+
+
+
 nonce_device = send_hello(client)
 cert_json,nonce_server = recv_hello(client)
 pre_master_secret = send_pre_master_secret(client, server_public_key)
-send_end_of_file(client)
-derived_keys = derive_keys(pre_master_secret, nonce_device, nonce_server)
-logger.info(f"Derived keys: {derived_keys}")
 
+DERIVED_KEYS = derive_keys(pre_master_secret, nonce_device, nonce_server)
+logger.info(f"Derived keys: {DERIVED_KEYS}")
+
+send_secure_text(client, "Hello, world!", DERIVED_KEYS)
+
+send_end_of_file(client)
 client.close()
 logger.info("Device socket closed")
