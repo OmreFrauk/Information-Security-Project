@@ -3,11 +3,30 @@ from cryptography import x509
 from cryptography.hazmat.primitives import hashes
 from cryptography.hazmat.primitives.asymmetric import rsa,padding
 from cryptography.hazmat.primitives import serialization
-
+import json
+from logger import logger
+from rsa_keys import decrypt_message
 import base64
 
 ca_private_key = load_private_key("keys/ca_private_key.pem")
 ca_public_key = load_public_key("keys/ca_public_key.pem")
+
+def send_certificate(client_socket, certificate_path, private_key):
+    try:
+        with open(certificate_path, "r") as f:
+            certificate = json.load(f)
+    
+        client_socket.sendall(len(json.dumps(certificate)).to_bytes(4, byteorder="big"))
+        logger.info(f"Sent certificate length: {len(json.dumps(certificate))}")
+        client_socket.sendall(json.dumps(certificate).encode())
+        logger.info("Sent certificate")
+        ack = client_socket.recv(256)
+        ack_msg = decrypt_message(ack, private_key)
+        logger.info(f"Server acknowledgement: {ack_msg}")
+    except Exception as e:  
+        logger.exception("Failed to send certificate")
+        raise e
+
 
 def create_signed_certificate(common_name: str, client_public_key_pem: bytes) -> dict:
     device_public_key = client_public_key_pem.public_bytes(encoding=serialization.Encoding.PEM, format=serialization.PublicFormat.SubjectPublicKeyInfo)

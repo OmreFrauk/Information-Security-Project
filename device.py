@@ -4,7 +4,7 @@ from logger import logger
 import os
 import tqdm
 import json
-from ca_cert import create_signed_certificate, validate_certificate
+from ca_cert import create_signed_certificate, validate_certificate, send_certificate
 
 logger.info("Device started")
 # Load keys
@@ -33,22 +33,6 @@ def generate_certificate(path="certificates/device_certificate.json", device_pub
         json.dump(certificate, f)
     logger.info(f"Certificate saved to {path}")
 
-def send_certificate(client_socket, certificate_path):
-    try:
-        with open(certificate_path, "r") as f:
-            certificate = json.load(f)
-        client_socket.sendall(b"<CERT>")
-        logger.info("Sent header: CERT")
-        client_socket.sendall(len(json.dumps(certificate)).to_bytes(4, byteorder="big"))
-        logger.info(f"Sent certificate length: {len(json.dumps(certificate))}")
-        client_socket.sendall(json.dumps(certificate).encode())
-        logger.info("Sent certificate")
-        ack = client_socket.recv(256)
-        ack_msg = decrypt_message(ack, private_key)
-        logger.info(f"Server acknowledgement: {ack_msg}")
-    except Exception as e:  
-        logger.exception("Failed to send certificate")
-        raise e
 
 def send_encrypted_text(client_socket,message: str, server_public_key):
     try:
@@ -116,12 +100,66 @@ def send_end_of_file(client_socket):
         logger.exception("Failed to send end of file")
         raise e
     
-generate_certificate()
+def send_hello(client_socket):
 
-send_certificate(client, "certificates/device_certificate.json")
+    try:
+        client_socket.sendall(b"<HELO>")
+        logger.info("Sent header: HELLO")
+        
+        send_certificate(client_socket, "certificates/device_certificate.json", private_key)
+        nonce_device = os.urandom(16)
+        client_socket.sendall(nonce_device)
+        logger.info(f"Sent nonce: {nonce_device}")
+        ack = client_socket.recv(256)
+        ack_msg = decrypt_message(ack, private_key)
+        logger.info(f"Server acknowledgement: {ack_msg}")
 
-send_encrypted_text(client, "Hello, server!", server_public_key)
+    except Exception as e:
+        logger.exception("Failed to send hello")
+        raise e
 
-#send_end_of_file(client)
+def recv_hello(client_socket):
+    try:
+        header = client_socket.recv(6)
+        if header == b"<HELO>":
+            logger.info("Received header: HELLO")
+            
+            logger.info("Recieving server certificate length..")
+            certificate_length_bytes = client_socket.recv(4)
+            certificate_length = int.from_bytes(certificate_length_bytes,byteorder="big")
+            logger.info(f"Expecting server cert length {certificate_length} bytes.")
+
+            cert_data = client_socket.recv(certificate_length)
+            cert_json = json.loads(cert_data.decode())
+            logger.info("Received server certificate: ")
+            ack = encrypt_message("CERT_RECEIVED", server_public_key)
+            client_socket.sendall(ack)
+            logger.info("Sent acknowledgement")
+
+            ca_public_key = load_public_key("keys/ca_public_key.pem")
+            if validate_certificate(cert_json, ca_public_key):
+                logger.info("Server certificate validated successfully")
+            else:
+                logger.warning("Server certificate validation failed")
+                client_socket.close()
+                raise Exception("Server certificate validation failed")
+            
+            logger.info("Recieving server nonce..")
+            nonce_device = client_socket.recv(16)
+            logger.info(f"Received nonce: {nonce_device}")
+            ack = encrypt_message("NONCE_RECEIVED", server_public_key)
+            client_socket.sendall(ack)
+            logger.info("Sent acknowledgement")
+
+            return cert_json,nonce_device
+    except Exception as e:
+        logger.exception("Failed to receive hello")
+        raise e
+
+send_hello(client)
+recv_hello(client)
+send_end_of_file(client)
+
+
 client.close()
 logger.info("Device socket closed")

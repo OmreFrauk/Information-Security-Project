@@ -4,7 +4,26 @@ from logger import logger
 from tqdm import tqdm
 from ca_cert import validate_certificate
 import json
+import os
+from ca_cert import create_signed_certificate, send_certificate
+
+
 logger.info("Server starting")
+# Load keys
+server_private_key = load_private_key("keys/server_private_key.pem")
+device_public_key = load_public_key("keys/device_public_key.pem")
+ca_public_key = load_public_key("keys/ca_public_key.pem")
+server_public_key = load_public_key("keys/server_public_key.pem")
+
+# Setup server
+server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+server.bind(("localhost", 9999))
+server.listen(1)
+logger.info("Server listening on port 9999")
+
+client, addr = server.accept()
+logger.info(f"Accepted connection from {addr}")
+
 
 def recv_exact(sock, size):
     logger.info(f"Receiving exactly {size} bytes...")
@@ -30,25 +49,44 @@ def recv_certificate(client_socket):
 
         cert_bundle = json.loads(cert_data.decode())
         logger.info("Received certificate from client")
+        ack = encrypt_message("CERT_RECEIVED", device_public_key)
+        client_socket.sendall(ack)
+        logger.info("Sent acknowledgement")
 
         return cert_bundle
 
     except Exception as e:
         logger.exception("Failed to receive or validate certificate.")
         return None
-# Load keys
-server_private_key = load_private_key("keys/server_private_key.pem")
-device_public_key = load_public_key("keys/device_public_key.pem")
-ca_public_key = load_public_key("keys/ca_public_key.pem")
+def generate_certificate(path="certificates/server_certificate.json", device_public_key=server_public_key):
+    if os.path.exists(path):
+        logger.info(f"Certificate file already exists: {path}")
+        return
+    logger.info("Generating certificate")
 
-# Setup server
-server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-server.bind(("localhost", 9999))
-server.listen(1)
-logger.info("Server listening on port 9999")
+    certificate = create_signed_certificate("device", device_public_key)
+    with open(path, "w") as f:
+        json.dump(certificate, f)
+    logger.info(f"Certificate saved to {path}")
 
-client, addr = server.accept()
-logger.info(f"Accepted connection from {addr}")
+def send_hello(client_socket):
+    try:
+        client_socket.sendall(b"<HELO>")
+        logger.info("Sent header: HELLO")
+        send_certificate(client_socket, "certificates/server_certificate.json", private_key=server_private_key)
+        
+        nonce_server = os.urandom(16)
+        client_socket.sendall(nonce_server)
+        logger.info(f"Sent nonce: {nonce_server}")
+        ack = client_socket.recv(256)
+        ack_msg = decrypt_message(ack, server_private_key)
+        logger.info(f"Device acknowledgement: {ack_msg}")
+    
+    except Exception as e:
+        logger.exception("Failed to send hello")
+        raise e
+
+
 
 try:
     while True:
@@ -92,12 +130,9 @@ try:
         elif header == b"<CERT>":
             logger.info("Expecting certificate")
             certificate = recv_certificate(client)
-            logger.info(f"Certificate: {certificate}")
             if certificate:
                 logger.info("Certificate received successfully")
-                ack = encrypt_message("CERT_RECEIVED", device_public_key)
-                client.sendall(ack)
-                logger.info("Sent acknowledgement")
+                
                 if validate_certificate(certificate, ca_public_key):
                     logger.info("Certificate validated successfully")
                 else:
@@ -109,6 +144,30 @@ try:
                 logger.warning("Certificate validation failed")
                 client.close()
                 server.close()
+                break
+
+        elif header == b"<HELO>":
+            logger.info("Expecting hello")
+            certificate = recv_certificate(client)
+            if validate_certificate(certificate, ca_public_key):
+                logger.info("Certificate validated successfully")
+                
+               
+               
+            else:
+                logger.warning("Certificate validation failed")
+                client.close()
+                server.close()
+                break
+
+            nonce_device = recv_exact(client, 16)
+            logger.info(f"Received nonce: {nonce_device}")
+            
+            ack = encrypt_message("HELLO_RECEIVED", device_public_key)
+            client.sendall(ack)
+            logger.info("Sent acknowledgement")
+            send_hello(client)
+            
 
         elif header == b"<ENDD>":
             logger.info("Received end of file")
