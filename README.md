@@ -135,3 +135,62 @@ Device              ↔            Server
   |                ←  ACK
   |  <ENDD>                     →
 ```
+
+## 🛡️ Security Holes and Proposed Countermeasures
+
+This implementation provides a foundational level of secure communication, but several security limitations remain. Below are the key vulnerabilities identified, along with proposed mitigations:
+
+### 1. 🔁 No Key Update Mechanism
+- **Issue:** The derived session keys remain static for the entire session.
+- **Risk:** If a key is compromised, all past and future messages could be decrypted (no forward secrecy).
+- **Countermeasure:** Implement a key update mechanism using periodic HKDF re-derivation or Diffie-Hellman-based key renewal.
+
+---
+
+### 2. 🧅 No Perfect Forward Secrecy (PFS)
+- **Issue:** RSA is used to transmit the pre-master secret, which does not provide PFS.
+- **Risk:** If the private key is ever leaked, all previous sessions can be decrypted.
+- **Countermeasure:** Use Ephemeral Diffie-Hellman (e.g., ECDHE) instead of static RSA for session key establishment.
+
+---
+
+### 3. 🕓 No Timestamp or Nonce Validation
+- **Issue:** While nonces are exchanged, they are not used for freshness validation or replay prevention.
+- **Risk:** Replay attacks may be possible by capturing and resending previous valid messages.
+- **Countermeasure:** Store used nonces temporarily, or include timestamps and session IDs in message MACs.
+
+---
+
+### 4. 📜 Lack of Certificate Revocation
+- **Issue:** Once a certificate is signed, it is always considered valid.
+- **Risk:** If a device/server key is compromised, the certificate remains valid.
+- **Countermeasure:** Implement a revocation mechanism such as a CRL (Certificate Revocation List) or OCSP-like mechanism.
+
+---
+
+### 5. 📶 No Session Identification
+- **Issue:** There is no session ID or tracking of ongoing communication sessions.
+- **Risk:** Makes it difficult to distinguish between multiple connections or sessions.
+- **Countermeasure:** Generate a unique session ID during handshake and include it in each message payload.
+
+---
+
+### 6. 🔓 Error Handling May Leak Information
+- **Issue:** Verbose error logs may be useful to attackers (e.g., "Decryption failed").
+- **Risk:** Could reveal internal logic or cryptographic expectations.
+- **Countermeasure:** Sanitize error messages for external logging, and separate internal debug logs.
+
+---
+
+### Summary Table
+
+| Vulnerability              | Status     | Fix Suggested               |
+|---------------------------|------------|-----------------------------|
+| Key Update Mechanism       | ❌ Missing | Add periodic HKDF rekeying |
+| Perfect Forward Secrecy    | ❌ Missing | Use ECDHE                  |
+| Replay Attack Prevention   | ⚠️ Basic   | Add nonce/timestamp logic  |
+| Certificate Revocation     | ❌ Missing | Implement CRL support      |
+| Session Management         | ❌ Missing | Add session identifiers    |
+| Error Message Sanitization | ⚠️ Partial | Clean up external logs     |
+
+
