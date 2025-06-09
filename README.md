@@ -48,6 +48,7 @@ python3 device.py
 ---
 
 ## 📂 Project Structure
+```markdown
 project/
 ├── server.py
 ├── device.py
@@ -76,7 +77,7 @@ project/
 ├── requirements.txt
 └── README.md
 
-
+```
 ---
 
 ## 🔐 Security Features
