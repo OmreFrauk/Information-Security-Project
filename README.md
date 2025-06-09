@@ -48,7 +48,7 @@ python3 device.py
 ---
 
 ## 📂 Project Structure
-```markdown
+```text
 project/
 ├── server.py
 ├── device.py
