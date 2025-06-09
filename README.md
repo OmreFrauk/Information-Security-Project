@@ -125,11 +125,12 @@ Device              ↔            Server
 python3 -m venv venv
 source venv/bin/activate  # For Windows: venv\Scripts\activate
 pip install -r requirements.txt
-
+```
 ## Run Server
 ```bash
 python3 server.py
-
+```
 ## Run Device
 ```bash
 python3 device.py
+```
