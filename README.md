@@ -103,7 +103,7 @@ project/
 ---
 
 ## 🔁 Protocol Flow
-
+```markdown
 ```text
 Device              ↔            Server
   |  <HELO> + cert  →            |
@@ -118,8 +118,7 @@ Device              ↔            Server
   |  <IMGX> encrypted image     →
   |                ←  ACK
   |  <ENDD>                     →
-
-
+```
 ## How to Run
 ```bash
 # Create and activate virtual environment
