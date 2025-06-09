@@ -18,6 +18,21 @@ The system supports:
 > ⚠️ No SSL/TLS libraries like OpenSSL were used. All cryptographic mechanisms were implemented manually using `cryptography`.
 
 ---
+## How to Run
+```bash
+# Create and activate virtual environment
+python3 -m venv venv
+source venv/bin/activate  # For Windows: venv\Scripts\activate
+pip install -r requirements.txt
+```
+## Run Server
+```bash
+python3 server.py
+```
+## Run Device
+```bash
+python3 device.py
+```
 
 ## 🧰 Technologies Used
 
@@ -118,19 +133,4 @@ Device              ↔            Server
   |  <IMGX> encrypted image     →
   |                ←  ACK
   |  <ENDD>                     →
-```
-## How to Run
-```bash
-# Create and activate virtual environment
-python3 -m venv venv
-source venv/bin/activate  # For Windows: venv\Scripts\activate
-pip install -r requirements.txt
-```
-## Run Server
-```bash
-python3 server.py
-```
-## Run Device
-```bash
-python3 device.py
 ```
