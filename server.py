@@ -26,20 +26,26 @@ server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 server.bind(("localhost", 9999))
 server.listen(1)
 logger.info("Server listening on port 9999")
-
 client, addr = server.accept()
 logger.info(f"Accepted connection from {addr}")
+
 
 
 def recv_exact(sock, size):
     logger.info(f"Receiving exactly {size} bytes...")
     data = b""
     while len(data) < size:
-        packet = sock.recv(size - len(data))
+        try:
+            packet = sock.recv(size - len(data))
+        except ConnectionResetError:
+            logger.error("Connection was reset by the peer (client)")
+            return None  
+
         if not packet:
             logger.warning("Connection interrupted during receive")
-            break
+            return None
         data += packet
+
     logger.info(f"Received {len(data)} bytes successfully")
     return data
 def save_verified_image(payload_bytes: bytes, save_dir="received_images") -> str:
@@ -89,20 +95,21 @@ def recv_certificate(client_socket):
 def generate_certificate(path="certificates/server_certificate.json", device_public_key=server_public_key):
     if os.path.exists(path):
         logger.info(f"Certificate file already exists: {path}")
-        return
+        return path
     logger.info("Generating certificate")
 
     certificate = create_signed_certificate("device", device_public_key)
     with open(path, "w") as f:
         json.dump(certificate, f)
     logger.info(f"Certificate saved to {path}")
-
+    return path
 def send_hello(client_socket):
     global NONCE_SERVER
     try:
         client_socket.sendall(b"<HELO>")
         logger.info("Sent header: HELLO")
-        send_certificate(client_socket, "certificates/server_certificate.json", private_key=server_private_key)
+        certificate_path = generate_certificate(path="certificates/server_certificate.json", device_public_key=server_public_key)
+        send_certificate(client_socket, certificate_path, private_key=server_private_key)
         
         NONCE_SERVER = os.urandom(16)
         client_socket.sendall(NONCE_SERVER)
@@ -141,7 +148,7 @@ def recv_secure_image(client_socket, keys=DERIVED_KEYS):
         mac_key = keys["client_mac_key"]
         iv = keys["iv"]
         decrypted_image_payload = decrypt_aes_with_hmac(encrypted_image_payload, aes_key, mac_key, iv)
-        logger.info(f"Decrypted image payload: {decrypted_image_payload}")
+
         if verify_image(decrypted_image_payload, device_public_key):
             logger.info("Image verified successfully")
             ack = encrypt_message("IMX_RECEIVED", device_public_key)
@@ -234,11 +241,12 @@ try:
             logger.info("Sent acknowledgement")
             send_hello(client)
 
-
         elif header == b"<PREM>":
             try:
                 logger.info("Expecting pre-master secret")
-                encrypted_pre_master_secret = recv_exact(client, 256)
+                length_bytes = recv_exact(client, 4)
+                data_length = int.from_bytes(length_bytes, byteorder="big")
+                encrypted_pre_master_secret = recv_exact(client, data_length)
                 pre_master_secret = decrypt_message(encrypted_pre_master_secret, server_private_key, decode=False)
                 logger.info(f"Received pre-master secret: {pre_master_secret}")
                 MASTER_SECRET = pre_master_secret
@@ -267,8 +275,8 @@ try:
         elif header == b"<IMGX>":
             logger.info("Expecting secure image")
             decrypted_image_payload = recv_secure_image(client, DERIVED_KEYS)
-            logger.info(f"Decrypted image payload: {decrypted_image_payload}")
-
+            logger.info(f"Decrypted image payload length: {len(decrypted_image_payload)}")
+ 
 
             ack = encrypt_message("IMX_RECEIVED", device_public_key)
             client.sendall(ack)
@@ -279,8 +287,6 @@ try:
             server.close()
             logger.info("Server closed")
             break
-        
-        
         else:
             logger.error("Invalid header received")
             client.close()

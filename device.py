@@ -161,8 +161,10 @@ def recv_hello(client_socket):
 def send_pre_master_secret(client_socket, server_public_key):
     try:
         pre_master_secret = os.urandom(32) #256 bits secret
+
         encrypted_pre_master_secret = encrypt_message(pre_master_secret, server_public_key)
         client_socket.sendall(b"<PREM>") #header
+        client_socket.sendall(len(encrypted_pre_master_secret).to_bytes(4, byteorder="big"))
         client_socket.sendall(encrypted_pre_master_secret)
         logger.info("Sent pre-master secret")
 
@@ -224,7 +226,7 @@ if __name__ == "__main__":
     DERIVED_KEYS = derive_keys(pre_master_secret, nonce_device, nonce_server)
     logger.info(f"Derived keys: {DERIVED_KEYS}")
 
-    send_secure_image(client, "images/test.png", DERIVED_KEYS)
+    send_secure_image(client, "images/test.mp4", DERIVED_KEYS)
 
     send_end_of_file(client)
     client.close()
