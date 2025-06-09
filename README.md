@@ -121,16 +121,16 @@ Device              ↔            Server
 
 
 ## How to Run
-```code
+```bash
+# Create and activate virtual environment
 python3 -m venv venv
-source venv/bin/activate  # for Windows:venv\Scripts\activate
+source venv/bin/activate  # For Windows: venv\Scripts\activate
 pip install -r requirements.txt
 
-Run Server
-'''code
+## Run Server
+```bash
 python3 server.py
 
-Run Client
-'''code
-python3 client.py
-
+## Run Device
+```bash
+python3 device.py
